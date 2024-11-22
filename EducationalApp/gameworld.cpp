@@ -47,7 +47,7 @@ GameWorld::GameWorld(QWidget *parent) : QWidget(parent),
     // Add the shape to the body.
     heroBody->CreateFixture(&fixtureDef);
     printf("Init world\n");
-    connect(&timer, &QTimer::timeout, this, &SceneWidget::updateWorld);
+    connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
     timer.start(10);
 }
 void GameWorld::paintEvent(QPaintEvent *) {

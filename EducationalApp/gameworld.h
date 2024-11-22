@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <Box2D/Box2D.h>
 #include <QTimer>
-#include "platforms.h"
+#include "platform.h"
 class GameWorld : public QWidget
 {
     Q_OBJECT
