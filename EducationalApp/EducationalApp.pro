@@ -58,6 +58,7 @@ SOURCES += \
     gamescene.cpp \
     main.cpp \
     mainwindow.cpp \
+    platforms.cpp \
     scenewidget.cpp
 
 HEADERS += \
@@ -110,6 +111,7 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     gamescene.h \
     mainwindow.h \
+    platforms.h \
     scenewidget.h
 
 FORMS += \
