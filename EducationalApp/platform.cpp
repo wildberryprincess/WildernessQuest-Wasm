@@ -1,7 +1,7 @@
 #include "platform.h"
 
 #include <QDebug>
-Platforms::Platforms(const QPoint& position) {
+Platform::Platform(const QPoint& position) {
     qDebug() << "Inside platform constructor";
     image = QImage(":/images/log.png");
     if (image.isNull()) {
@@ -13,10 +13,10 @@ Platforms::Platforms(const QPoint& position) {
 }
 
 
-QRect Platforms::getBoundingRect(){
+QRect Platform::getBoundingRect(){
     return boundingRect;
 }
 
-QImage Platforms::getImage(){
+QImage Platform::getImage(){
     return image;
 }

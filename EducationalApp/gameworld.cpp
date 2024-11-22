@@ -9,7 +9,7 @@ GameWorld::GameWorld(QWidget *parent) : QWidget(parent),
     //setting the image
     image(":/images/hero.png")
 {
-    Platforms platform(QPoint(500, 500));
+    Platform platform(QPoint(500, 500));
     platformsList.append(platform);
     //  // Create the hero and platforms
     // createPlatform(50, 400, 200, 20); // Example platform
