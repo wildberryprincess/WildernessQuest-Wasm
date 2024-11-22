@@ -19,7 +19,7 @@ public slots:
 private:
     void createHero();
     // void createPlatform(float x, float y, float width, float height);
-    QList<Platforms> platformsList;
+    QList<Platform> platformsList;
     b2World world;
     b2Body* heroBody;
     QTimer timer;
