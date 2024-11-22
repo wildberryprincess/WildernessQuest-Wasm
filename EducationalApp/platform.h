@@ -4,10 +4,10 @@
 #include <QPoint>
 #include <QImage>
 
-    class Platforms
+    class Platform
 {
 public:
-    Platforms(const QPoint& position);
+    Platform(const QPoint& position);
 
     // gets the boundary of platform which is helpful for collisions
     QRect getBoundingRect();
