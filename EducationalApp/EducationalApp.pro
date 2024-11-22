@@ -58,6 +58,7 @@ SOURCES += \
     gameworld.cpp \
     main.cpp \
     platform.cpp \
+    survivalprompt.cpp \
     view.cpp
 
 HEADERS += \
@@ -110,6 +111,7 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     gameworld.h \
     platform.h \
+    survivalprompt.h \
     view.h
 
 FORMS += \
