@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "view.h"
+#include "view.h"
 #include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent)
