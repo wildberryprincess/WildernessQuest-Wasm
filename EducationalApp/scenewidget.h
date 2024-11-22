@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <Box2D/Box2D.h>
 #include <QTimer>
+#include "platforms.h"
 
 class SceneWidget : public QWidget
 {
@@ -11,9 +12,9 @@ class SceneWidget : public QWidget
 
 public:
     explicit SceneWidget(QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent *) override;
 
 protected:
+    void paintEvent(QPaintEvent *) override;
     // void keyPressEvent(QKeyEvent *event) override;
     // void keyReleaseEvent(QKeyEvent *event) override;
 
@@ -26,6 +27,8 @@ public slots:
 private:
     void createHero();
     void createPlatform(float x, float y, float width, float height);
+
+    QList<Platforms> platformsList;
 
     b2World world;
     b2Body* heroBody;

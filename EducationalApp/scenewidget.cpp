@@ -10,6 +10,9 @@ SceneWidget::SceneWidget(QWidget *parent) : QWidget(parent),
     //setting the image
     image(":/images/hero.png")
 {
+    Platforms platform(QPoint(500, 500));
+    platformsList.append(platform);
+
 
      // Create the hero and platforms
     createPlatform(50, 400, 200, 20); // Example platform
@@ -62,6 +65,8 @@ SceneWidget::SceneWidget(QWidget *parent) : QWidget(parent),
 
     connect(&timer, &QTimer::timeout, this, &SceneWidget::updateWorld);
     timer.start(10);
+
+    update();
 }
 
 void SceneWidget::paintEvent(QPaintEvent *) {
@@ -79,6 +84,9 @@ void SceneWidget::paintEvent(QPaintEvent *) {
 
     painter.drawImage((int)(position.x*20), (int)(position.y*20), image);
     painter.drawImage(200, 200, image);
+
+    painter.drawImage(platformsList[0].getBoundingRect().topLeft(), platformsList[0].getImage());
+
     //    qDebug() << image;
     painter.end();
 }

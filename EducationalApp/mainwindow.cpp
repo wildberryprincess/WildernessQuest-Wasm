@@ -14,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     //     int randYPosition = rand() % 700;
     // }
 
-    Platforms platform(QPoint(500, 500));
-    platformsList.append(platform);
+    // Platforms platform(QPoint(500, 500));
+    // platformsList.append(platform);
 
-    update();
+    // update();
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
-    painter.drawImage(platformsList[0].getBoundingRect().topLeft(), platformsList[0].getImage());
-}
+// void MainWindow::paintEvent(QPaintEvent *event) {
+//     QPainter painter(this);
+//     painter.drawImage(platformsList[0].getBoundingRect().topLeft(), platformsList[0].getImage());
+// }
