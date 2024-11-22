@@ -10,9 +10,11 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    platform.cpp \
     view.cpp
 
 HEADERS += \
+    platform.h \
     view.h
 
 FORMS += \
