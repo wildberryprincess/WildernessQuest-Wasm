@@ -3,7 +3,7 @@
 #include <QDebug>
 Platform::Platform(const QPoint& position) {
     qDebug() << "Inside platform constructor";
-    image = QImage(":/Images/log.png");
+    image = QImage(":/Images/log2.png");
     if (image.isNull()) {
         qDebug() << "Failed to load log.png from resource path.";
     } else {

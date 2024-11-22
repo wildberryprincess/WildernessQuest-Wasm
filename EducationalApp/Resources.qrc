@@ -2,5 +2,6 @@
     <qresource prefix="/Images">
         <file>log.png</file>
         <file>hero.png</file>
+        <file>log2.png</file>
     </qresource>
 </RCC>
