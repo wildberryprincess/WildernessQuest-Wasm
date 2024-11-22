@@ -7,7 +7,7 @@ GameWorld::GameWorld(QWidget *parent) : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this),
     //setting the image
-    image(":/images/hero.png")
+    image(":/Images/hero.png")
 {
     Platform platform(QPoint(500, 500));
     platformsList.append(platform);
