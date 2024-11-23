@@ -6,11 +6,14 @@
 #include <QGraphicsRectItem>
 #include <cstdlib>
 
-GameWorld::GameWorld(QWidget *parent) : QWidget(parent),
-    world(b2Vec2(0.0f, 10.0f)), timer(this)
+GameWorld::GameWorld(QWidget *parent)
+    : QWidget(parent),
+    world(b2Vec2(0.0f, 10.0f)),
+    timer(this)
 {
+    // Ensure GameWorld has focus to handle key events
+    setFocusPolicy(Qt::StrongFocus);
     mainPlayer = new mainCharacter(QPoint(100,100), &world);
-
     for (int i = 0; i < 10; i++) {
         // Platform platform(QPoint(0 + (i * 150), 200));
         Platform platform(QPoint(rand() % 1300, rand() % 800));

@@ -41,7 +41,7 @@ void mainCharacter::keyPressEvent(QKeyEvent *event) {
         moveRight = true;
         break;
     default:
-        view:keyPressEvent(event); // Pass unhandled keys to the base class
+        break;
     }
 }
 
@@ -55,7 +55,7 @@ void mainCharacter::keyReleaseEvent(QKeyEvent *event) {
         moveRight = false;
         break;
     default:
-        view:keyReleaseEvent(event); // Pass unhandled keys to the base class
+        break;
     }
 }
 
