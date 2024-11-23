@@ -15,9 +15,6 @@ GameWorld::GameWorld(QWidget *parent)
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
 
-    // Initialize the main player
-   // mainPlayer = new mainCharacter(QPoint(100, 100), &world);
-
     // Create the platform grid
     createPlatformGrid();
 
@@ -46,7 +43,7 @@ void GameWorld::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // Fill the entire widget with the desired background color
-    painter.fillRect(rect(), Qt::white); // Replace Qt::black with your desired color
+    painter.fillRect(rect(), Qt::white);
 
     // Draw the platforms
     for (Platform platform : platformsList) {
@@ -60,6 +57,7 @@ void GameWorld::updateWorld() {
 
     // Step the physics world
     world.Step(1.0f / 60.0f, 6, 2);
+
     // Update the main character's movement
     mainPlayer->update();
 
@@ -68,22 +66,15 @@ void GameWorld::updateWorld() {
 }
 
 void GameWorld::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "Inside game model key press event";
     mainPlayer->keyPressEvent(event); // Forward event to the main player
 }
 
 void GameWorld::keyReleaseEvent(QKeyEvent *event) {
-    qDebug() << "Inside game model key press released event";
     mainPlayer->keyReleaseEvent(event); // Forward event to the main player
 }
 
 GameWorld::~GameWorld() {
-    qDebug() << "GameWorld Destructor Called: Clearing platforms list.";
-
-    // Clear the platform list
     platformsList.clear();
-
-    // Delete the main player to prevent memory leaks
     delete mainPlayer;
 }
 
