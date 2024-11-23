@@ -7,6 +7,7 @@
 #include <Box2D/Box2D.h>
 #include "platform.h"
 #include "maincharacter.h"
+#include "gamecontactlistener.h"
 
 class GameWorld : public QWidget {
     Q_OBJECT
@@ -26,9 +27,14 @@ private:
     b2World world;
     QTimer timer;
     QList<Platform> platformsList;
-
-    // Main character
     mainCharacter* mainPlayer;
+    GameContactListener contactListener;
+
+    ~GameWorld();
+
+    void createPlatformGrid();
+
+    void initializePlayerPosition();
 };
 
 #endif // GAMEWORLD_H

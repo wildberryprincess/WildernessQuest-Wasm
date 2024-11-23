@@ -5,10 +5,11 @@
 #include <QString>
 #include <Box2D/Box2D.h>
 #include <QKeyEvent>
+#include "gamecontactlistener.h"
 class mainCharacter
 {
 public:
-    mainCharacter(const QPoint& position, b2World* world);
+    mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener);
 
     // gets the boundary of the character which is helpful for collisions
     QRect getBoundingRect();
@@ -19,6 +20,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void jump();
+    b2Body* getBody();
 
 private:
     QRect boundingRect;
@@ -28,6 +30,9 @@ private:
     bool moveLeft = false;
     bool moveRight = false;
     bool isJumping = false;
+    float verticalVelocity;
+
+    GameContactListener* contactListener; // Pointer to the contact listener
 
     const float moveSpeed = 5.0f; // Adjust as needed
     b2Body* body;

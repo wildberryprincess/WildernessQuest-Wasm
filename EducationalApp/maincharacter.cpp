@@ -2,7 +2,9 @@
 #include <QWidget>
 #define SCALE 30.0f
 
-mainCharacter::mainCharacter(const QPoint& position, b2World* world){
+mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener)
+    : contactListener(contactListener)
+{
     image = QImage(":/Images/hero.png");
     boundingRect = QRect(position, image.size());
 
@@ -10,6 +12,7 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world){
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(position.x() / SCALE, position.y() / SCALE);
     body = world->CreateBody(&bodyDef);
+    body->SetUserData(this); // Set user data to identify the player for contact collision
 
     b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox((boundingRect.width()/ 2.0f) / SCALE, (boundingRect.height() / 2.0f) / SCALE);
@@ -17,14 +20,14 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world){
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3;
-    fixtureDef.restitution = 0.1f;
+    fixtureDef.friction = 0.1;
+    fixtureDef.restitution = 0.0f;
 
     body->CreateFixture(&fixtureDef);
 
 }
 
-    // gets the boundary of the character which is helpful for collisions
+// gets the boundary of the character which is helpful for collisions
 QRect mainCharacter::getBoundingRect(){
     return boundingRect;
 }
@@ -51,7 +54,6 @@ void mainCharacter::keyPressEvent(QKeyEvent *event) {
 }
 
 void mainCharacter::keyReleaseEvent(QKeyEvent *event) {
-    qDebug() << "Inside main character key press released event";
     switch (event->key()) {
     case Qt::Key_Left:
         moveLeft = false;
@@ -70,6 +72,8 @@ void mainCharacter::keyReleaseEvent(QKeyEvent *event) {
 void mainCharacter::update() {
     b2Vec2 velocity = body->GetLinearVelocity();
 
+    float verticalVelocity = velocity.y;
+
     if (moveLeft) {
         velocity.x = -5.0f; // Move left with a fixed speed
     } else if (moveRight) {
@@ -78,26 +82,28 @@ void mainCharacter::update() {
         velocity.x = 0.0f; // Stop moving horizontally
     }
 
-    body->SetLinearVelocity(velocity);
+    // Set the horizontal velocity, leave vertical velocity as is
+    body->SetLinearVelocity(b2Vec2(velocity.x, verticalVelocity));
 
     // Update bounding rectangle for rendering
     b2Vec2 position = body->GetPosition();
     boundingRect.moveTo(position.x * SCALE - boundingRect.width() / 2,
-                        position.y * SCALE - boundingRect.height() / 2);
+                        position.y * SCALE - boundingRect.height() / 4);
 }
+
 
 void mainCharacter::jump() {
-    b2Vec2 velocity = body->GetLinearVelocity();
-
-    // Check if the character is grounded by ensuring vertical velocity is near zero
-    if (velocity.y == 0.0f) {
-        // Apply an impulse at the body's center
-        b2Vec2 impulse(0.0f, -40.0f); // Adjust impulse strength as needed
+    if (contactListener->isGrounded) {
+        b2Vec2 impulse(0.0f, -50.0f); // Adjust impulse strength as needed
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
-
-        //isJumping = true; // Set jumping flag to true
+        isJumping = true;
     }
 }
+
+b2Body* mainCharacter::getBody() {
+    return body;
+}
+
 
 
 
