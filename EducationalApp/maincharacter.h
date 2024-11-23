@@ -3,10 +3,10 @@
 #include <QPoint>
 #include <QImage>
 
-class Character
+class mainCharacter
 {
 public:
-    Character(const QPoint& position);
+    mainCharacter(const QPoint& position);
 
     // gets the boundary of the character which is helpful for collisions
     QRect getBoundingRect();

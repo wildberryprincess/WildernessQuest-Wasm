@@ -57,6 +57,7 @@ SOURCES += \
     Box2D/Rope/b2Rope.cpp \
     gameworld.cpp \
     main.cpp \
+    maincharacter.cpp \
     platform.cpp \
     survivalprompt.cpp \
     view.cpp
