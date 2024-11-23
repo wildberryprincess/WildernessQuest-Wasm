@@ -40,6 +40,11 @@ void mainCharacter::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_Right:
         moveRight = true;
         break;
+    case Qt::Key_Up:
+        if (!isJumping) {
+            jump();
+        }
+        break;
     default:
         break;
     }
@@ -53,6 +58,9 @@ void mainCharacter::keyReleaseEvent(QKeyEvent *event) {
         break;
     case Qt::Key_Right:
         moveRight = false;
+        break;
+    case Qt::Key_Up:
+        isJumping = false;
         break;
     default:
         break;
@@ -76,6 +84,19 @@ void mainCharacter::update() {
     b2Vec2 position = body->GetPosition();
     boundingRect.moveTo(position.x * SCALE - boundingRect.width() / 2,
                         position.y * SCALE - boundingRect.height() / 2);
+}
+
+void mainCharacter::jump() {
+    b2Vec2 velocity = body->GetLinearVelocity();
+
+    // Check if the character is grounded by ensuring vertical velocity is near zero
+    if (velocity.y == 0.0f) {
+        // Apply an impulse at the body's center
+        b2Vec2 impulse(0.0f, -40.0f); // Adjust impulse strength as needed
+        body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
+
+        //isJumping = true; // Set jumping flag to true
+    }
 }
 
 

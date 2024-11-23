@@ -18,6 +18,7 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    void jump();
 
 private:
     QRect boundingRect;
@@ -26,6 +27,7 @@ private:
     // Flags for key states
     bool moveLeft = false;
     bool moveRight = false;
+    bool isJumping = false;
 
     const float moveSpeed = 5.0f; // Adjust as needed
     b2Body* body;
