@@ -30,12 +30,13 @@ public:
     };
 
 
-    map<QString, QString[4]> levelOnePrompts;
-    map<QString, QString[4]> levelTwoPrompts;
-    map<QString, QString[4]> levelThreePrompts;
+    Prompt* levelOnePrompts;
+    Prompt* levelTwoPrompts;
+    Prompt* levelThreePrompts;
 
 private:
     void deserializePrompts(QString filename);
+    Prompt* deserializeHelper(QJsonArray promptArray);
 
 };
 
