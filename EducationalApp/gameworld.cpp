@@ -80,7 +80,7 @@ GameWorld::~GameWorld() {
 }
 
 void GameWorld::generatePlatforms() {
-    QList<QPoint> positionList = { {10, 275}, {330, 425}, {800, 525}, {550, 700}, {500, 225}, {1000, 225}, {200, 600}, {1100, 700}, {1250, 400}, {675, 350}};
+    QList<QPoint> positionList = { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 
     for (int i = 0; i < 10; i++) {
@@ -111,7 +111,7 @@ void GameWorld::createPlatformGrid() {
 
         // Define the shape for the platform
         b2PolygonShape platformShape;
-        platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
+        platformShape.SetAsBox(platform.imageSize.x() / (3.0f * SCALE), platform.imageSize.y() / (3.0f * SCALE));
 
         // Define the fixture for the platform with low friction
         b2FixtureDef platformFixtureDef;
@@ -125,7 +125,7 @@ void GameWorld::createPlatformGrid() {
 
 
 void GameWorld::initializePlayerPosition() {
-    QPoint playerPosition(0,0); // Adjust to start above a platform
+    QPoint playerPosition(100,0); // Adjust to start above a platform
     mainPlayer = new mainCharacter(playerPosition, &world, &contactListener);
 }
 
