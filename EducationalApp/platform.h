@@ -8,6 +8,8 @@
 {
 public:
     Platform(const QPoint& position);
+    QPoint position;
+    QPoint imageSize;
 
     // gets the boundary of platform which is helpful for collisions
     QRect getBoundingRect();

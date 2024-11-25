@@ -1,7 +1,7 @@
 #include "platform.h"
 
 #include <QDebug>
-Platform::Platform(const QPoint& position) {
+Platform::Platform(const QPoint& position) : position(position) {
     qDebug() << "Inside platform constructor";
     image = QImage(":/Images/log2.0.png");
 
@@ -19,6 +19,8 @@ QRect Platform::getBoundingRect(){
 }
 
 void Platform::changeImageDimensions(int newWidth, int newHeight){
+    imageSize.setX(newWidth);
+    imageSize.setY(newHeight);
     image = image.scaled(newWidth, newHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
