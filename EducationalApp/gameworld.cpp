@@ -80,12 +80,6 @@ GameWorld::~GameWorld() {
 }
 
 void GameWorld::generatePlatforms() {
-    // for (int i = 0; i < 10; i++) {
-    //     // Platform platform(QPoint(0 + (i * 150), 200));
-    //     Platform platform(QPoint(rand() % 1450, rand() % 780));
-    //     platformsList.append(platform);
-    // }
-
     QList<QPoint> positionList = { {10, 275}, {330, 425}, {800, 525}, {550, 700}, {500, 225}, {1000, 225}, {200, 600}, {1100, 700}, {1250, 400}, {675, 350}};
     QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 
