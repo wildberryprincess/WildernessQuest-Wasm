@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/Images">
-        <file>log.png</file>
         <file>hero.png</file>
-        <file>log2.png</file>
+        <file>log2.0.png</file>
+        <file>trial_background.png</file>
     </qresource>
 </RCC>

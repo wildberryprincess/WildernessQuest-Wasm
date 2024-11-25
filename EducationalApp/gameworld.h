@@ -32,6 +32,7 @@ private:
 
     ~GameWorld();
 
+    void generatePlatforms();
     void createPlatformGrid();
 
     void initializePlayerPosition();

@@ -43,7 +43,8 @@ void GameWorld::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // Fill the entire widget with the desired background color
-    painter.fillRect(rect(), Qt::white);
+    QPixmap backgroundPixmap(":/Images/trial_background.png");
+    painter.drawPixmap(QRect(0, 0, this->width(), this->height()), backgroundPixmap);
 
     // Draw the platforms
     for (Platform platform : platformsList) {
@@ -78,6 +79,23 @@ GameWorld::~GameWorld() {
     delete mainPlayer;
 }
 
+void GameWorld::generatePlatforms() {
+    // for (int i = 0; i < 10; i++) {
+    //     // Platform platform(QPoint(0 + (i * 150), 200));
+    //     Platform platform(QPoint(rand() % 1450, rand() % 780));
+    //     platformsList.append(platform);
+    // }
+
+    QList<QPoint> positionList = { {10, 275}, {330, 425}, {800, 525}, {550, 700}, {500, 225}, {1000, 225}, {200, 600}, {1100, 700}, {1250, 400}, {675, 350}};
+    QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+
+    for (int i = 0; i < 10; i++) {
+        Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
+        platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
+        platformsList.append(platform);
+    }
+}
+
 void GameWorld::createPlatformGrid() {
     // Define grid dimensions
     const int gridWidth = 1400;
@@ -98,10 +116,8 @@ void GameWorld::createPlatformGrid() {
                 int x = col * cellWidth;
                 int y = row * cellHeight;
 
-                // Add the platform to the QList
-                QPoint position(x, y);
-                Platform platform(position);
-                platformsList.append(platform);
+                // // Add the platform to the QList
+                generatePlatforms();
 
                 // Create a static body in the Box2D world
                 b2BodyDef platformBodyDef;
@@ -122,9 +138,9 @@ void GameWorld::createPlatformGrid() {
                 platformFixtureDef.density = 0.0f;
                 platformFixtureDef.friction = 0.1f;
                 platformBody->CreateFixture(&platformFixtureDef);
-            }
         }
     }
+}
 
 
 

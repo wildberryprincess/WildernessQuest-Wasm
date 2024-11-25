@@ -11,6 +11,7 @@ public:
 
     // gets the boundary of platform which is helpful for collisions
     QRect getBoundingRect();
+    void changeImageDimensions(int newWidth, int newHeight);
     QImage getImage();
 
 private:
