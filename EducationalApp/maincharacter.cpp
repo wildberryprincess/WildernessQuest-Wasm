@@ -6,7 +6,7 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     : contactListener(contactListener)
 {
     image = QImage(":/Images/girlScout.png");
-    image = image.scaled(80, 80, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     boundingRect = QRect(position, image.size());
 
