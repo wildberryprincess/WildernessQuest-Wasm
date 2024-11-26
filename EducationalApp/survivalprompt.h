@@ -2,13 +2,12 @@
 #define SURVIVALPROMPT_H
 
 #include <QObject>
-#include <map>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
 
-using std:: map;
+using std:: vector;
 
 class SurvivalPrompt
 {
@@ -30,13 +29,15 @@ public:
     };
 
 
-    Prompt* levelOnePrompts;
-    Prompt* levelTwoPrompts;
-    Prompt* levelThreePrompts;
+    vector<Prompt> levelOnePrompts;
+    vector<Prompt> levelTwoPrompts;
+    vector<Prompt> levelThreePrompts;
+    vector<Prompt> levelFourPrompts;
+
 
 private:
     void deserializePrompts(QString filename);
-    Prompt* deserializeHelper(QJsonArray promptArray);
+    void deserializeHelper(QJsonArray promptArray, vector<Prompt>& levelPromptsArray);
 
 };
 
