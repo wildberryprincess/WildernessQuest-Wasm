@@ -5,7 +5,9 @@
 mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener)
     : contactListener(contactListener)
 {
-    image = QImage(":/Images/hero.png");
+    image = QImage(":/Images/girlScout.png");
+    image = image.scaled(80, 80, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
     boundingRect = QRect(position, image.size());
 
     b2BodyDef bodyDef;
@@ -24,7 +26,6 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     fixtureDef.restitution = 0.0f;
 
     body->CreateFixture(&fixtureDef);
-
 }
 
 // gets the boundary of the character which is helpful for collisions

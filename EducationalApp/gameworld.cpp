@@ -111,7 +111,7 @@ void GameWorld::createPlatformGrid() {
 
         // Define the shape for the platform
         b2PolygonShape platformShape;
-        platformShape.SetAsBox(platform.imageSize.x() / (3.0f * SCALE), platform.imageSize.y() / (3.0f * SCALE));
+        platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
 
         // Define the fixture for the platform with low friction
         b2FixtureDef platformFixtureDef;
