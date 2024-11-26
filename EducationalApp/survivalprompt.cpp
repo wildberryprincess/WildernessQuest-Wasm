@@ -28,46 +28,20 @@ void SurvivalPrompt:: deserializePrompts(QString filename){
 
 
     QJsonArray levelOneJsonPrompts = allPrompts["levelOne"].toArray();
-    levelOnePrompts = deserializeHelper(levelOneJsonPrompts);
+    deserializeHelper(levelOneJsonPrompts, levelOnePrompts);
 
     QJsonArray levelTwoJsonPrompts = allPrompts["levelTwo"].toArray();
-    levelOnePrompts = deserializeHelper(levelTwoJsonPrompts);
+    deserializeHelper(levelTwoJsonPrompts, levelTwoPrompts);
 
     QJsonArray levelThreeJsonPrompts = allPrompts["levelThree"].toArray();
-    levelOnePrompts = deserializeHelper(levelThreeJsonPrompts);
+    deserializeHelper(levelThreeJsonPrompts, levelThreePrompts);
 
-    // int indexCount= 0;
-
-    // for(const QJsonValue& promptJsonInfo: levelOneJsonPrompts){
-    //     QJsonObject promptInfo = promptJsonInfo.toObject();
-    //     Prompt newPrompt;
-    //     newPrompt.question = promptInfo["question"].toString();
-    //     qDebug() << newPrompt.question;
-
-    //     newPrompt.optionA = promptInfo["optionA"].toString();
-    //     qDebug() << newPrompt.optionA;
-    //     newPrompt.optionB = promptInfo["optionB"].toString();
-    //     qDebug() << newPrompt.optionB;
-
-    //     newPrompt.optionC = promptInfo["optionC"].toString();
-    //     qDebug() << newPrompt.optionC;
-
-    //     newPrompt.optionD = promptInfo["optionD"].toString();
-    //     qDebug() << newPrompt.optionD;
-
-
-    //     newPrompt.correctAnswer = promptInfo["correctAnswer"].toString();
-
-    //     levelOnePrompts[indexCount] = newPrompt;
-    //     indexCount++;
-    // }
+    QJsonArray levelFourJsonPrompts = allPrompts["levelFour"].toArray();
+    deserializeHelper(levelThreeJsonPrompts, levelFourPrompts);
 }
 
 
-SurvivalPrompt::Prompt* SurvivalPrompt:: deserializeHelper(QJsonArray promptArray){
-    Prompt promptInfoArray[10];
-    int indexCount= 0;
-
+void SurvivalPrompt:: deserializeHelper(QJsonArray promptArray, vector<Prompt>& levelPromptsArray){
     for(const QJsonValue& promptJsonInfo: promptArray){
         QJsonObject promptInfo = promptJsonInfo.toObject();
         Prompt newPrompt;
@@ -88,10 +62,7 @@ SurvivalPrompt::Prompt* SurvivalPrompt:: deserializeHelper(QJsonArray promptArra
 
         newPrompt.correctAnswer = promptInfo["correctAnswer"].toString();
 
-        promptInfoArray[indexCount] = newPrompt;
-        indexCount++;
+        levelPromptsArray.push_back(newPrompt);
     }
-    //TODO:: problem here is that 'promptInfoArray' gets destructed once this method is done so nothing gets saved
-    return promptInfoArray;
 }
 
