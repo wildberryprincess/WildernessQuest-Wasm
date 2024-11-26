@@ -43,7 +43,7 @@ void GameWorld::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // Fill the entire widget with the desired background color
-    QPixmap backgroundPixmap(":/Images/trial_background.png");
+    QPixmap backgroundPixmap(":/Images/background_level1.PNG");
     painter.drawPixmap(QRect(0, 0, this->width(), this->height()), backgroundPixmap);
 
     // Draw the platforms
