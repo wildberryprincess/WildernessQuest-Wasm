@@ -8,8 +8,6 @@ SurvivalPrompt::SurvivalPrompt(QString filename) {
 }
 
 
-
-
 void SurvivalPrompt:: deserializePrompts(QString filename){
     QFile file(filename);
     QJsonDocument promptDoc;
@@ -21,6 +19,7 @@ void SurvivalPrompt:: deserializePrompts(QString filename){
     } else {
         qWarning("Error opening file: %s", qPrintable(filename));
     }
+    //TODO: Get rid of this to clean up
     qDebug() << "sucessfully opened file!";
 
     //Access the JSON data
@@ -37,7 +36,7 @@ void SurvivalPrompt:: deserializePrompts(QString filename){
     deserializeHelper(levelThreeJsonPrompts, levelThreePrompts);
 
     QJsonArray levelFourJsonPrompts = allPrompts["levelFour"].toArray();
-    deserializeHelper(levelThreeJsonPrompts, levelFourPrompts);
+    deserializeHelper(levelFourJsonPrompts, levelFourPrompts);
 }
 
 
@@ -46,19 +45,11 @@ void SurvivalPrompt:: deserializeHelper(QJsonArray promptArray, vector<Prompt>& 
         QJsonObject promptInfo = promptJsonInfo.toObject();
         Prompt newPrompt;
         newPrompt.question = promptInfo["question"].toString();
-        qDebug() << newPrompt.question;
 
         newPrompt.optionA = promptInfo["optionA"].toString();
-        qDebug() << newPrompt.optionA;
         newPrompt.optionB = promptInfo["optionB"].toString();
-        qDebug() << newPrompt.optionB;
-
         newPrompt.optionC = promptInfo["optionC"].toString();
-        qDebug() << newPrompt.optionC;
-
         newPrompt.optionD = promptInfo["optionD"].toString();
-        qDebug() << newPrompt.optionD;
-
 
         newPrompt.correctAnswer = promptInfo["correctAnswer"].toString();
 
