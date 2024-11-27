@@ -4,11 +4,26 @@
 #include <QWidget>
 #include "platform.h"
 #include "maincharacter.h"
+#include "survivalprompt.h"
+using std::vector;
 
-class GameWorld : public QWidget {
+class GameModel  {
     Q_OBJECT
 
 public:
-    explicit GameWorld(QWidget *parent = nullptr);
+    explicit GameModel();
+
+private:
+    int currentLevel;
+    int lives;
+    int levelProgress;
+    bool gameOver;
+    vector <QPixmap> backgroundImages;
+    QList <QPoint> levelOnePlatformCoords;
+    QList <QPoint> levelTwoPlatformCoords;
+    QList <QPoint> levelThreePlatformCoords;
+    QList <QPoint> levelFourPlatformCoords;
+    SurvivalPrompt allPrompts;
+
 };
 #endif // GAMEMODEL_H

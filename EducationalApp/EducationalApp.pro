@@ -56,6 +56,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     gamecontactlistener.cpp \
+    gamemodel.cpp \
     gameworld.cpp \
     main.cpp \
     maincharacter.cpp \
@@ -132,4 +133,5 @@ RESOURCES += \
 
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
-    Box2D/CMakeLists.txt
+    Box2D/CMakeLists.txt \
+    Prompts.json
