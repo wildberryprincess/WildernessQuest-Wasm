@@ -7,7 +7,7 @@
 #include "survivalprompt.h"
 using std::vector;
 
-class GameModel  {
+class GameModel: public QObject {
     Q_OBJECT
 
 public:

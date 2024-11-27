@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/Prompts">
+        <file>Prompts.json</file>
+    </qresource>
+</RCC>

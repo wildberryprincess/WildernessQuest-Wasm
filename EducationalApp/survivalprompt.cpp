@@ -2,10 +2,7 @@
 #include <QDebug>
 
 
-SurvivalPrompt::SurvivalPrompt(QString filename) {
-    deserializePrompts(filename);
-
-}
+SurvivalPrompt::SurvivalPrompt() {}
 
 
 void SurvivalPrompt:: deserializePrompts(QString filename){

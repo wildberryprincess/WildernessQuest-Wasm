@@ -129,9 +129,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    Prompts.qrc \
     Resources.qrc
 
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
-    Box2D/CMakeLists.txt \
-    Prompts.json
+    Box2D/CMakeLists.txt

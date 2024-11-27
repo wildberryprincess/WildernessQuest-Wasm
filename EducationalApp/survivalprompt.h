@@ -12,7 +12,7 @@ using std:: vector;
 class SurvivalPrompt
 {
 public:
-    SurvivalPrompt(QString filename);
+    SurvivalPrompt();
 
     /**
      * @brief The Prompt struct holds a single question and its options along with the correct answer
@@ -34,9 +34,11 @@ public:
     vector<Prompt> levelThreePrompts;
     vector<Prompt> levelFourPrompts;
 
+    void deserializePrompts(QString filename);
+
+
 
 private:
-    void deserializePrompts(QString filename);
     void deserializeHelper(QJsonArray promptArray, vector<Prompt>& levelPromptsArray);
 
 };
