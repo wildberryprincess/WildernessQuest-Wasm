@@ -44,6 +44,9 @@ void GameWorld::paintEvent(QPaintEvent *) {
 
     // Fill the entire widget with the desired background color
     QPixmap backgroundPixmap(":/Images/background_level1.PNG");
+
+    //TODO:: setting a background image from the gamemodel class
+    //backgroundPixmap.loadFromData();
     painter.drawPixmap(QRect(0, 0, this->width(), this->height()), backgroundPixmap);
 
     // Draw the platforms
@@ -79,6 +82,7 @@ GameWorld::~GameWorld() {
     delete mainPlayer;
 }
 
+//TODO:: making this method into a slot that takes two params of the coords and the size of the platforms
 void GameWorld::generatePlatforms() {
     QList<QPoint> positionList = { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
