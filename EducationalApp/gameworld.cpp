@@ -7,11 +7,14 @@
 #include <cstdlib>
 #define SCALE 30.0f
 
-GameWorld::GameWorld(QWidget *parent)
+GameWorld::GameWorld(GameModel& gameModel, QWidget *parent)
     : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this)
 {
+    connect(&gameModel, &GameModel::platformInfo, this, &GameWorld::generatePlatforms);
+    connect(&gameModel, &GameModel::setBackground, this, &GameWorld::setBackgroundPixMap);
+
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
 
@@ -80,12 +83,16 @@ void GameWorld::keyReleaseEvent(QKeyEvent *event) {
 GameWorld::~GameWorld() {
     platformsList.clear();
     delete mainPlayer;
+    delete currentBackground;
+}
+void GameWorld::setBackgroundPixMap(QString filepath) {
+    currentBackground = new QPixmap(filepath);
 }
 
 //TODO:: making this method into a slot that takes two params of the coords and the size of the platforms
-void GameWorld::generatePlatforms() {
-    QList<QPoint> positionList = { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
-    QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
+    //QList<QPoint> positionList = { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
+    //QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 
     for (int i = 0; i < 10; i++) {
         Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
@@ -99,7 +106,7 @@ void GameWorld::createPlatformGrid() {
     platformsList.clear();
 
     // Add the platform to the QList
-    generatePlatforms();
+    //generatePlatforms();
 
     for (const Platform& platform : platformsList) {
 

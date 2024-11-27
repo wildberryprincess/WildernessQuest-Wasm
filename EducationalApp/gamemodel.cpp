@@ -39,17 +39,18 @@ void GameModel:: SetLevel(){
 void GameModel:: InstantiateBackgrounds(){
 
     //Adding all the background images into vector
-    QPixmap levelOneBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(levelOneBG);
+    //TODO: maybe remove pixmap obj
+    QPixmap levelOneBG();
+    backgroundImages.push_back(":/Images/background_level1.PNG");
 
     QPixmap levelTwoBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(levelTwoBG);
+    backgroundImages.push_back(":/Images/background_level1.PNG");
 
     QPixmap levelThreeBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(levelThreeBG);
+    backgroundImages.push_back(":/Images/background_level1.PNG");
 
     QPixmap levelFourBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(levelFourBG);
+    backgroundImages.push_back(":/Images/background_level1.PNG");
 }
 
 

@@ -18,7 +18,7 @@ private:
     int lives;
     int levelProgress;
     bool gameOver;
-    vector <QPixmap> backgroundImages;
+    vector <QString> backgroundImages;
 
     QList <QPoint> levelOnePlatformCoords;
     QList <QPoint> levelOnePlatformSizes;
@@ -44,7 +44,7 @@ public slots:
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
-    void setBackground(QPixmap background);
+    void setBackground(QString filepath);
 
 };
 #endif // GAMEMODEL_H

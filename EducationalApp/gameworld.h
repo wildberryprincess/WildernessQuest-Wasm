@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QList>
 #include <Box2D/Box2D.h>
+#include "gamemodel.h"
 #include "platform.h"
 #include "maincharacter.h"
 #include "gamecontactlistener.h"
@@ -13,7 +14,7 @@ class GameWorld : public QWidget {
     Q_OBJECT
 
 public:
-    explicit GameWorld(QWidget *parent = nullptr);
+    explicit GameWorld(GameModel& gameModel, QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -22,17 +23,20 @@ protected:
 
 private slots:
     void updateWorld();
+    void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
+    void setBackgroundPixMap(QString filepath);
 
 private:
     b2World world;
     QTimer timer;
+    QPixmap* currentBackground;
     QList<Platform> platformsList;
     mainCharacter* mainPlayer;
     GameContactListener contactListener;
 
     ~GameWorld();
 
-    void generatePlatforms();
+
     void createPlatformGrid();
 
     void initializePlayerPosition();
