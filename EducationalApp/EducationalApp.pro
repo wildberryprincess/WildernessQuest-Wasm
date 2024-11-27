@@ -112,6 +112,7 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     gamecontactlistener.h \
+    gamemodel.h \
     gameworld.h \
     maincharacter.h \
     platform.h \
