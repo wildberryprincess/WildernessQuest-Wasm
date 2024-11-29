@@ -58,6 +58,7 @@ SOURCES += \
     gamecontactlistener.cpp \
     gamemodel.cpp \
     gameworld.cpp \
+    letterobjects.cpp \
     main.cpp \
     maincharacter.cpp \
     platform.cpp \
@@ -115,6 +116,7 @@ HEADERS += \
     gamecontactlistener.h \
     gamemodel.h \
     gameworld.h \
+    letterobjects.h \
     maincharacter.h \
     platform.h \
     survivalprompt.h \

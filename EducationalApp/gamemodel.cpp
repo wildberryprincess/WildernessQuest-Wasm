@@ -68,3 +68,4 @@ void GameModel:: SetPlateformCoords(){
     levelFourPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 }
 
+

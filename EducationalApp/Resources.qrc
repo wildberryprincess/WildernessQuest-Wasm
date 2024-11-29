@@ -4,7 +4,10 @@
         <file>trial_background.png</file>
         <file>girlScout.png</file>
         <file>background_level1.PNG</file>
+        <file>A.png</file>
+        <file>D.png</file>
+        <file>C.png</file>
+        <file>B.png</file>
     </qresource>
-    <qresource prefix="/Prompts">
-    </qresource>
+    <qresource prefix="/Prompts"/>
 </RCC>
