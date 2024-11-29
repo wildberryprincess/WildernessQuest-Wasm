@@ -2,6 +2,7 @@
 #define VIEW_H
 
 #include <QMainWindow>
+#include "gamemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

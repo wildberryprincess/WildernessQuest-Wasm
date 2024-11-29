@@ -37,10 +37,11 @@ private:
 
     void InstantiateBackgrounds();
     void SetPlateformCoords();
+    ~GameModel();
 
 
 public slots:
-    void SetLevel();
+    void SetLevel(int level);
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);

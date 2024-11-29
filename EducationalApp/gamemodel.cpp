@@ -15,8 +15,14 @@ GameModel::GameModel(){
     SetPlateformCoords();
     }
 
+GameModel::~GameModel() {
 
-void GameModel:: SetLevel(){
+    }
+
+//void GameModel::
+//slots to receive the request for info that sends platforms background
+
+void GameModel:: SetLevel(int level){
     if(currentLevel == 1){
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit setBackground(backgroundImages.at(currentLevel-1));

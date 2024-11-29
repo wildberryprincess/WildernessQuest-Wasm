@@ -14,7 +14,8 @@ class GameWorld : public QWidget {
     Q_OBJECT
 
 public:
-    explicit GameWorld(GameModel& gameModel, QWidget *parent = nullptr);
+    explicit GameWorld(QWidget *parent = nullptr);
+    void setGameModel(GameModel& model);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -7,13 +7,11 @@
 #include <cstdlib>
 #define SCALE 30.0f
 
-GameWorld::GameWorld(GameModel& gameModel, QWidget *parent)
+GameWorld::GameWorld(QWidget *parent)
     : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this)
 {
-    connect(&gameModel, &GameModel::platformInfo, this, &GameWorld::generatePlatforms);
-    connect(&gameModel, &GameModel::setBackground, this, &GameWorld::setBackgroundPixMap);
 
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
@@ -42,15 +40,26 @@ GameWorld::GameWorld(GameModel& gameModel, QWidget *parent)
     timer.start(10);
 }
 
+void GameWorld::GetInitialModelInfo() {
+
+    //emit getPatformInfor
+
+    // Connect signals from GameModel to slots in GameWorld
+    //connect(gameModel, &GameModel::platformInfo, this, &GameWorld::generatePlatforms);
+    //connect(gameModel, &GameModel::setBackground, this, &GameWorld::setBackgroundPixMap);
+
+    // Additional connections can be added here as needed
+}
+
 void GameWorld::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // Fill the entire widget with the desired background color
-    QPixmap backgroundPixmap(":/Images/background_level1.PNG");
+    //QPixmap backgroundPixmap(":/Images/background_level1.PNG");
 
     //TODO:: setting a background image from the gamemodel class
     //backgroundPixmap.loadFromData();
-    painter.drawPixmap(QRect(0, 0, this->width(), this->height()), backgroundPixmap);
+    painter.drawPixmap(QRect(0, 0, this->width(), this->height()), *currentBackground);
 
     // Draw the platforms
     for (Platform platform : platformsList) {

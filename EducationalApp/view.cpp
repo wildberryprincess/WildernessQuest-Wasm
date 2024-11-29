@@ -6,6 +6,15 @@ View::View(QWidget *parent)
     , ui(new Ui::View)
 {
     ui->setupUi(this);
+
+   //connect( view signal "sendModel" to gameWorld "setModel" slot)
+    connect ()
+    //setUpModel();
+
+}
+
+void View::setUpInitialGameModel() {
+    emit setUpModel(1);
 }
 
 View::~View()
