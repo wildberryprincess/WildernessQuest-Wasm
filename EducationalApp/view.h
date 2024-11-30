@@ -1,24 +1,30 @@
 #ifndef VIEW_H
 #define VIEW_H
-
-#include <QMainWindow>
 #include "gamemodel.h"
+#include "gameworld.h"
+#include <QMainWindow>
 
-QT_BEGIN_NAMESPACE
 namespace Ui {
 class View;
 }
-QT_END_NAMESPACE
 
 class View : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    View(QWidget *parent = nullptr);
+    explicit View(QWidget *parent = nullptr);
+
+    void setUpInitialGameModel();
     ~View();
 
+signals:
+    void setUpModel(int level);
+
 private:
-    Ui::View *ui;
+    Ui::View *ui; // Ensure this is declared
+    GameWorld *gameWorld;  // Single instance
+
 };
+
 #endif // VIEW_H

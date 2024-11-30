@@ -1,5 +1,6 @@
 #include "gameworld.h"
 #include "maincharacter.h"
+#include "gamemodel.h"
 #include <QPainter>
 #include <QDebug>
 #include <QKeyEvent>
@@ -10,14 +11,12 @@
 GameWorld::GameWorld(QWidget *parent)
     : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
-    timer(this)
+    timer(this),
+    currentBackground(nullptr)
 {
 
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
-
-    // Create the platform grid
-    createPlatformGrid();
 
     // Define the ground body
     b2BodyDef groundBodyDef;
@@ -40,26 +39,23 @@ GameWorld::GameWorld(QWidget *parent)
     timer.start(10);
 }
 
-void GameWorld::GetInitialModelInfo() {
-
-    //emit getPatformInfor
-
-    // Connect signals from GameModel to slots in GameWorld
-    //connect(gameModel, &GameModel::platformInfo, this, &GameWorld::generatePlatforms);
-    //connect(gameModel, &GameModel::setBackground, this, &GameWorld::setBackgroundPixMap);
-
-    // Additional connections can be added here as needed
-}
 
 void GameWorld::paintEvent(QPaintEvent *) {
+
     QPainter painter(this);
 
-    // Fill the entire widget with the desired background color
-    //QPixmap backgroundPixmap(":/Images/background_level1.PNG");
-
-    //TODO:: setting a background image from the gamemodel class
-    //backgroundPixmap.loadFromData();
-    painter.drawPixmap(QRect(0, 0, this->width(), this->height()), *currentBackground);
+    if (currentBackground) {
+        if (!currentBackground->isNull()) {
+            qDebug() << "Drawing valid background";
+            painter.drawPixmap(QRect(0, 0, this->width(), this->height()), *currentBackground);
+        } else {
+            qWarning() << "currentBackground is null.";
+            painter.fillRect(this->rect(), Qt::black);
+        }
+    } else {
+        qWarning() << "currentBackground is not initialized.";
+        painter.fillRect(this->rect(), Qt::black);
+    }
 
     // Draw the platforms
     for (Platform platform : platformsList) {
@@ -95,27 +91,28 @@ GameWorld::~GameWorld() {
     delete currentBackground;
 }
 void GameWorld::setBackgroundPixMap(QString filepath) {
+
+    if (currentBackground) {
+        delete currentBackground;
+        currentBackground = nullptr;
+    }
+
     currentBackground = new QPixmap(filepath);
+
+    update(); // This triggers a repaint
 }
 
-//TODO:: making this method into a slot that takes two params of the coords and the size of the platforms
 void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
-    //QList<QPoint> positionList = { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
-    //QList<QPoint> sizeList = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 
     for (int i = 0; i < 10; i++) {
         Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
         platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
         platformsList.append(platform);
     }
+    createPlatformGrid();
 }
 
 void GameWorld::createPlatformGrid() {
-    // Clear any existing platforms (if necessary)
-    platformsList.clear();
-
-    // Add the platform to the QList
-    //generatePlatforms();
 
     for (const Platform& platform : platformsList) {
 

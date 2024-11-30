@@ -35,13 +35,13 @@ private:
     SurvivalPrompt allPrompts;
 
 
-    void InstantiateBackgrounds();
-    void SetPlateformCoords();
+    void instantiateBackgrounds();
+    void setPlatformCoords();
     ~GameModel();
 
 
 public slots:
-    void SetLevel(int level);
+    void setLevel(int level);
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);

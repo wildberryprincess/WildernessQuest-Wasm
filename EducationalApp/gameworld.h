@@ -22,7 +22,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
-private slots:
+public slots:
     void updateWorld();
     void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
     void setBackgroundPixMap(QString filepath);
@@ -36,6 +36,8 @@ private:
     GameContactListener contactListener;
 
     ~GameWorld();
+
+    GameModel *gameModel = nullptr; // Add GameModel pointer
 
 
     void createPlatformGrid();
