@@ -32,7 +32,7 @@ private:
     QList <QPoint> levelFourPlatformCoords;
     QList <QPoint> levelFourPlatformSizes;
 
-    QList <QPoint> levelOneLetterCoords;
+    QList <QPoint> questionOneLetterCoords;
 
     QStringList letters;
 

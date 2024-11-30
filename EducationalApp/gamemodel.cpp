@@ -28,7 +28,7 @@ void GameModel:: setLevel(int level){
 
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes); // Update platforms
         emit setBackground(bgPath); // Emit background path
-        emit letterInfo(levelOneLetterCoords, letters);
+        emit letterInfo(questionOneLetterCoords, letters);
     }
     else if(currentLevel == 2){
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
@@ -45,11 +45,10 @@ void GameModel:: setLevel(int level){
 }
 
 void GameModel::setLetterPositions(){
-    // Emit letters for level 1
     letters = { "a", "b", "c", "d"};
-    levelOneLetterCoords = { QPoint(120, 325), QPoint(1300, 450), QPoint(550, 270), QPoint(300,650) };
+    questionOneLetterCoords = { QPoint(850, 575), QPoint(1300, 450), QPoint(550, 270), QPoint(300,650) };
 
-    //DO THE SAME FOR OTHER LEVELS
+    //DO THE SAME FOR OTHER Questions
 }
 
 
