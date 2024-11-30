@@ -8,6 +8,7 @@
         <file>D.png</file>
         <file>C.png</file>
         <file>B.png</file>
+        <file>background_level2.PNG</file>
     </qresource>
     <qresource prefix="/Prompts"/>
 </RCC>
