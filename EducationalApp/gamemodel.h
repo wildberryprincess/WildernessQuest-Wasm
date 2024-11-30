@@ -18,7 +18,7 @@ private:
     int lives;
     int levelProgress;
     bool gameOver;
-    vector <QPixmap> backgroundImages;
+    vector <QString> backgroundImages;
 
     QList <QPoint> levelOnePlatformCoords;
     QList <QPoint> levelOnePlatformSizes;
@@ -35,16 +35,17 @@ private:
     SurvivalPrompt allPrompts;
 
 
-    void InstantiateBackgrounds();
-    void SetPlateformCoords();
+    void instantiateBackgrounds();
+    void setPlatformCoords();
+    ~GameModel();
 
 
 public slots:
-    void SetLevel();
+    void setLevel(int level);
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
-    void setBackground(QPixmap background);
+    void setBackground(QString filepath);
 
 };
 #endif // GAMEMODEL_H
