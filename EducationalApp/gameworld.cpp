@@ -62,6 +62,11 @@ void GameWorld::paintEvent(QPaintEvent *) {
         painter.drawImage(platform.getBoundingRect().topLeft(), platform.getImage());
     }
 
+    // Draw the letters
+    for (LetterObjects letter : letterObjectsList) {
+        painter.drawImage(letter.getBoundingRect().topLeft(), letter.getImage());
+    }
+
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
 }
@@ -137,6 +142,25 @@ void GameWorld::createPlatformGrid() {
         platformFixtureDef.friction = 0.1f;
         platformBody->CreateFixture(&platformFixtureDef);
     }
+}
+
+void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters) {
+    qDebug() << "Letter coordinates size:" << letterCoords.size();
+    qDebug() << "Letters size:" << letters.size();
+
+    if (letterCoords.size() != letters.size()) {
+        qWarning() << "Mismatch between letter coordinates and letter strings!";
+        return;
+    }
+
+    letterObjectsList.clear(); // Clear existing letters
+
+    for (int i = 0; i < letterCoords.size(); ++i) {
+        LetterObjects letter(letterCoords[i], letters[i]); // Use both the position and letter
+        letter.changeImageDimensions(50, 50); // Resize letter to fit on screen
+        letterObjectsList.append(letter);
+    }
+    update(); // Trigger a repaint
 }
 
 

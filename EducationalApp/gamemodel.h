@@ -32,11 +32,17 @@ private:
     QList <QPoint> levelFourPlatformCoords;
     QList <QPoint> levelFourPlatformSizes;
 
+    QList <QPoint> levelOneLetterCoords;
+
+    QStringList letters;
+
     SurvivalPrompt allPrompts;
 
 
     void instantiateBackgrounds();
     void setPlatformCoords();
+    void setLetterPositions();
+    void generateLetters(QList<QPoint> letterCoords, QStringList letters);
     ~GameModel();
 
 
@@ -46,6 +52,7 @@ public slots:
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
     void setBackground(QString filepath);
+    void letterInfo(QList <QPoint> letterCoords, QStringList letters);
 
 };
 #endif // GAMEMODEL_H

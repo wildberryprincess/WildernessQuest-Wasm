@@ -9,6 +9,7 @@
 #include "platform.h"
 #include "maincharacter.h"
 #include "gamecontactlistener.h"
+#include "letterobjects.h"
 
 class GameWorld : public QWidget {
     Q_OBJECT
@@ -26,6 +27,7 @@ public slots:
     void updateWorld();
     void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
     void setBackgroundPixMap(QString filepath);
+    void generateLetters(QList<QPoint> coords, QStringList letters);
 
 private:
     b2World world;
@@ -34,6 +36,7 @@ private:
     QList<Platform> platformsList;
     mainCharacter* mainPlayer;
     GameContactListener contactListener;
+    QList<LetterObjects> letterObjectsList;
 
     ~GameWorld();
 

@@ -20,6 +20,8 @@ View::View(QWidget *parent)
 
     connect(gameModel, &GameModel::setBackground, gameWorld, &GameWorld::setBackgroundPixMap);
 
+    connect(gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);
+
     setUpInitialGameModel(); // Example call to initialize model
 
     // Add gameWorld as the central widget for the View

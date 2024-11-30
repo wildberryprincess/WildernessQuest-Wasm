@@ -1,17 +1,16 @@
 #include "letterobjects.h"
 
 LetterObjects::LetterObjects(const QPoint& position, const QString& letter)
-    : position(position)
-{
+    : position(position) {
     // Load the image based on the letter
     if (letter == "a") {
-        image = QImage(":/Images/a.png");
+        image = QImage(":/Images/A.png");
     } else if (letter == "b") {
-        image = QImage(":/Images/b.png");
+        image = QImage(":/Images/B.png");
     } else if (letter == "c") {
-        image = QImage(":/Images/c.png");
+        image = QImage(":/Images/C.png");
     } else if (letter == "d") {
-        image = QImage(":/Images/d.png");
+        image = QImage(":/Images/D.png");
     } else {
         image = QImage(); // Empty image for invalid letters
     }
@@ -25,8 +24,9 @@ QRect LetterObjects::getBoundingRect() {
 }
 
 void LetterObjects::changeImageDimensions(int newWidth, int newHeight) {
-    // Resize the image and update the bounding rectangle
-    image = image.scaled(newWidth, newHeight, Qt::KeepAspectRatio);
+    imageSize.setX(newWidth);
+    imageSize.setY(newHeight);
+    image = image.scaled(newWidth, newHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     boundingRect.setSize(image.size());
 }
 
