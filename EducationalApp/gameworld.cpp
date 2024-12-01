@@ -180,16 +180,17 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     // Combine the question and answers into a single string
     QString quizContent = QString(
                               "<b>Question:</b> %1<br><br>"
-                              "A: %2<br>"
-                              "B: %3<br>"
-                              "C: %4<br>"
-                              "D: %5"
+                              "%2<br>"
+                              "%3<br>"
+                              "%4<br>"
+                              "%5"
                               ).arg(prompt.question)
                               .arg(prompt.optionA)
                               .arg(prompt.optionB)
                               .arg(prompt.optionC)
                               .arg(prompt.optionD);
 
+    qDebug() << "The prompt is being displayed.";
     // Update the label with the formatted content
     promptLabel->setText(quizContent);
 }

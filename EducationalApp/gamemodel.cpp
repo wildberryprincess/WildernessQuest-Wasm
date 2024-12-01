@@ -77,7 +77,9 @@ void GameModel::emitPromptsForLevel(int level) {
 
     // Emit only the first prompt if available
     if (prompts && !prompts->isEmpty()) {
-        emit sendPrompt(prompts->front());
+        auto& prompt = prompts->front();
+        emit sendPrompt(prompt);
+        currentCorrectAnswer = prompt.correctAnswer.at(0).toLower(); //SET CORRECT ANSWER HERE
     } else {
         qWarning() << "No prompts available for level" << level;
     }

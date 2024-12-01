@@ -2,8 +2,6 @@
 #define GAMEMODEL_H
 
 #include <QWidget>
-#include "platform.h"
-#include "maincharacter.h"
 #include "survivalprompt.h"
 using std::vector;
 
@@ -18,6 +16,7 @@ private:
     int lives;
     int levelProgress;
     bool gameOver;
+    QString currentCorrectAnswer;
     vector <QString> backgroundImages;
 
     QList <QPoint> levelOnePlatformCoords;
