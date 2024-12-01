@@ -12,8 +12,7 @@ GameWorld::GameWorld(QWidget *parent)
     world(b2Vec2(0.0f, 10.0f)),
     timer(this),
     currentBackground(nullptr),
-    promptLabel(new QLabel(this)),
-    promptLayout(new QVBoxLayout(this))
+    promptLabel(new QLabel(this))
 {
 
     // Ensure GameWorld has focus to handle key events
@@ -37,10 +36,9 @@ GameWorld::GameWorld(QWidget *parent)
 
     // Set up the prompt display
     promptLabel->setWordWrap(true);
-    promptLabel->setAlignment(Qt::AlignCenter);
-    promptLabel->setStyleSheet("font-size: 16px; font-family: Arial;");
-    promptLayout->addWidget(promptLabel);
-    setLayout(promptLayout);
+    promptLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    promptLabel->setStyleSheet("font-size: 16px; color: black; font-family: Arial;");
+    promptLabel->setGeometry(725, 10, 500, 150);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);

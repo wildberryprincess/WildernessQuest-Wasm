@@ -5,7 +5,6 @@
 #include <QTimer>
 #include <QList>
 #include <QLabel>
-#include <QVBoxLayout>
 #include <Box2D/Box2D.h>
 #include "gamemodel.h"
 #include "platform.h"
@@ -44,7 +43,6 @@ private:
     SurvivalPrompt survivalPrompts;
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
     QLabel* promptLabel; //display for the question
-    QVBoxLayout* promptLayout; //layout for the question and answers
 
     ~GameWorld();
 
