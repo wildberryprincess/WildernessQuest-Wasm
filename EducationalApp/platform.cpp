@@ -1,6 +1,6 @@
 #include "platform.h"
-
 #include <QDebug>
+
 Platform::Platform(const QPoint& position) : position(position) {
     qDebug() << "Inside platform constructor";
     image = QImage(":/Images/log2.0.png");

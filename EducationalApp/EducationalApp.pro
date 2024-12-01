@@ -61,6 +61,7 @@ SOURCES += \
     letterobjects.cpp \
     main.cpp \
     maincharacter.cpp \
+    obstacle.cpp \
     platform.cpp \
     survivalprompt.cpp \
     view.cpp
@@ -118,6 +119,7 @@ HEADERS += \
     gameworld.h \
     letterobjects.h \
     maincharacter.h \
+    obstacle.h \
     platform.h \
     survivalprompt.h \
     view.h

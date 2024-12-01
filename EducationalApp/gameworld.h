@@ -8,6 +8,7 @@
 #include <Box2D/Box2D.h>
 #include "gamemodel.h"
 #include "platform.h"
+#include "obstacle.h"
 #include "maincharacter.h"
 #include "gamecontactlistener.h"
 #include "letterobjects.h"
@@ -27,6 +28,7 @@ protected:
 public slots:
     void updateWorld();
     void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
+    void generateObstacles();
     void setBackgroundPixMap(QString filepath);
     void generateLetters(QList<QPoint> coords, QStringList letters);
     void displayPrompt(SurvivalPrompt::Prompt& prompt);
@@ -37,6 +39,7 @@ private:
     QTimer timer;
     QPixmap* currentBackground;
     QList<Platform> platformsList;
+    QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
     GameContactListener contactListener;
     QList<LetterObjects> letterObjectsList;

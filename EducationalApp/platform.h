@@ -4,7 +4,7 @@
 #include <QPoint>
 #include <QImage>
 
-    class Platform
+class Platform
 {
 public:
     Platform(const QPoint& position);
