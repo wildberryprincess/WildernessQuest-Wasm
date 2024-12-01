@@ -6,14 +6,17 @@
 #include <QKeyEvent>
 #include <QGraphicsRectItem>
 #include <cstdlib>
+#include <bodydata.h>
 #define SCALE 30.0f
+
 
 GameWorld::GameWorld(QWidget *parent)
     : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this),
     currentBackground(nullptr),
-    promptLabel(new QLabel(this))
+    promptLabel(new QLabel(this)),
+    contactListener(new GameContactListener())
 {
 
     // Ensure GameWorld has focus to handle key events
@@ -32,8 +35,10 @@ GameWorld::GameWorld(QWidget *parent)
 
     initializePlayerPosition();
 
-    world.SetContactListener(&contactListener); // Sets the collision detection
-    contactListener.setPlayerBody(mainPlayer->getBody());
+    world.SetContactListener(contactListener); // Sets the collision detection
+  //  contactListener.setPlayerBody(mainPlayer->getBody());
+
+    contactListener->setGameWorld(this);
 
     // Set up the prompt display
     promptLabel->setWordWrap(true);
@@ -53,7 +58,6 @@ void GameWorld::paintEvent(QPaintEvent *) {
 
     if (currentBackground) {
         if (!currentBackground->isNull()) {
-            qDebug() << "Drawing valid background";
             painter.drawPixmap(QRect(0, 0, this->width(), this->height()), *currentBackground);
         } else {
             qWarning() << "currentBackground is null.";
@@ -90,6 +94,13 @@ void GameWorld::updateWorld() {
     // Update the main character's movement
     mainPlayer->update();
 
+
+    if (!contactListener->collidedLetter.isEmpty()) {
+        qDebug() << "Player collided with letter:" << contactListener->collidedLetter;
+        // Process the collision, e.g., remove the letter or update the game state
+        contactListener->collidedLetter.clear(); // Reset after processing
+    }
+
     // Trigger a repaint
     update();
 }
@@ -103,7 +114,12 @@ void GameWorld::keyReleaseEvent(QKeyEvent *event) {
 }
 
 GameWorld::~GameWorld() {
+
     platformsList.clear();
+    letterObjectsList.clear();
+    obstaclesList.clear();
+
+    delete contactListener;
     delete mainPlayer;
     delete currentBackground;
 }
@@ -139,7 +155,7 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
 
 void GameWorld::createPlatformGrid() {
 
-    for (const Platform& platform : platformsList) {
+    for (Platform& platform : platformsList) {
 
         // Calculate center of platform (This is how the collision works)
         float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
@@ -150,6 +166,9 @@ void GameWorld::createPlatformGrid() {
         platformBodyDef.type = b2_staticBody;
         platformBodyDef.position.Set(centerX / SCALE, centerY / SCALE);
         b2Body* platformBody = world.CreateBody(&platformBodyDef);
+        BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
+        platformBody->SetUserData(platformData);
+        qDebug() << "Set platform UserData for body:" << platformBody;
 
         // Define the shape for the platform
         b2PolygonShape platformShape;
@@ -161,6 +180,8 @@ void GameWorld::createPlatformGrid() {
         platformFixtureDef.density = 0.0f;
         platformFixtureDef.friction = 0.1f;
         platformBody->CreateFixture(&platformFixtureDef);
+
+
     }
 }
 
@@ -176,10 +197,30 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
     letterObjectsList.clear(); // Clear existing letters
 
     for (int i = 0; i < letterCoords.size(); ++i) {
-        LetterObjects letter(letterCoords[i], letters[i]); // Use both the position and letter
-        letter.changeImageDimensions(50, 50); // Resize letter to fit on screen
+        LetterObjects letter(letterCoords[i], letters[i]);
+        letter.changeImageDimensions(50, 50);
+
+        // Create a static body for the letter
+        b2BodyDef letterBodyDef;
+        letterBodyDef.type = b2_staticBody;
+        letterBodyDef.position.Set(letterCoords[i].x() / SCALE, letterCoords[i].y() / SCALE);
+
+        b2Body* letterBody = world.CreateBody(&letterBodyDef);
+
+        b2PolygonShape letterShape;
+        letterShape.SetAsBox(1.0f / SCALE, 1.0f / SCALE); // Half width/height
+
+        b2FixtureDef letterFixtureDef;
+        letterFixtureDef.shape = &letterShape;
+        letterFixtureDef.density = 0.0f;
+        letterBody->CreateFixture(&letterFixtureDef);
+
+        BodyData* letterData = new BodyData{"letter", new LetterObjects(letter)};
+        letterBody->SetUserData(letterData);
+
         letterObjectsList.append(letter);
     }
+
     update(); // Trigger a repaint
 }
 
@@ -187,7 +228,10 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 
 void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,0); // Adjust to start above a platform
-    mainPlayer = new mainCharacter(playerPosition, &world, &contactListener);
+    mainPlayer = new mainCharacter(playerPosition, &world, contactListener);
+
+    BodyData* playerData = new BodyData("player", mainPlayer);
+    mainPlayer->getBody()->SetUserData(playerData);
 }
 
 void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
@@ -207,6 +251,10 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     qDebug() << "The prompt is being displayed.";
     // Update the label with the formatted content
     promptLabel->setText(quizContent);
+}
+
+void GameWorld::checkLetter(QString letter) {
+    emit checkLetterInModel(letter);
 }
 
 

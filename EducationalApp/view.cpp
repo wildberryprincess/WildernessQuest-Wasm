@@ -12,7 +12,6 @@ View::View(QWidget *parent)
     // Initialize GameModel
     GameModel *gameModel = new GameModel();
 
-
     // Connect setUpModel signal in View to setLevel slot in GameModel
     connect(this, &View::setUpModel, gameModel, &GameModel::setLevel);
     // Connect GameModel's platformInfo signal to GameWorld's generatePlatforms slot
@@ -26,7 +25,10 @@ View::View(QWidget *parent)
 
     connect(gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
 
-    setUpInitialGameModel(); // Example call to initialize model
+    connect(gameWorld, &GameWorld::checkLetterInModel, gameModel, &GameModel::checkCollidedLetter);
+
+
+    setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View
     setCentralWidget(gameWorld);  // Ensures only this instance is displayed and updated

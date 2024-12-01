@@ -84,7 +84,7 @@ void GameModel::emitPromptsForLevel(int level) {
     if (prompts && !prompts->isEmpty()) {
         auto& prompt = prompts->front();
         emit sendPrompt(prompt);
-        currentCorrectAnswer = prompt.correctAnswer.at(0).toLower(); //SET CORRECT ANSWER HERE
+       // currentCorrectAnswer = prompt.correctAnswer.at(0).toLower(); //SET CORRECT ANSWER HERE
     } else {
         qWarning() << "No prompts available for level" << level;
     }
@@ -147,6 +147,14 @@ void GameModel::randomizeSurvivalPrompts(){
     std::shuffle(allPrompts.levelTwoPrompts.begin(), allPrompts.levelTwoPrompts.end(), generator);
     std::shuffle(allPrompts.levelThreePrompts.begin(), allPrompts.levelThreePrompts.end(), generator);
     std::shuffle(allPrompts.levelFourPrompts.begin(), allPrompts.levelFourPrompts.end(), generator);
+}
+
+void GameModel::checkCollidedLetter(QString letter) {
+    if(letter == currentCorrectAnswer) {
+        qDebug() << "the user selected the correct answer " << letter;
+    } else {
+        qDebug() << "the user collided with the incorrect letter: user letter:" << letter << " correct letter: " << currentCorrectAnswer;
+    }
 }
 
 

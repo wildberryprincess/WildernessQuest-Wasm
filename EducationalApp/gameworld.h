@@ -1,17 +1,18 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
-#include <QWidget>
-#include <QTimer>
-#include <QList>
-#include <QLabel>
 #include <Box2D/Box2D.h>
-#include "gamemodel.h"
+#include <QWidget>
+#include <QString>
+#include <QTimer>
+#include <QLabel>
 #include "platform.h"
-#include "obstacle.h"
-#include "maincharacter.h"
-#include "gamecontactlistener.h"
 #include "letterobjects.h"
+#include "obstacle.h"
+#include "gamecontactlistener.h" // Include here to use GameContactListener
+#include "maincharacter.h"
+#include "bodydata.h"
+#include "gamemodel.h"
 
 class GameWorld : public QWidget {
     Q_OBJECT
@@ -19,6 +20,7 @@ class GameWorld : public QWidget {
 public:
     explicit GameWorld(QWidget *parent = nullptr);
     void setGameModel(GameModel& model);
+    void checkLetter(QString letter);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -41,7 +43,7 @@ private:
     QList<Platform> platformsList;
     QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
-    GameContactListener contactListener;
+    GameContactListener* contactListener;
     QList<LetterObjects> letterObjectsList;
     SurvivalPrompt survivalPrompts;
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
@@ -54,6 +56,7 @@ private:
     void createPlatformGrid();
 
     void initializePlayerPosition();
+signals:
+    void checkLetterInModel(QString letter);
 };
-
 #endif // GAMEWORLD_H

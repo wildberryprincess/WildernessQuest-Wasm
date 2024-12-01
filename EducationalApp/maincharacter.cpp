@@ -1,4 +1,5 @@
 #include "maincharacter.h"
+#include "gamecontactlistener.h"
 #include <QWidget>
 #define SCALE 30.0f
 

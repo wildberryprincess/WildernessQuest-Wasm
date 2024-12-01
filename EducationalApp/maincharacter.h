@@ -6,6 +6,8 @@
 #include <Box2D/Box2D.h>
 #include <QKeyEvent>
 #include "gamecontactlistener.h"
+
+class GameContactListener;
 class mainCharacter
 {
 public:
@@ -36,6 +38,7 @@ private:
 
     const float moveSpeed = 5.0f; // Adjust as needed
     b2Body* body;
+
 
 
 signals:

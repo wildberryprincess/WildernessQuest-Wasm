@@ -16,10 +16,12 @@ public:
     QRect getBoundingRect();
     void changeImageDimensions(int newWidth, int newHeight);
     QImage getImage();
+    QString getLetter();
 
 private:
     QRect boundingRect;
     QImage image;
+    QString objectLetter;
 };
 
 #endif // LETTEROBJECTS_H

@@ -16,7 +16,7 @@ private:
     int lives;
     int levelProgress;
     bool gameOver;
-    QString currentCorrectAnswer;
+    QString currentCorrectAnswer = "a";
     vector <QString> backgroundImages;
 
     QList<QPoint> levelOnePlatformCoords;
@@ -54,6 +54,7 @@ private:
 
 public slots:
     void setLevel(int level);
+    void checkCollidedLetter(QString letter);
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
