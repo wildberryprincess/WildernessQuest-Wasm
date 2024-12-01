@@ -120,8 +120,7 @@ void GameWorld::setBackgroundPixMap(QString filepath) {
 }
 
 void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
-
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < positionList.size(); i++) {
         Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
         platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
         platformsList.append(platform);
@@ -130,14 +129,12 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
 }
 
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
+
     qDebug() << "Obstacle list size: " << positionList.size();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < positionList.size(); i++) {
         Obstacle obstacle(QPoint(positionList[i].x(), positionList[i].y()));
         obstaclesList.append(obstacle);
     }
-
-    // Obstacle obstacle(QPoint(850, 550));
-    // obstaclesList.append(obstacle);
 }
 
 void GameWorld::createPlatformGrid() {
