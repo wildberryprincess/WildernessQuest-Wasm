@@ -28,7 +28,7 @@ protected:
 public slots:
     void updateWorld();
     void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
-    void generateObstacles();
+    void generateObstacles(QList<QPoint> positionList);
     void setBackgroundPixMap(QString filepath);
     void generateLetters(QList<QPoint> coords, QStringList letters);
     void displayPrompt(SurvivalPrompt::Prompt& prompt);

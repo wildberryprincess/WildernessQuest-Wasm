@@ -17,6 +17,7 @@ GameModel::GameModel(){
     instantiateBackgrounds();
     setPlatformCoords();
     setLetterPositions();
+    setObstaclePositions();
     }
 
 GameModel::~GameModel() {
@@ -34,15 +35,19 @@ void GameModel:: setLevel(int level){
     case 1:
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
+        emit obstacleInfo(levelOneObstaclePosition);
         break;
     case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
+        emit obstacleInfo(levelTwoObstaclePosition);
         break;
     case 3:
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
+        emit obstacleInfo(levelThreeObstaclePosition);
         break;
     case 4:
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes);
+        emit obstacleInfo(levelFourObstaclePosition);
         break;
     default:
         qWarning() << "Invalid level number:" << level;
@@ -87,7 +92,7 @@ void GameModel::emitPromptsForLevel(int level) {
 
 void GameModel::setLetterPositions(){
     letters = { "a", "b", "c", "d"};
-    questionOneLetterCoords = { QPoint(850, 575), QPoint(1300, 450), QPoint(550, 270), QPoint(300,650) };
+    questionOneLetterCoords = { QPoint(385, 475), QPoint(575, 275), QPoint(1055, 275), QPoint(1305, 450) };
 
     //DO THE SAME FOR OTHER Questions
 }
@@ -111,7 +116,7 @@ void GameModel:: instantiateBackgrounds(){
 }
 
 
-void GameModel:: setPlatformCoords(){
+void GameModel::setPlatformCoords(){
 
     levelOnePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelOnePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
@@ -124,6 +129,13 @@ void GameModel:: setPlatformCoords(){
 
     levelFourPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelFourPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+}
+
+void GameModel::setObstaclePositions() {
+    levelOneObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
+    levelTwoObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
+    levelThreeObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
+    levelFourObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
 }
 
 void GameModel::randomizeSurvivalPrompts(){

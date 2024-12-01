@@ -31,7 +31,6 @@ GameWorld::GameWorld(QWidget *parent)
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     initializePlayerPosition();
-    generateObstacles();
 
     world.SetContactListener(&contactListener); // Sets the collision detection
     contactListener.setPlayerBody(mainPlayer->getBody());
@@ -122,7 +121,7 @@ void GameWorld::setBackgroundPixMap(QString filepath) {
 
 void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
 
-    for (int i = 0; i < positionList.size(); i++) {
+    for (int i = 0; i < 10; i++) {
         Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
         platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
         platformsList.append(platform);
@@ -130,14 +129,15 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
     createPlatformGrid();
 }
 
-void GameWorld::generateObstacles() {
-    // for (int i = 0; i < 3; i++) {
-    //     Obstacle obstacle(QPoint(positionList[i].x(), positionList[i].y()));
-    //     obstaclesList.append(obstacle);
-    // }
+void GameWorld::generateObstacles(QList<QPoint> positionList) {
+    qDebug() << "Obstacle list size: " << positionList.size();
+    for (int i = 0; i < 3; i++) {
+        Obstacle obstacle(QPoint(positionList[i].x(), positionList[i].y()));
+        obstaclesList.append(obstacle);
+    }
 
-    Obstacle obstacle(QPoint(850, 550));
-    obstaclesList.append(obstacle);
+    // Obstacle obstacle(QPoint(850, 550));
+    // obstaclesList.append(obstacle);
 }
 
 void GameWorld::createPlatformGrid() {

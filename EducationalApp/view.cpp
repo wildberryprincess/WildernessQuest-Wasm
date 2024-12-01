@@ -18,6 +18,8 @@ View::View(QWidget *parent)
     // Connect GameModel's platformInfo signal to GameWorld's generatePlatforms slot
     connect(gameModel, &GameModel::platformInfo, gameWorld, &GameWorld::generatePlatforms);
 
+    connect(gameModel, &GameModel::obstacleInfo, gameWorld, &GameWorld::generateObstacles);
+
     connect(gameModel, &GameModel::setBackground, gameWorld, &GameWorld::setBackgroundPixMap);
 
     connect(gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);

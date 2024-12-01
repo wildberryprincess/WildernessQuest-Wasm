@@ -19,19 +19,23 @@ private:
     QString currentCorrectAnswer;
     vector <QString> backgroundImages;
 
-    QList <QPoint> levelOnePlatformCoords;
-    QList <QPoint> levelOnePlatformSizes;
+    QList<QPoint> levelOnePlatformCoords;
+    QList<QPoint> levelOnePlatformSizes;
+    QList<QPoint> levelOneObstaclePosition;
 
-    QList <QPoint> levelTwoPlatformCoords;
-    QList <QPoint> levelTwoPlatformSizes;
+    QList<QPoint> levelTwoPlatformCoords;
+    QList<QPoint> levelTwoPlatformSizes;
+    QList<QPoint> levelTwoObstaclePosition;
 
-    QList <QPoint> levelThreePlatformCoords;
-    QList <QPoint> levelThreePlatformSizes;
+    QList<QPoint> levelThreePlatformCoords;
+    QList<QPoint> levelThreePlatformSizes;
+    QList<QPoint> levelThreeObstaclePosition;
 
-    QList <QPoint> levelFourPlatformCoords;
-    QList <QPoint> levelFourPlatformSizes;
+    QList<QPoint> levelFourPlatformCoords;
+    QList<QPoint> levelFourPlatformSizes;
+    QList<QPoint> levelFourObstaclePosition;
 
-    QList <QPoint> questionOneLetterCoords;
+    QList<QPoint> questionOneLetterCoords;
 
     QStringList letters;
 
@@ -40,6 +44,7 @@ private:
 
     void instantiateBackgrounds();
     void setPlatformCoords();
+    void setObstaclePositions();
     void setLetterPositions();
     void generateLetters(QList<QPoint> letterCoords, QStringList letters);
     void randomizeSurvivalPrompts();
@@ -52,6 +57,7 @@ public slots:
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
+    void obstacleInfo(QList<QPoint> positions);
     void setBackground(QString filepath);
     void letterInfo(QList <QPoint> letterCoords, QStringList letters);
     void sendPrompt(SurvivalPrompt::Prompt& survivalPrompt);
