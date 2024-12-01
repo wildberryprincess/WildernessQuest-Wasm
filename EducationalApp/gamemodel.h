@@ -43,6 +43,8 @@ private:
     void setPlatformCoords();
     void setLetterPositions();
     void generateLetters(QList<QPoint> letterCoords, QStringList letters);
+    void randomizeSurvivalPrompts();
+    void emitPromptsForLevel(int level);
     ~GameModel();
 
 
@@ -53,6 +55,7 @@ signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);
     void setBackground(QString filepath);
     void letterInfo(QList <QPoint> letterCoords, QStringList letters);
+    void sendPrompt(SurvivalPrompt::Prompt& survivalPrompt);
 
 };
 #endif // GAMEMODEL_H

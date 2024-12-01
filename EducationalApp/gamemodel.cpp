@@ -1,11 +1,14 @@
 #include "gamemodel.h"
+#include <algorithm> // For std::random_shuffle
+#include <random>    // For std::mt19937
+#include <ctime>     // For time()
 
 
 
 GameModel::GameModel(){
 
     allPrompts.deserializePrompts(":/Prompts/Prompts.json");
-
+    randomizeSurvivalPrompts();
     //initial game logisitcs
     currentLevel = 1;
     lives = 3;
@@ -22,25 +25,61 @@ GameModel::~GameModel() {
 
 void GameModel:: setLevel(int level){
     currentLevel = level;
-    if (currentLevel == 1) {
-        QString bgPath = backgroundImages.at(currentLevel - 1);
-        qDebug() << "Setting up level" << level << ". Emitting setBackground with:" << bgPath;
 
-        emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes); // Update platforms
-        emit setBackground(bgPath); // Emit background path
+    // Emit platform and background info
+    QString bgPath = backgroundImages.at(currentLevel - 1);
+    emit setBackground(bgPath);
+
+    switch (currentLevel) {
+    case 1:
+        emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
-    }
-    else if(currentLevel == 2){
+        break;
+    case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
-        emit setBackground(backgroundImages.at(currentLevel-1));
-    }
-    else if(currentLevel == 3){
+        break;
+    case 3:
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
-        emit setBackground(backgroundImages.at(currentLevel-1));
-    }
-    else if(currentLevel == 4){
+        break;
+    case 4:
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes);
-        emit setBackground(backgroundImages.at(currentLevel-1));
+        break;
+    default:
+        qWarning() << "Invalid level number:" << level;
+        return;
+    }
+    // Emit a prompt for the current level
+    emitPromptsForLevel(level);
+}
+
+// emits only one prompt at a time, so we can emit the next one in response to a correct answer in the future
+void GameModel::emitPromptsForLevel(int level) {
+    QVector<SurvivalPrompt::Prompt>* prompts = nullptr;
+
+    // Map level to the corresponding prompts vector
+    switch (level) {
+    case 1:
+        prompts = &allPrompts.levelOnePrompts;
+        break;
+    case 2:
+        prompts = &allPrompts.levelTwoPrompts;
+        break;
+    case 3:
+        prompts = &allPrompts.levelThreePrompts;
+        break;
+    case 4:
+        prompts = &allPrompts.levelFourPrompts;
+        break;
+    default:
+        qWarning() << "Invalid level number:" << level;
+        return;
+    }
+
+    // Emit only the first prompt if available
+    if (prompts && !prompts->isEmpty()) {
+        emit sendPrompt(prompts->front());
+    } else {
+        qWarning() << "No prompts available for level" << level;
     }
 }
 
@@ -83,6 +122,17 @@ void GameModel:: setPlatformCoords(){
 
     levelFourPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelFourPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+}
+
+void GameModel::randomizeSurvivalPrompts(){
+    unsigned seed = static_cast<unsigned>(time(nullptr));
+    std::mt19937 generator(seed); // Mersenne Twister random number generator
+
+    // Shuffle the prompts for each level
+    std::shuffle(allPrompts.levelOnePrompts.begin(), allPrompts.levelOnePrompts.end(), generator);
+    std::shuffle(allPrompts.levelTwoPrompts.begin(), allPrompts.levelTwoPrompts.end(), generator);
+    std::shuffle(allPrompts.levelThreePrompts.begin(), allPrompts.levelThreePrompts.end(), generator);
+    std::shuffle(allPrompts.levelFourPrompts.begin(), allPrompts.levelFourPrompts.end(), generator);
 }
 
 

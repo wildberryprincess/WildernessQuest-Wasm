@@ -37,7 +37,7 @@ void SurvivalPrompt:: deserializePrompts(QString filename){
 }
 
 
-void SurvivalPrompt:: deserializeHelper(QJsonArray promptArray, vector<Prompt>& levelPromptsArray){
+void SurvivalPrompt:: deserializeHelper(QJsonArray promptArray, QVector<Prompt>& levelPromptsArray){
     for(const QJsonValue& promptJsonInfo: promptArray){
         QJsonObject promptInfo = promptJsonInfo.toObject();
         Prompt newPrompt;
