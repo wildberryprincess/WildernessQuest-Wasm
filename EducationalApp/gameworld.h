@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QTimer>
 #include <QList>
+#include <QLabel>
+#include <QVBoxLayout>
 #include <Box2D/Box2D.h>
 #include "gamemodel.h"
 #include "platform.h"
@@ -28,8 +30,10 @@ public slots:
     void generatePlatforms(QList<QPoint> coords, QList<QPoint> sizes);
     void setBackgroundPixMap(QString filepath);
     void generateLetters(QList<QPoint> coords, QStringList letters);
+    void displayPrompt(SurvivalPrompt::Prompt& prompt);
 
 private:
+    GameModel *gameModel = nullptr; // Add GameModel pointer
     b2World world;
     QTimer timer;
     QPixmap* currentBackground;
@@ -37,10 +41,13 @@ private:
     mainCharacter* mainPlayer;
     GameContactListener contactListener;
     QList<LetterObjects> letterObjectsList;
+    SurvivalPrompt survivalPrompts;
+    vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
+    QLabel* promptLabel; //display for the question
+    QVBoxLayout* promptLayout; //layout for the question and answers
 
     ~GameWorld();
 
-    GameModel *gameModel = nullptr; // Add GameModel pointer
 
 
     void createPlatformGrid();

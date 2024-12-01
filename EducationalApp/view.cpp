@@ -22,6 +22,8 @@ View::View(QWidget *parent)
 
     connect(gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);
 
+    connect(gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
+
     setUpInitialGameModel(); // Example call to initialize model
 
     // Add gameWorld as the central widget for the View

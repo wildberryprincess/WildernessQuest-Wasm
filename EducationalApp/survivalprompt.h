@@ -6,8 +6,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+#include <QVector>
 
-using std:: vector;
+
 
 class SurvivalPrompt
 {
@@ -29,17 +30,17 @@ public:
     };
 
 
-    vector<Prompt> levelOnePrompts;
-    vector<Prompt> levelTwoPrompts;
-    vector<Prompt> levelThreePrompts;
-    vector<Prompt> levelFourPrompts;
+    QVector<Prompt> levelOnePrompts;
+    QVector<Prompt> levelTwoPrompts;
+    QVector<Prompt> levelThreePrompts;
+    QVector<Prompt> levelFourPrompts;
 
     void deserializePrompts(QString filename);
 
 
 
 private:
-    void deserializeHelper(QJsonArray promptArray, vector<Prompt>& levelPromptsArray);
+    void deserializeHelper(QJsonArray promptArray, QVector<Prompt>& levelPromptsArray);
 
 };
 

@@ -1,6 +1,5 @@
 #include "gameworld.h"
 #include "maincharacter.h"
-#include "gamemodel.h"
 #include <QPainter>
 #include <QDebug>
 #include <QKeyEvent>
@@ -12,7 +11,9 @@ GameWorld::GameWorld(QWidget *parent)
     : QWidget(parent),
     world(b2Vec2(0.0f, 10.0f)),
     timer(this),
-    currentBackground(nullptr)
+    currentBackground(nullptr),
+    promptLabel(new QLabel(this)),
+    promptLayout(new QVBoxLayout(this))
 {
 
     // Ensure GameWorld has focus to handle key events
@@ -33,6 +34,13 @@ GameWorld::GameWorld(QWidget *parent)
 
     world.SetContactListener(&contactListener); // Sets the collision detection
     contactListener.setPlayerBody(mainPlayer->getBody());
+
+    // Set up the prompt display
+    promptLabel->setWordWrap(true);
+    promptLabel->setAlignment(Qt::AlignCenter);
+    promptLabel->setStyleSheet("font-size: 16px; font-family: Arial;");
+    promptLayout->addWidget(promptLabel);
+    setLayout(promptLayout);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -169,4 +177,23 @@ void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,0); // Adjust to start above a platform
     mainPlayer = new mainCharacter(playerPosition, &world, &contactListener);
 }
+
+void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
+    // Combine the question and answers into a single string
+    QString quizContent = QString(
+                              "<b>Question:</b> %1<br><br>"
+                              "A: %2<br>"
+                              "B: %3<br>"
+                              "C: %4<br>"
+                              "D: %5"
+                              ).arg(prompt.question)
+                              .arg(prompt.optionA)
+                              .arg(prompt.optionB)
+                              .arg(prompt.optionC)
+                              .arg(prompt.optionD);
+
+    // Update the label with the formatted content
+    promptLabel->setText(quizContent);
+}
+
 
