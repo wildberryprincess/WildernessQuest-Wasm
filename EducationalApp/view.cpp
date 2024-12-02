@@ -2,7 +2,7 @@
 #include "ui_view.h"
 #include "gamemodel.h"
 
-View::View(QWidget *parent)
+View::View(StartPage& startScreen, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
     , gameWorld(new GameWorld(this))  // Initialize a single GameWorld instance
@@ -28,6 +28,8 @@ View::View(QWidget *parent)
     connect(gameWorld, &GameWorld::checkLetterInModel, gameModel, &GameModel::checkCollidedLetter);
 
     connect(gameWorld, &GameWorld::collidedWithObstacle, gameModel, &GameModel::checkObstacleCollision);
+
+    // connect(&startScreen, &StartPage::updateCharacterInfo, gameWorld, &GameWorld::initializePlayerPosition);
 
 
     setUpInitialGameModel(); // Call to Initialize model

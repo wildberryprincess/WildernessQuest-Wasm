@@ -64,6 +64,7 @@ SOURCES += \
     maincharacter.cpp \
     obstacle.cpp \
     platform.cpp \
+    startpage.cpp \
     survivalprompt.cpp \
     tent.cpp \
     view.cpp
@@ -124,11 +125,13 @@ HEADERS += \
     maincharacter.h \
     obstacle.h \
     platform.h \
+    startpage.h \
     survivalprompt.h \
     tent.h \
     view.h
 
 FORMS += \
+    startpage.ui \
     view.ui
 
 # Default rules for deployment.

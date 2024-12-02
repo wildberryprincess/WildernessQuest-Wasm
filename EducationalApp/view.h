@@ -2,6 +2,7 @@
 #define VIEW_H
 #include "gamemodel.h"
 #include "gameworld.h"
+#include "startpage.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -13,7 +14,7 @@ class View : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit View(QWidget *parent = nullptr);
+    explicit View(StartPage& startscreen, QWidget *parent = nullptr);
 
     void setUpInitialGameModel();
     ~View();
@@ -23,6 +24,7 @@ signals:
 
 private:
     Ui::View *ui; // Ensure this is declared
+    Ui::StartPage *startScreenUI;
     GameWorld *gameWorld;  // Single instance
 
 };
