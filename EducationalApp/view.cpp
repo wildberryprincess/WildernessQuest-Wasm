@@ -2,7 +2,7 @@
 #include "ui_view.h"
 #include "gamemodel.h"
 
-View::View(StartPage& startScreen, QWidget *parent)
+View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
     , startScreen(&startScreen)
@@ -10,29 +10,25 @@ View::View(StartPage& startScreen, QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Initialize GameModel
-    GameModel *gameModel = new GameModel();
-
     // Connect setUpModel signal in View to setLevel slot in GameModel
-    connect(this, &View::setUpModel, gameModel, &GameModel::setLevel);
+    connect(this, &View::setUpModel, &gameModel, &GameModel::setLevel);
     // Connect GameModel's platformInfo signal to GameWorld's generatePlatforms slot
-    connect(gameModel, &GameModel::platformInfo, gameWorld, &GameWorld::generatePlatforms);
+    connect(&gameModel, &GameModel::platformInfo, gameWorld, &GameWorld::generatePlatforms);
 
-    connect(gameModel, &GameModel::obstacleInfo, gameWorld, &GameWorld::generateObstacles);
+    connect(&gameModel, &GameModel::obstacleInfo, gameWorld, &GameWorld::generateObstacles);
 
-    connect(gameModel, &GameModel::setBackground, gameWorld, &GameWorld::setBackgroundPixMap);
+    connect(&gameModel, &GameModel::setBackground, gameWorld, &GameWorld::setBackgroundPixMap);
 
-    connect(gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);
+    connect(&gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);
 
-    connect(gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
+    connect(&gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
 
-    connect(gameWorld, &GameWorld::checkLetterInModel, gameModel, &GameModel::checkCollidedLetter);
+    connect(gameWorld, &GameWorld::checkLetterInModel, &gameModel, &GameModel::checkCollidedLetter);
 
-    connect(gameWorld, &GameWorld::collidedWithObstacle, gameModel, &GameModel::checkObstacleCollision);
+    connect(gameWorld, &GameWorld::collidedWithObstacle, &gameModel, &GameModel::checkObstacleCollision);
 
     connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);
     connect(this, &View::updateCharacter, gameWorld, &GameWorld::setCharacterType);
-
 
     setUpInitialGameModel(); // Call to Initialize model
 
@@ -52,4 +48,5 @@ View::~View()
 void View::displayGame(int characterType) {
     this->show();
     emit updateCharacter(characterType);
+    qDebug() << "Inside displayGame: " << characterType;
 }

@@ -6,7 +6,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     StartPage startScreen;
-    View w(startScreen);
+    GameModel gameModel;
+    View w(startScreen, gameModel);
     startScreen.show();
     return a.exec();
 }

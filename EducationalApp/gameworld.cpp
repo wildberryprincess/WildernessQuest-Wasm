@@ -131,7 +131,9 @@ GameWorld::~GameWorld() {
 
 void GameWorld::setCharacterType(int type) {
     characterType = type;
-    qDebug() << "characterType is " << characterType;
+    qDebug() << "Inside setCharacterType: " << characterType;
+
+    initializePlayerPosition();
 }
 void GameWorld::setBackgroundPixMap(QString filepath) {
 
@@ -262,6 +264,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 
 void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,0); // Adjust to start above a platform
+    qDebug() << "Inside initializePlayerPosition: " << characterType;
     mainPlayer = new mainCharacter(playerPosition, &world, contactListener, characterType);
 
     BodyData* playerData = new BodyData("player", mainPlayer);

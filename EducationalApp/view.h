@@ -14,7 +14,7 @@ class View : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit View(StartPage& startscreen, QWidget *parent = nullptr);
+    explicit View(StartPage& startscreen, GameModel& gameModel, QWidget *parent = nullptr);
 
     void setUpInitialGameModel();
     ~View();

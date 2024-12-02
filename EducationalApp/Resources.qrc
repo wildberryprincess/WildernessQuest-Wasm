@@ -11,6 +11,7 @@
         <file>background_level2.PNG</file>
         <file>bear.png</file>
         <file>tent.png</file>
+        <file>boyScout.png</file>
     </qresource>
     <qresource prefix="/Prompts"/>
 </RCC>

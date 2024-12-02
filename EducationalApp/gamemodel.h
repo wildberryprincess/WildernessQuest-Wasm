@@ -10,6 +10,7 @@ class GameModel: public QObject {
 
 public:
     explicit GameModel();
+    ~GameModel();
 
 private:
     int currentLevel;
@@ -49,7 +50,6 @@ private:
     void generateLetters(QList<QPoint> letterCoords, QStringList letters);
     void randomizeSurvivalPrompts();
     void emitPromptsForLevel(int level);
-    ~GameModel();
 
 
 public slots:
