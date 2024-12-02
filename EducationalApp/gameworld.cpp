@@ -44,8 +44,8 @@ GameWorld::GameWorld(QWidget *parent)
     // Set up the prompt display
     promptLabel->setWordWrap(true);
     promptLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    promptLabel->setStyleSheet("font-size: 16px; color: black; font-family: Arial;");
-    promptLabel->setGeometry(725, 10, 500, 150);
+    promptLabel->setStyleSheet("font-size: 14px; color: black; font-family: Courier;");
+    promptLabel->setGeometry(725, 10, 700, 150);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);

@@ -1,106 +1,259 @@
-{
-  "levelOne": [
-    {
-      "question": "Testing if this works for level one!",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionA"
-    },
-    {
-      "question": "Questions 2",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionB"
-    },
-    {
-      "question": "this is a question3",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionC"
-    },
-    {
-      "question": "this is a question4",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionD"
-    }
-  ],
-  "levelTwo": [
-    {
-      "question": "this is a question1",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionA"
-    },
-    {
-      "question": "this is a question2",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionB"
-    },
-    {
-      "question": "this is a question3",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionC"
-    },
-    {
-      "question": "this is a question4",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionD"
-    }
-  ],
+{"levelOne": [
+        {
+          "question": "In the Utah desert, which of the following is the best option to source water for survival?",
+          "optionA": "a. Digging a hole in the sand to find groundwater.",
+          "optionB": "b. Collecting water from cacti by cutting them open.",
+          "optionC": "c. Searching for water at the base of cliffs or canyons.",
+          "optionD": "d. Drinking directly from stagnant pools of water.",
+          "correctAnswer": "c. Searching for water at the base of cliffs or canyons."
+        },
+        {
+          "question": "Which combination of water purification techniques is best to bring on a backpacking trip in Utah's desert or mountain terrain to ensure safe and reliable drinking water?",
+          "optionA": "a. A portable water filter and iodine tablets as a backup.",
+          "optionB": "b. A UV water purifier and a solar still.",
+          "optionC": "c. Boiling water over a campfire and relying on natural water sources.",
+          "optionD": "d. Carrying enough bottled water for the entire trip.",
+          "correctAnswer": "a. A portable water filter and iodine tablets as a backup."
+        },
+        {
+          "question": "Which sun protection measure is most effective for hiking in Utah’s high-elevation terrain?",
+          "optionA": "a. Applying sunscreen with SPF 30 or higher throughout the day.",
+          "optionB": "b. Wearing light-colored, long-sleeve clothing to cover exposed skin.",
+          "optionC": "c. Using a wide-brimmed hat and seeking natural shade whenever possible.",
+          "optionD": "d. Building a sun tolerance by practicing short sessions of unprotected sun exposure over the course of two weeks.",
+          "correctAnswer": "b. Wearing light-colored, long-sleeve clothing to cover exposed skin."
+        },
+        {
+          "question": "Which of the following are key signs of heatstroke that hikers in Utah’s desert or mountain terrain should be able to recognize?",
+          "optionA": "a. Sweating profusely, mild headache, and slightly elevated heart rate.",
+          "optionB": "b. Dry, hot skin; confusion; and a rapid, strong pulse.",
+          "optionC": "c. Shivering, slow heartbeat, and pale skin.",
+          "optionD": "d. Fatigue, muscle cramps, and nausea.",
+          "correctAnswer": "b. Dry, hot skin; confusion; and a rapid, strong pulse."
+        },
+        {
+          "question": "What is the correct way to treat someone experiencing heat exhaustion while hiking in Utah’s high temperatures?",
+          "optionA": "a. Move the person to a shaded area, have them lie down, give them water to sip, and cool their body with damp clothes.",
+          "optionB": "b. Have the person drink two liters of water immediately to rehydrate and regain energy.",
+          "optionC": "c. Encourage the person to eat salty snacks and continue hiking slowly to avoid cramping.",
+          "optionD": "d. Use a fan or other object to help the person cool down and gradually reintroduce physical activity.",
+          "correctAnswer": "a. Move the person to a shaded area, have them lie down, give them water to sip, and cool their body with damp clothes."
+        },
+        {
+          "question": "If you don’t have insect repellent while hiking in Utah’s mountain terrain, which of the following is the best strategy to repel mosquitoes and other insect bites?",
+          "optionA": "a. Wear loose, dark-colored clothing to blend in with the environment.",
+          "optionB": "b. Cover exposed skin with long, light-colored clothing and avoid heavily scented lotions or perfumes.",
+          "optionC": "c. Use natural oils like lavender or mint as a substitute for insect repellent.",
+          "optionD": "d. Ignore the insects and keep moving to avoid being bitten.",
+          "correctAnswer": "b. Cover exposed skin with long, light-colored clothing and avoid heavily scented lotions or perfumes."
+        },
+        {
+          "question": "Which of the following plants found in Utah’s desert terrain are considered safe and edible in a survival situation to prevent starvation?",
+          "optionA": "a. Prickly pear cactus (pads and fruit) after removing spines and peeling.",
+          "optionB": "b. Desert sage leaves, eaten raw and unprocessed.",
+          "optionC": "c. Yucca plant flowers and fruit, eaten directly from the plant.",
+          "optionD": "d. Tamarisk (salt cedar) bark and leaves boiled into a tea.",
+          "correctAnswer": "a. Prickly pear cactus (pads and fruit) after removing spines and peeling."
+        },
+        {
+          "question": "What should you do if you encounter a moose while hiking in Utah?",
+          "optionA": "a. Approach the moose slowly to show you are not a threat.",
+          "optionB": "b. Run away as quickly as possible to put distance between you and the moose.",
+          "optionC": "c. Stay calm, give the moose plenty of space, and back away slowly without turning your back.",
+          "optionD": "d. Jump and wave arms to appear larger and make a lot of noise to scare the moose away.",
+          "correctAnswer": "c. Stay calm, give the moose plenty of space, and back away slowly without turning your back."
+        },
+        {
+          "question": "If you are caught in an unexpected thunder and lightning storm while hiking in Utah’s mountain terrain, what is the safest course of action?",
+          "optionA": "a. Continue hiking at a steady pace to get to lower ground as quickly as possible.",
+          "optionB": "b. Seek shelter under the tallest tree in the area to stay dry and protected.",
+          "optionC": "c. Move to lower ground, avoid open spaces, and crouch down on the balls of your feet if lightning is nearby.",
+          "optionD": "d. Lie flat on the ground to minimize your height and avoid being struck by lightning.",
+          "correctAnswer": "c. Move to lower ground, avoid open spaces, and crouch down on the balls of your feet if lightning is nearby."
+        },
+        {
+          "question": "What is the best way to ensure fire safety while camping in Utah during the dry season?",
+          "optionA": "a. Build a fire pit using large rocks to contain the flames and cover the ashes with dirt when you’re done.",
+          "optionB": "b. Build a small fire in a cleared area, use only as much wood as necessary, and pour water over the ashes until they are cool to the touch before leaving.",
+          "optionC": "c. Build the fire under a tree canopy to prevent wind from spreading sparks and cover it with stones when you’re done.",
+          "optionD": "d. Dig a shallow trench for the fire to prevent it from spreading and extinguish it by scattering the ashes over a wide area.",
+          "correctAnswer": "b. Build a small fire in a cleared area, use only as much wood as necessary, and pour water over the ashes until they are cool to the touch before leaving."
+        }
+      ],
+"levelTwo": [
+  {
+    "question": "What is the best type of clothing layers to bring for a backpacking trip in Utah during the fall?",
+    "optionA": "a. A single thick jacket to keep you warm during cold mornings and nights.",
+    "optionB": "b. Lightweight, moisture-wicking base layers, an insulating middle layer, and a waterproof outer layer.",
+    "optionC": "c. 100% cotton layers for comfort and durability in all weather conditions.",
+    "optionD": "d. Heavy wool sweaters and a rain poncho to handle all weather scenarios.",
+    "correctAnswer": "b. Lightweight, moisture-wicking base layers, an insulating middle layer, and a waterproof outer layer."
+  },
+  {
+    "question": "What type of shelter is best to bring for fall camping in Utah to stay prepared for variable weather conditions?",
+    "optionA": "a. A lightweight tarp for quick setup and ventilation.",
+    "optionB": "b. A four-season tent with a rainfly for insulation and protection from rain or snow.",
+    "optionC": "c. A hammock with a bug net to stay off the ground and avoid insects.",
+    "optionD": "d. A simple bivy sack for portability and minimal weight.",
+    "correctAnswer": "b. A four-season tent with a rainfly for insulation and protection from rain or snow."
+  },
+  {
+    "question": "When water sources are scarce during the dry fall season in Utah, what is the best strategy for finding water?",
+    "optionA": "a. Search for water at the base of dry streambeds, where moisture may collect under the surface.",
+    "optionB": "b. Rely on cactus or other local plants by cutting them open to extract water.",
+    "optionC": "c. Look for water in exposed, sunny areas where it is likely to pool.",
+    "optionD": "d. Dig in sandy areas in hopes of finding groundwater.",
+    "correctAnswer": "a. Search for water at the base of dry streambeds, where moisture may collect under the surface."
+  },
+  {
+    "question": "Which of the following plants are edible and commonly available in Utah during the fall season?",
+    "optionA": "a. Pine nuts from piñon pine trees and rose hips from wild rose bushes.",
+    "optionB": "b. Chokecherries, harvested and prepared to remove toxins.",
+    "optionC": "c. Juniper berries, eaten raw in large quantities for quick energy.",
+    "optionD": "d. Cattail roots, dug up from wetland areas and cooked.",
+    "correctAnswer": "a. Pine nuts from piñon pine trees and rose hips from wild rose bushes."
+  },
+  {
+    "question": "What is the most effective way to collect rainwater for survival in Utah’s desert or mountain terrain?",
+    "optionA": "a. Digging a shallow trench and waiting for it to fill with rainwater.",
+    "optionB": "b. Setting up a tarp or poncho to funnel rainwater into a container.",
+    "optionC": "c. Placing several small containers out in the open to catch rainwater individually.",
+    "optionD": "d. Positioning large flat rocks to direct rainwater into a collection point.",
+    "correctAnswer": "b. Setting up a tarp or poncho to funnel rainwater into a container."
+  },
+  {
+    "question": "What is the best course of action if you sprain your ankle while hiking in the wilderness?",
+    "optionA": "a. Continue hiking but use a sturdy stick or trekking pole for support to keep moving without stopping for too long.",
+    "optionB": "b. Sit down immediately, elevate the injured ankle, apply cold from a nearby stream if possible, and wrap it for support using a bandana or clothing.",
+    "optionC": "c. Tighten your boot laces as much as possible to stabilize the ankle and keep walking carefully toward the nearest help.",
+    "optionD": "d. Rest briefly, then remove your boot to check for swelling and massage the ankle before continuing to hike.",
+    "correctAnswer": "b. Sit down immediately, elevate the injured ankle, apply cold from a nearby stream if possible, and wrap it for support using a bandana or clothing."
+  },
+  {
+    "question": "What is the best course of action if you break a bone while hiking in a remote location?",
+    "optionA": "a. Immobilize the injured limb using a splint made from sturdy sticks and fabric, and avoid moving unless absolutely necessary.",
+    "optionB": "b. Try to reset the bone immediately to restore normal alignment, then wrap it tightly with available materials.",
+    "optionC": "c. Continue moving carefully, supporting the injured area with your hands until you find help.",
+    "optionD": "d. Apply pressure to the area to stop swelling and keep the limb elevated at all times.",
+    "correctAnswer": "a. Immobilize the injured limb using a splint made from sturdy sticks and fabric, and avoid moving unless absolutely necessary."
+  },
+  {
+    "question": "What is the best combination of planning and communication tools to ensure you are prepared for emergencies during a remote backpacking trip?",
+    "optionA": "a. Post your trip plans on social media and rely on other hikers for assistance if needed.",
+    "optionB": "b. Bring a basic walkie-talkie for communication and rely on cell service to contact help if needed.",
+    "optionC": "c. Leave a detailed trip itinerary with a trusted person and carry a satellite phone or emergency beacon.",
+    "optionD": "d. Inform someone of your general destination and use a compass and map to navigate emergencies.",
+    "correctAnswer": "c. Leave a detailed trip itinerary with a trusted person and carry a satellite phone or emergency beacon."
+  },
+  {
+    "question": "What is the best time period for backpacking and camping in Utah’s Uinta Mountains to enjoy favorable weather and avoid extreme conditions?",
+    "optionA": "a. Late winter to early spring, when snow is starting to melt.",
+    "optionB": "b. Late spring to early summer, when wildflowers are blooming but some trails may still have snow.",
+    "optionC": "c. Mid-fall to early winter, when trails are less crowded, and snow is beginning to accumulate.",
+    "optionD": "d. Late summer to early fall, when the weather is mild, trails are clear, and fall colors are at their peak.",
+    "correctAnswer": "d. Late summer to early fall, when the weather is mild, trails are clear, and fall colors are at their peak."
+  },
+  {
+    "question": "How can you best identify and avoid potentially toxic fall berries while foraging in Utah?",
+    "optionA": "a. Only eat berries that birds are also eating, as they are always safe for humans.",
+    "optionB": "b. Crush a berry and smell it—if it smells sweet, it is safe to eat.",
+    "optionC": "c. Eat small quantities of unknown berries to test if they cause a reaction before eating more.",
+    "optionD": "d. Learn to identify edible berries like rose hips and chokecherries, and avoid berries that are unfamiliar or brightly colored.",
+    "correctAnswer": "d. Learn to identify edible berries like rose hips and chokecherries, and avoid berries that are unfamiliar or brightly colored."
+  },
+  {
+    "question": "What temperature range should you be prepared for when camping in Utah’s deserts during the fall?",
+    "optionA": "a. 50°F to 70°F during the day and 40°F to 50°F at night.",
+    "optionB": "b. 60°F to 80°F during the day and 50°F to 60°F at night.",
+    "optionC": "c. 40°F to 70°F during the day and 20°F to 40°F at night.",
+    "optionD": "d. 30°F to 50°F during the day and below 20°F at night.",
+    "correctAnswer": "c. 40°F to 70°F during the day and 20°F to 40°F at night."
+  }
+]
+  ,
   "levelThree": [
     {
-      "question": "this is a question1",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionA"
+      "question": "What is the best insulative material for a winter coat to keep you warm in Utah’s winter conditions?",
+      "optionA": "a. Cotton, because it is breathable and traps heat effectively in dry conditions.",
+      "optionB": "b. Wool, because it insulates well, even when damp, and is naturally water-resistant.",
+      "optionC": "c. Down, because it offers the highest warmth-to-weight ratio, making it ideal for cold, dry weather.",
+      "optionD": "d. Synthetic materials, because they provide lightweight insulation, wick moisture, and retain warmth when wet.",
+      "correctAnswer": "d. Synthetic materials, because they provide lightweight insulation, wick moisture, and retain warmth when wet."
     },
     {
-      "question": "Question 2 Test",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionB"
+      "question": "What is the most effective way to stay warm while sleeping outdoors in Utah during the winter?",
+      "optionA": "a. Sleep in all your layers, including damp clothes, to conserve body heat.",
+      "optionB": "b. Use a sleeping bag rated for sub-zero temperatures, insulate from the ground with a sleeping pad, and wear dry, warm clothing.",
+      "optionC": "c. Rely on a campfire to keep the area around your sleeping bag warm.",
+      "optionD": "d. Sleep in a sleeping bag rated for sub-zero temperatures without any clothing layers to allow your body heat to circulate freely.",
+      "correctAnswer": "b. Use a sleeping bag rated for sub-zero temperatures, insulate from the ground with a sleeping pad, and wear dry, warm clothing."
     },
     {
-      "question": "Testing if this works for level 3!",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionC"
+      "question": "What is the first step you should take if someone shows signs of hypothermia?",
+      "optionA": "a. Give them hot food and drinks while keeping them moving.",
+      "optionB": "b. Wrap them in a blanket and immediately apply direct heat to their hands and feet.",
+      "optionC": "c. Move them to a warm, dry shelter, remove wet clothing, and insulate them with dry layers.",
+      "optionD": "d. Massage their extremities to restore circulation quickly.",
+      "correctAnswer": "c. Move them to a warm, dry shelter, remove wet clothing, and insulate them with dry layers."
     },
     {
-      "question": "this is a question4",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionD"
+      "question": "What is the safest way to find water in frozen conditions?",
+      "optionA": "a. Eat snow directly to stay hydrated.",
+      "optionB": "b. Melt snow or ice in a pot over a fire or stove and purify it if necessary.",
+      "optionC": "c. Search for flowing water under frozen streams and break the ice to access it.",
+      "optionD": "d. Collect icicles or chunks of ice and let them melt in your mouth gradually to prevent dehydration.",
+      "correctAnswer": "b. Melt snow or ice in a pot over a fire or stove and purify it if necessary."
+    },
+    {
+      "question": "How can you navigate snow-covered trails effectively?",
+      "optionA": "a. Use trail markers and footprints from other hikers as your primary guide.",
+      "optionB": "b. Follow the sun’s direction and rely on your intuition.",
+      "optionC": "c. Carry a map, compass, or GPS and follow landmarks carefully.",
+      "optionD": "d. Stay in open areas to see as far as possible.",
+      "correctAnswer": "c. Carry a map, compass, or GPS and follow landmarks carefully."
+    },
+    {
+      "question": "How can you avoid triggering or getting caught in an avalanche?",
+      "optionA": "a. Always hike in the center of a slope to avoid unstable edges.",
+      "optionB": "b. Avoid slopes steeper than 30 degrees, check for avalanche forecasts, and carry safety equipment like a beacon, probe, and shovel.",
+      "optionC": "c. Walk directly above avalanche paths to stay clear of sliding snow.",
+      "optionD": "d. Stick to tree-covered areas, as avalanches never occur there.",
+      "correctAnswer": "b. Avoid slopes steeper than 30 degrees, check for avalanche forecasts, and carry safety equipment like a beacon, probe, and shovel."
+    },
+    {
+      "question": "What is the best way to build an emergency shelter in snowy conditions?",
+      "optionA": "a. Dig a snow trench or build a snow cave, ensuring proper ventilation and insulation.",
+      "optionB": "b. Use sticks and branches to construct a shelter without disturbing the snow.",
+      "optionC": "c. Clear away all snow and build a fire for warmth instead of a shelter.",
+      "optionD": "d. Pile snow around you for insulation and huddle inside with no roof.",
+      "correctAnswer": "a. Dig a snow trench or build a snow cave, ensuring proper ventilation and insulation."
+    },
+    {
+      "question": "How can you successfully start a fire in snowy or wet conditions?",
+      "optionA": "a. Gather slightly damp wood and dry it over the fire as it burns to create fuel.",
+      "optionB": "b. Use dry tinder stored in a waterproof container and build the fire on a platform of sticks or rocks to keep it off the snow.",
+      "optionC": "c. Build a fire directly on the snow and use extra fuel to keep it burning steadily.",
+      "optionD": "d. Look for natural shelters, such as under trees, where wood is naturally dry enough to ignite.",
+      "correctAnswer": "b. Use dry tinder stored in a waterproof container and build the fire on a platform of sticks or rocks to keep it off the snow."
+    },
+    {
+      "question": "What is the best way to treat frostbite in a wilderness survival situation?",
+      "optionA": "a. Rub the affected area vigorously to restore circulation.",
+      "optionB": "b. Slowly rewarm the frostbitten area by immersing it in warm (not hot) water, and avoid walking on frostbitten feet.",
+      "optionC": "c. Apply direct heat, such as from a fire or heating pad, to the frostbitten area for rapid warming.",
+      "optionD": "d. Massage the frostbitten area gently to reduce stiffness and encourage blood flow.",
+      "correctAnswer": "b. Slowly rewarm the frostbitten area by immersing it in warm (not hot) water, and avoid walking on frostbitten feet."
+    },
+    {
+      "question": "What should you do if you are caught in a winter storm while hiking in Utah?",
+      "optionA": "a. Seek shelter immediately, stay insulated, and wait for the storm to pass.",
+      "optionB": "b. Keep hiking to stay warm and avoid losing progress toward your destination.",
+      "optionC": "c. Look for a large overhanging rock or ledge to create a natural windbreak and conserve energy.",
+      "optionD": "d. Light a fire in a windy area to signal for help.",
+      "correctAnswer": "a. Seek shelter immediately, stay insulated, and wait for the storm to pass."
     }
-  ],
+  ]
+  ,
 "levelFour": [
     {
       "question": "this is a question1",
