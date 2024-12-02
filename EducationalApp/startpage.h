@@ -23,6 +23,8 @@ private slots:
 
     void on_girlScoutButton_clicked();
 
+    void on_boyScoutButton_clicked();
+
 private:
     Ui::StartPage *ui;
 };
