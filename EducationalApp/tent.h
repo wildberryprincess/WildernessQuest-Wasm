@@ -1,13 +1,13 @@
-#ifndef OBSTACLE_H
-#define OBSTACLE_H
+#ifndef TENT_H
+#define TENT_H
 
 #include <QPoint>
 #include <QImage>
 
-class Obstacle
+class Tent
 {
 public:
-    Obstacle(const QPoint& position);
+    Tent();
     QPoint position;
 
     QRect getBoundingRect();
@@ -18,4 +18,4 @@ private:
     QImage image;
 };
 
-#endif // OBSTACLE_H
+#endif // TENT_H

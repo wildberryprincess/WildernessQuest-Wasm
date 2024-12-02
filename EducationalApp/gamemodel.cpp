@@ -132,7 +132,7 @@ void GameModel::setPlatformCoords(){
 }
 
 void GameModel::setObstaclePositions() {
-    levelOneObstaclePosition = { {900, 560}, {300, 635}};
+    levelOneObstaclePosition = { {900, 570}, {300, 645}};
     levelTwoObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
     levelThreeObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
     levelFourObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };

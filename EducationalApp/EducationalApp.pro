@@ -65,6 +65,7 @@ SOURCES += \
     obstacle.cpp \
     platform.cpp \
     survivalprompt.cpp \
+    tent.cpp \
     view.cpp
 
 HEADERS += \
@@ -124,6 +125,7 @@ HEADERS += \
     obstacle.h \
     platform.h \
     survivalprompt.h \
+    tent.h \
     view.h
 
 FORMS += \

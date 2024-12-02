@@ -34,6 +34,7 @@ GameWorld::GameWorld(QWidget *parent)
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     initializePlayerPosition();
+    levelUpTent = new Tent();
 
     world.SetContactListener(contactListener); // Sets the collision detection
 
@@ -84,7 +85,11 @@ void GameWorld::paintEvent(QPaintEvent *) {
 
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
+
+    // Draw Tent
+    painter.drawImage(levelUpTent->getBoundingRect().topLeft(), levelUpTent->getImage());
 }
+
 void GameWorld::updateWorld() {
 
     // Step the physics world

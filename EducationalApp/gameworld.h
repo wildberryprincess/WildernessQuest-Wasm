@@ -11,6 +11,7 @@
 #include "obstacle.h"
 #include "gamecontactlistener.h" // Include here to use GameContactListener
 #include "maincharacter.h"
+#include "tent.h"
 #include "bodydata.h"
 #include "gamemodel.h"
 
@@ -44,6 +45,7 @@ private:
     QList<Platform> platformsList;
     QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
+    Tent* levelUpTent;
     GameContactListener* contactListener;
     QList<LetterObjects> letterObjectsList;
     SurvivalPrompt survivalPrompts;
