@@ -159,6 +159,13 @@ void GameModel::checkCollidedLetter(QString letter) {
 
 void GameModel::checkObstacleCollision(){
     qDebug() << "Inside model, the user collided with a bear";
+    lives--;
+    qDebug() << "Lives left: " << lives;
+
+    if (lives == 0) {
+        qDebug() << "Game Over! There are 0 Lives!";
+    }
 }
+
 
 
