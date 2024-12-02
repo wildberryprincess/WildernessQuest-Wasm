@@ -21,6 +21,7 @@ public:
     explicit GameWorld(QWidget *parent = nullptr);
     void setGameModel(GameModel& model);
     void checkLetter(QString letter);
+    void handleObstacleCollisions();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -58,5 +59,6 @@ private:
     void initializePlayerPosition();
 signals:
     void checkLetterInModel(QString letter);
+    void collidedWithObstacle();
 };
 #endif // GAMEWORLD_H

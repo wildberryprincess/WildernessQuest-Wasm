@@ -27,6 +27,8 @@ View::View(QWidget *parent)
 
     connect(gameWorld, &GameWorld::checkLetterInModel, gameModel, &GameModel::checkCollidedLetter);
 
+    connect(gameWorld, &GameWorld::collidedWithObstacle, gameModel, &GameModel::checkObstacleCollision);
+
 
     setUpInitialGameModel(); // Call to Initialize model
 

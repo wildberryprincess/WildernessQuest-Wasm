@@ -42,6 +42,7 @@ void GameContactListener::BeginContact(b2Contact* contact) {
             qWarning() << "Null letter object in collision.";
         }
     } else if (otherData->type == "obstacle") {
+        gameWorld->handleObstacleCollisions();
         qDebug() << "Player collided with an obstacle!";
     } else {
         qWarning() << "Unknown collision type:" << otherData->type;

@@ -157,4 +157,8 @@ void GameModel::checkCollidedLetter(QString letter) {
     }
 }
 
+void GameModel::checkObstacleCollision(){
+    qDebug() << "Inside model, the user collided with a bear";
+}
+
 

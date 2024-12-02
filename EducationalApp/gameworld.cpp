@@ -36,7 +36,6 @@ GameWorld::GameWorld(QWidget *parent)
     initializePlayerPosition();
 
     world.SetContactListener(contactListener); // Sets the collision detection
-  //  contactListener.setPlayerBody(mainPlayer->getBody());
 
     contactListener->setGameWorld(this);
 
@@ -147,9 +146,33 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
 
     qDebug() << "Obstacle list size: " << positionList.size();
-    for (int i = 0; i < positionList.size(); i++) {
-        Obstacle obstacle(QPoint(positionList[i].x(), positionList[i].y()));
+
+    for (int i = 0; i < positionList.size(); ++i) {
+        // Create the obstacle
+        Obstacle obstacle(positionList[i]);
         obstaclesList.append(obstacle);
+
+        // Create a static body in the Box2D world
+        b2BodyDef obstacleBodyDef;
+        obstacleBodyDef.type = b2_staticBody;
+        obstacleBodyDef.position.Set(positionList[i].x() / SCALE, positionList[i].y() / SCALE);
+        b2Body* obstacleBody = world.CreateBody(&obstacleBodyDef);
+
+        // Define the shape for the obstacle
+        b2PolygonShape obstacleShape;
+        obstacleShape.SetAsBox(1.0f / SCALE, 1.0f / SCALE); // Adjust size as needed
+
+        // Define the fixture for the obstacle
+        b2FixtureDef obstacleFixtureDef;
+        obstacleFixtureDef.shape = &obstacleShape;
+        obstacleFixtureDef.density = 0.0f;
+        obstacleBody->CreateFixture(&obstacleFixtureDef);
+
+        // Attach user data for collision handling
+        BodyData* obstacleData = new BodyData("obstacle", new Obstacle(obstacle));
+        obstacleBody->SetUserData(obstacleData);
+
+        qDebug() << "Obstacle created with UserData:" << obstacleBody;
     }
 }
 
@@ -254,7 +277,10 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
 }
 
 void GameWorld::checkLetter(QString letter) {
-    emit checkLetterInModel(letter);
+    emit checkLetterInModel(letter); // emits to model to handle the check
 }
 
+void GameWorld::handleObstacleCollisions() {
+    emit collidedWithObstacle(); // emits to model to handle obstacle collisions
+}
 
