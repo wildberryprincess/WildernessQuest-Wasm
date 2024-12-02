@@ -2,6 +2,7 @@
 #define STARTPAGE_H
 
 #include <QWidget>
+#include <QLabel>
 
 namespace Ui {
 class StartPage;
@@ -25,8 +26,12 @@ private slots:
 
     void on_boyScoutButton_clicked();
 
+    void on_instructionsButton_clicked();
+
 private:
     Ui::StartPage *ui;
+
+    QLabel* instructionsLabel;
 };
 
 #endif // STARTPAGE_H
