@@ -11,7 +11,7 @@ class GameContactListener;
 class mainCharacter
 {
 public:
-    mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener);
+    mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener, int characterType);
 
     // gets the boundary of the character which is helpful for collisions
     QRect getBoundingRect();

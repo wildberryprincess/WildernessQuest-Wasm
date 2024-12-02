@@ -21,6 +21,7 @@ GameWorld::GameWorld(QWidget *parent)
 
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
+    characterType = 0;
 
     // Define the ground body
     b2BodyDef groundBodyDef;
@@ -126,6 +127,11 @@ GameWorld::~GameWorld() {
     delete contactListener;
     delete mainPlayer;
     delete currentBackground;
+}
+
+void GameWorld::setCharacterType(int type) {
+    characterType = type;
+    qDebug() << "characterType is " << characterType;
 }
 void GameWorld::setBackgroundPixMap(QString filepath) {
 
@@ -256,7 +262,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 
 void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,0); // Adjust to start above a platform
-    mainPlayer = new mainCharacter(playerPosition, &world, contactListener);
+    mainPlayer = new mainCharacter(playerPosition, &world, contactListener, characterType);
 
     BodyData* playerData = new BodyData("player", mainPlayer);
     mainPlayer->getBody()->SetUserData(playerData);

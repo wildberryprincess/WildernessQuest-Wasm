@@ -36,6 +36,7 @@ public slots:
     void setBackgroundPixMap(QString filepath);
     void generateLetters(QList<QPoint> coords, QStringList letters);
     void displayPrompt(SurvivalPrompt::Prompt& prompt);
+    void setCharacterType(int type);
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
@@ -46,6 +47,7 @@ private:
     QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
     Tent* levelUpTent;
+    int characterType;
     GameContactListener* contactListener;
     QList<LetterObjects> letterObjectsList;
     SurvivalPrompt survivalPrompts;

@@ -21,11 +21,16 @@ public:
 
 signals:
     void setUpModel(int level);
+    void updateCharacter(int characterTupe);
 
 private:
     Ui::View *ui; // Ensure this is declared
-    Ui::StartPage *startScreenUI;
+    StartPage* startScreen;
+    // Ui::StartPage *startScreenUI;
     GameWorld *gameWorld;  // Single instance
+
+public slots:
+    void displayGame(int characterType);
 
 };
 

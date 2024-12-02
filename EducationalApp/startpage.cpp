@@ -26,7 +26,8 @@ void StartPage::on_startButton_clicked()
 
 void StartPage::on_girlScoutButton_clicked()
 {
-    // Girl Scout is 0, Boy Scout is 1,
-    emit updateCharacterInfo(0);
+    // Girl Scout is 1, Boy Scout is 2,
+    emit updateCharacterInfo(1);
+    this->hide();
 }
 

@@ -5,6 +5,7 @@
 View::View(StartPage& startScreen, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
+    , startScreen(&startScreen)
     , gameWorld(new GameWorld(this))  // Initialize a single GameWorld instance
 {
     ui->setupUi(this);
@@ -29,7 +30,8 @@ View::View(StartPage& startScreen, QWidget *parent)
 
     connect(gameWorld, &GameWorld::collidedWithObstacle, gameModel, &GameModel::checkObstacleCollision);
 
-    // connect(&startScreen, &StartPage::updateCharacterInfo, gameWorld, &GameWorld::initializePlayerPosition);
+    connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);
+    connect(this, &View::updateCharacter, gameWorld, &GameWorld::setCharacterType);
 
 
     setUpInitialGameModel(); // Call to Initialize model
@@ -45,4 +47,9 @@ void View::setUpInitialGameModel() {
 View::~View()
 {
     delete ui;
+}
+
+void View::displayGame(int characterType) {
+    this->show();
+    emit updateCharacter(characterType);
 }

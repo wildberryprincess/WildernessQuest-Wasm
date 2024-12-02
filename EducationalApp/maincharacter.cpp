@@ -3,11 +3,18 @@
 #include <QWidget>
 #define SCALE 30.0f
 
-mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener)
+mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener, int characterType)
     : contactListener(contactListener)
 {
-    image = QImage(":/Images/girlScout.png");
-    image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    if (characterType == 0) {
+        image = QImage(":/Images/girlScout.png");
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    } else if (characterType == 1) {
+        image = QImage(":/Images/bear.png"); // Need to change
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
+    // image = QImage(":/Images/girlScout.png");
+    // image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     boundingRect = QRect(position, image.size());
 
