@@ -341,29 +341,56 @@ void GameWorld::handleIncorrectCollidedLetter() {
         qWarning() << "promptLabel is not initialized!";
         return;
     }
+
+    // Clear any existing timers or reset the message
+    static QTimer* timer = nullptr;
+
+    if (!timer) {
+        // Create the timer if it doesn't exist
+        timer = new QTimer(this);
+        timer->setSingleShot(true);
+
+        // Restore the original text when the timer times out
+        connect(timer, &QTimer::timeout, this, [this]() {
+            QString currentText = promptLabel->text();
+            // Remove the "Try again!" portion from the text
+            int index = currentText.indexOf("<br><br><span style='color: red; font-weight: bold;'>Try again!</span>");
+            if (index != -1) {
+                currentText = currentText.left(index);
+                promptLabel->setText(currentText);
+            }
+            qDebug() << "'Try again!' message removed.";
+        });
+    }
+
+    // Append or overwrite the "Try again!" message
     QString currentText = promptLabel->text();
+    int index = currentText.indexOf("<br><br><span style='color: red; font-weight: bold;'>Try again!</span>");
+    if (index != -1) {
+        currentText = currentText.left(index); // Remove existing "Try again!" message
+    }
     QString updatedText = currentText + "<br><br><span style='color: red; font-weight: bold;'>Try again!</span>";
     promptLabel->setText(updatedText);
 
-    //"try again" disappears after 3 seconds
-    QTimer::singleShot(3000, this, [this, currentText]() {
-        promptLabel->setText(currentText);
-    });
+    qDebug() << "Displayed 'Try again!' message.";
+
+    // Start or restart the timer
+    timer->start(3000); // 3 seconds
 }
 
 void GameWorld::handleCorrectCollidedLetter() {
-    // if (!promptLabel) {
-    //     qWarning() << "promptLabel is not initialized!";
-    //     return;
-    // }
-    // QString currentText = promptLabel->text();
-    // QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
-    // promptLabel->setText(updatedText);
+    if (!promptLabel) {
+        qWarning() << "promptLabel is not initialized!";
+        return;
+    }
+    QString currentText = promptLabel->text();
+    QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
+    promptLabel->setText(updatedText);
 
-    // //"Correct!" disappears after 3 seconds
-    // QTimer::singleShot(3000, this, [this, currentText]() {
-    //     promptLabel->setText(currentText);
-    // });
+    //"Correct!" disappears after 3 seconds
+    QTimer::singleShot(3000, this, [this, currentText]() {
+        promptLabel->setText(currentText);
+    });
 }
 
 void GameWorld::handleObstacleCollisions() {
