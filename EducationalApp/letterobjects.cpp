@@ -3,6 +3,7 @@
 LetterObjects::LetterObjects(const QPoint& position, const QString& letter)
     : position(position) {
     objectLetter = letter;
+
     // Load the image based on the letter
     if (letter == "a") {
         image = QImage(":/Images/A.png");

@@ -25,8 +25,6 @@ public:
      * @param letter : the actual letter itself e.g. "A", "B", "C", D"
      */
     LetterObjects(const QPoint& position, const QString& letter); // Constructor to specify position and letter
-    QPoint position;
-    QPoint imageSize;
 
     /**
      * @brief getBoundingRect : Returns the bounding rectangle based on the image size.
@@ -54,10 +52,13 @@ public:
      */
     QString getLetter();
 
+
 private:
     QRect boundingRect;
     QImage image;
     QString objectLetter;
+    QPoint position;
+    QPoint imageSize;
 };
 
 #endif // LETTEROBJECTS_H
