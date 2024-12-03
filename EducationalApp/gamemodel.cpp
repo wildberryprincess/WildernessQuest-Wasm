@@ -60,6 +60,7 @@ void GameModel:: setLevel(int level){
     }
     // Emit a prompt for the current level
     emitPromptsForLevel(level);
+    emit sendGameInfo(currentLevel);
 }
 
 // emits only one prompt at a time, so we can emit the next one in response to a correct answer in the future

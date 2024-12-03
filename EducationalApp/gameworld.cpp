@@ -16,7 +16,8 @@ GameWorld::GameWorld(QWidget *parent)
     timer(this),
     currentBackground(nullptr),
     contactListener(new GameContactListener()),
-    promptLabel(new QLabel(this))
+    promptLabel(new QLabel(this)),
+    gameInfoLabel(new QLabel(this))
 {
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
     // Ensure GameWorld has focus to handle key events
@@ -46,6 +47,12 @@ GameWorld::GameWorld(QWidget *parent)
     promptLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
     promptLabel->setStyleSheet("font-size: 14px; color: black; font-family: Courier;");
     promptLabel->setGeometry(725, 10, 700, 300);
+
+    // Set up the game info display
+    gameInfoLabel->setWordWrap(true);
+    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    gameInfoLabel->setStyleSheet("font-size: 24px; color: black; font-family: Courier;");
+    gameInfoLabel->setGeometry(10, 10, 400, 50);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -332,6 +339,13 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     promptLabel->setText(quizContent);
 }
 
+void GameWorld::displayGameInfo(int level) {
+    QString levelString = "<br><br><span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
+                          + QString::number(level)
+                          + "<br><span style='color: red; font-weight: bold;'>Lives: </span>";
+    gameInfoLabel->setText(levelString);
+}
+
 void GameWorld::checkLetter(QString letter) {
     emit checkLetterInModel(letter); // emits to model to handle the check
 }
@@ -387,7 +401,7 @@ void GameWorld::handleCorrectCollidedLetter() {
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
-    //"Correct!" disappears after 3 seconds
+    //"Good job!" disappears after 3 seconds
     QTimer::singleShot(3000, this, [this, currentText]() {
         promptLabel->setText(currentText);
     });

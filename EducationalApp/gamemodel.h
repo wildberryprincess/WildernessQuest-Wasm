@@ -69,5 +69,6 @@ signals:
     void createTent();
     void incorrectCollidedLetter();
     void correctCollidedLetter();
+    void sendGameInfo(int level);
 };
 #endif // GAMEMODEL_H

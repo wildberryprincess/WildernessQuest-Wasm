@@ -43,6 +43,7 @@ public slots:
     void setCharacterType(int type);
     void handleIncorrectCollidedLetter();
     void handleCorrectCollidedLetter();
+    void displayGameInfo(int level);
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
@@ -59,6 +60,7 @@ private:
     SurvivalPrompt survivalPrompts;
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
     QLabel* promptLabel; //display for the question
+    QLabel* gameInfoLabel; //display level and lives
 
     std::queue<std::function<void()>> deferredActions;
 
