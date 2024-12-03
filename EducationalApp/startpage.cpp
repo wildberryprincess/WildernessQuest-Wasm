@@ -10,6 +10,7 @@ StartPage::StartPage(QWidget *parent)
     ui->gameNameLabel->setAlignment(Qt::AlignCenter);
     ui->girlScoutButton->hide();
     ui->boyScoutButton->hide();
+    ui->nonBinaryScoutButton->hide();
     instructionsLabel = new QLabel(this);
 }
 
@@ -25,6 +26,7 @@ void StartPage::on_startButton_clicked()
     instructionsLabel->hide();
     ui->girlScoutButton->show();
     ui->boyScoutButton->show();
+    ui->nonBinaryScoutButton->show();
     ui->gameNameLabel->show();
 }
 
