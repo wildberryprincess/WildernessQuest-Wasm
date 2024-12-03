@@ -30,6 +30,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);
     connect(this, &View::updateCharacter, gameWorld, &GameWorld::setCharacterType);
 
+    connect(&gameModel,&GameModel::createTent, gameWorld, &GameWorld::generateTent);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View

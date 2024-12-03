@@ -36,18 +36,22 @@ void GameModel:: setLevel(int level){
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
         emit obstacleInfo(levelOneObstaclePosition);
+        emit createTent();
         break;
     case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
         emit obstacleInfo(levelTwoObstaclePosition);
+        emit createTent();
         break;
     case 3:
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
         emit obstacleInfo(levelThreeObstaclePosition);
+        emit createTent();
         break;
     case 4:
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes);
         emit obstacleInfo(levelFourObstaclePosition);
+        emit createTent();
         break;
     default:
         qWarning() << "Invalid level number:" << level;

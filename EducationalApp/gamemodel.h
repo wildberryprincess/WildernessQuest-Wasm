@@ -63,6 +63,7 @@ signals:
     void setBackground(QString filepath);
     void letterInfo(QList <QPoint> letterCoords, QStringList letters);
     void sendPrompt(SurvivalPrompt::Prompt& survivalPrompt);
+    void createTent();
 
 };
 #endif // GAMEMODEL_H

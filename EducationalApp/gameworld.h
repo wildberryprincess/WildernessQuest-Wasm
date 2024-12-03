@@ -35,6 +35,7 @@ public slots:
     void generateObstacles(QList<QPoint> positionList);
     void setBackgroundPixMap(QString filepath);
     void generateLetters(QList<QPoint> coords, QStringList letters);
+    void generateTent();
     void displayPrompt(SurvivalPrompt::Prompt& prompt);
     void setCharacterType(int type);
 

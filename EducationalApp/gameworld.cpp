@@ -83,12 +83,12 @@ void GameWorld::paintEvent(QPaintEvent *) {
     for (LetterObjects letter : letterObjectsList) {
         painter.drawImage(letter.getBoundingRect().topLeft(), letter.getImage());
     }
+    // Draw Tent
+    painter.drawImage(levelUpTent->getBoundingRect().topLeft(), levelUpTent->getImage());
+
 
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
-
-    // Draw Tent
-    painter.drawImage(levelUpTent->getBoundingRect().topLeft(), levelUpTent->getImage());
 }
 
 void GameWorld::updateWorld() {
@@ -173,12 +173,12 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
 
         // Define the shape for the obstacle
         b2PolygonShape obstacleShape;
-        obstacleShape.SetAsBox(1.0f / SCALE, 1.0f / SCALE); // Adjust size as needed
+        obstacleShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Adjust size as needed
 
         // Define the fixture for the obstacle
         b2FixtureDef obstacleFixtureDef;
         obstacleFixtureDef.shape = &obstacleShape;
-        obstacleFixtureDef.density = 0.0f;
+        obstacleFixtureDef.isSensor = true; // Mark this fixture as a sensor
         obstacleBody->CreateFixture(&obstacleFixtureDef);
 
         // Attach user data for collision handling
@@ -244,7 +244,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
         b2Body* letterBody = world.CreateBody(&letterBodyDef);
 
         b2PolygonShape letterShape;
-        letterShape.SetAsBox(1.0f / SCALE, 1.0f / SCALE); // Half width/height
+        letterShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Half width/height
 
         b2FixtureDef letterFixtureDef;
         letterFixtureDef.shape = &letterShape;
@@ -259,6 +259,37 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 
     update(); // Trigger a repaint
 }
+
+void GameWorld::generateTent(){
+    // Create the Tent object
+    Tent* tent = new Tent();
+    levelUpTent = tent; // Store the tent instance for rendering
+
+    // Create a static body in the Box2D world
+    b2BodyDef tentBodyDef;
+    tentBodyDef.type = b2_staticBody;
+    tentBodyDef.position.Set(tent->getBoundingRect().center().x() / SCALE,
+                             tent->getBoundingRect().center().y() / SCALE);
+    b2Body* tentBody = world.CreateBody(&tentBodyDef);
+
+    // Define the shape for the tent
+    b2PolygonShape tentShape;
+    tentShape.SetAsBox(tent->getBoundingRect().width() / (3.0f * SCALE),
+                       tent->getBoundingRect().height() / (3.0f * SCALE));
+
+    // Define the fixture for the tent
+    b2FixtureDef tentFixtureDef;
+    tentFixtureDef.shape = &tentShape;
+    tentFixtureDef.isSensor = true; // Mark this fixture as a sensor
+    tentBody->CreateFixture(&tentFixtureDef);
+
+    // Attach user data for collision handling
+    BodyData* tentData = new BodyData("tent", tent);
+    tentBody->SetUserData(tentData);
+
+    qDebug() << "Tent created with UserData:" << tentBody;
+}
+
 
 
 
