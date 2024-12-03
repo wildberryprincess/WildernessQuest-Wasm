@@ -55,7 +55,7 @@ void GameModel:: setLevel(int level){
         emit createTent();
         break;
     default:
-        qWarning() << "Invalid level number:" << level;
+        qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!
         return;
     }
     // Emit a prompt for the current level
@@ -81,7 +81,7 @@ void GameModel::emitPromptsForLevel(int level) {
         prompts = &allPrompts.levelFourPrompts;
         break;
     default:
-        qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!
+        qWarning() << "Invalid level number:" << level;
         return;
     }
 
@@ -155,23 +155,30 @@ void GameModel::randomizeSurvivalPrompts(){
 }
 
 void GameModel::checkCollidedLetter(QString letter) {
+    // Check for correct answer
     if (letter == currentCorrectAnswer) {
-        if (numQuestionsAnswered == 2) {
-            currentLevel = currentLevel + 1;
+        qDebug() << "The user selected the correct answer: " << letter;
+
+        numQuestionsAnswered++; // Increment the correct answer count
+        qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
+
+        // Check if the user answered enough questions to advance
+        if (numQuestionsAnswered >= 2) {
+            qDebug() << "Advancing to the next level.";
+            currentLevel++;
             setLevel(currentLevel);
+            numQuestionsAnswered = 0; // Reset question counter for the new level
         } else {
-            qDebug() << "the user selected the correct answer " << letter;
-            numQuestionsAnswered = numQuestionsAnswered + 1;
-            qDebug() << "Number of correct answered Questions" << numQuestionsAnswered;
-            updatePrompts();
-            emit correctCollidedLetter();
+            updatePrompts(); // Emit the next prompt
         }
+        emit correctCollidedLetter(); // Notify of correct answer collision
     } else {
-        qDebug() << "The user collided with the incorrect letter: user letter: "
-                 << letter << " correct letter: " << currentCorrectAnswer;
-        emit incorrectCollidedLetter();
+        qDebug() << "The user collided with an incorrect letter. User letter: "
+                 << letter << " Correct letter: " << currentCorrectAnswer;
+        emit incorrectCollidedLetter(); // Notify of incorrect answer collision
     }
 }
+
 
 void GameModel::updatePrompts() {
     // Remove the answered question from the current prompts
