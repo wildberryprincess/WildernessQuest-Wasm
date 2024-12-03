@@ -182,7 +182,7 @@ void GameModel::updatePrompts() {
     case 2:
         prompts = &allPrompts.levelTwoPrompts;
         break;
-    case 3:
+    case 3: //TEST TEST
         prompts = &allPrompts.levelThreePrompts;
         break;
     case 4:
