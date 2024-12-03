@@ -262,6 +262,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
             b2FixtureDef letterFixtureDef;
             letterFixtureDef.shape = &letterShape;
             letterFixtureDef.density = 0.0f;
+            letterFixtureDef.isSensor = true; // Mark this fixture as a sensor
             letterBody->CreateFixture(&letterFixtureDef);
 
             BodyData* letterData = new BodyData{"letter", new LetterObjects(letter)};
@@ -290,7 +291,7 @@ void GameWorld::generateTent(){
 
         b2FixtureDef tentFixtureDef;
         tentFixtureDef.shape = &tentShape;
-        tentFixtureDef.density = 0.0f;
+        tentFixtureDef.isSensor = true; // Mark this fixture as a sensor
         tentBody->CreateFixture(&tentFixtureDef);
 
         BodyData* tentData = new BodyData("tent", levelUpTent);
