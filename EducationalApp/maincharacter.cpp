@@ -6,37 +6,42 @@
 mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener, int characterType)
     : contactListener(contactListener)
 {
+    // Load and scale the character image
     if (characterType == 0) {
         image = QImage(":/Images/girlScout.png");
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 1) {
-        image = QImage(":/Images/boyScout.png"); // Need to change
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    } else if (characterType == 2) {
-        image = QImage(":/Images/bear.png"); // Need to change
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        image = QImage(":/Images/boyScout.png");
+    } else {
+        image = QImage(":/Images/bear.png");
     }
-    // image = QImage(":/Images/girlScout.png");
-    // image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
+    // Initialize bounding rectangle directly at the position
     boundingRect = QRect(position, image.size());
 
+    // Define the Box2D body
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(position.x() / SCALE, position.y() / SCALE);
+    bodyDef.position.Set(position.x() / SCALE, position.y() / SCALE); // Use position directly
+
+    // Create the Box2D body
     body = world->CreateBody(&bodyDef);
-    body->SetUserData(this); // Set user data to identify the player for contact collision
+    body->SetUserData(this);
 
+    // Define the collision box based on bounding rectangle
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox((boundingRect.width()/ 2.0f) / SCALE, (boundingRect.height() / 2.0f) / SCALE);
+    dynamicBox.SetAsBox((boundingRect.width() / 2.0f) / SCALE,
+                        (boundingRect.height() / 2.0f) / SCALE);
 
+    // Create the fixture
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.1;
+    fixtureDef.friction = 0.1f;
     fixtureDef.restitution = 0.0f;
 
     body->CreateFixture(&fixtureDef);
+
 }
 
 // gets the boundary of the character which is helpful for collisions
@@ -100,7 +105,8 @@ void mainCharacter::update() {
     // Update bounding rectangle for rendering
     b2Vec2 position = body->GetPosition();
     boundingRect.moveTo(position.x * SCALE - boundingRect.width() / 2,
-                        position.y * SCALE - boundingRect.height() / 4);
+                        position.y * SCALE - boundingRect.height() / 2); // Center correctly
+
 }
 
 
