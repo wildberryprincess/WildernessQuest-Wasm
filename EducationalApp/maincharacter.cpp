@@ -37,7 +37,7 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.1f;
+    fixtureDef.friction = 0.1;
     fixtureDef.restitution = 0.0f;
 
     body->CreateFixture(&fixtureDef);
@@ -105,7 +105,7 @@ void mainCharacter::update() {
     // Update bounding rectangle for rendering
     b2Vec2 position = body->GetPosition();
     boundingRect.moveTo(position.x * SCALE - boundingRect.width() / 2,
-                        position.y * SCALE - boundingRect.height() / 2); // Center correctly
+                        position.y * SCALE - boundingRect.height() / 4); // Center correctly
 
 }
 
