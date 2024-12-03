@@ -28,6 +28,8 @@ private slots:
 
     void on_instructionsButton_clicked();
 
+    void on_nonBinaryScoutButton_clicked();
+
 private:
     Ui::StartPage *ui;
 

@@ -264,7 +264,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
             b2Body* letterBody = world.CreateBody(&letterBodyDef);
 
             b2PolygonShape letterShape;
-            letterShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Half width/height
+            letterShape.SetAsBox(2.0f / SCALE, 2.0f / SCALE); // Half width/height
 
             b2FixtureDef letterFixtureDef;
             letterFixtureDef.shape = &letterShape;

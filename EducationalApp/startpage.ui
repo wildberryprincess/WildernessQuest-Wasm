@@ -78,6 +78,19 @@
     <string>Girl Scout</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="nonBinaryScoutButton">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>290</y>
+     <width>100</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Scout</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
