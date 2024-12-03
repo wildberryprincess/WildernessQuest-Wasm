@@ -15,8 +15,8 @@ GameWorld::GameWorld(QWidget *parent)
     world(b2Vec2(0.0f, 10.0f)),
     timer(this),
     currentBackground(nullptr),
-    promptLabel(new QLabel(this)),
-    contactListener(new GameContactListener())
+    contactListener(new GameContactListener()),
+    promptLabel(new QLabel(this))
 {
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
     // Ensure GameWorld has focus to handle key events
@@ -334,6 +334,36 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
 
 void GameWorld::checkLetter(QString letter) {
     emit checkLetterInModel(letter); // emits to model to handle the check
+}
+
+void GameWorld::handleIncorrectCollidedLetter() {
+    if (!promptLabel) {
+        qWarning() << "promptLabel is not initialized!";
+        return;
+    }
+    QString currentText = promptLabel->text();
+    QString updatedText = currentText + "<br><br><span style='color: red; font-weight: bold;'>Try again!</span>";
+    promptLabel->setText(updatedText);
+
+    //"try again" disappears after 3 seconds
+    QTimer::singleShot(3000, this, [this, currentText]() {
+        promptLabel->setText(currentText);
+    });
+}
+
+void GameWorld::handleCorrectCollidedLetter() {
+    // if (!promptLabel) {
+    //     qWarning() << "promptLabel is not initialized!";
+    //     return;
+    // }
+    // QString currentText = promptLabel->text();
+    // QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
+    // promptLabel->setText(updatedText);
+
+    // //"Correct!" disappears after 3 seconds
+    // QTimer::singleShot(3000, this, [this, currentText]() {
+    //     promptLabel->setText(currentText);
+    // });
 }
 
 void GameWorld::handleObstacleCollisions() {

@@ -164,10 +164,12 @@ void GameModel::checkCollidedLetter(QString letter) {
             numQuestionsAnswered = numQuestionsAnswered + 1;
             qDebug() << "Number of correct answered Questions" << numQuestionsAnswered;
             updatePrompts();
+            emit correctCollidedLetter();
         }
     } else {
         qDebug() << "The user collided with the incorrect letter: user letter: "
                  << letter << " correct letter: " << currentCorrectAnswer;
+        emit incorrectCollidedLetter();
     }
 }
 

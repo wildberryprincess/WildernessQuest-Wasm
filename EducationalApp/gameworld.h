@@ -41,6 +41,8 @@ public slots:
     void displayPrompt(SurvivalPrompt::Prompt& prompt);
     void handleTentCollisions();
     void setCharacterType(int type);
+    void handleIncorrectCollidedLetter();
+    void handleCorrectCollidedLetter();
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer

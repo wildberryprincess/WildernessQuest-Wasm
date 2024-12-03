@@ -25,6 +25,10 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(gameWorld, &GameWorld::checkLetterInModel, &gameModel, &GameModel::checkCollidedLetter);
 
+    connect(&gameModel, &GameModel::incorrectCollidedLetter, gameWorld, &GameWorld::handleIncorrectCollidedLetter);
+
+    connect(&gameModel, &GameModel::correctCollidedLetter, gameWorld, &GameWorld::handleCorrectCollidedLetter);
+
     connect(gameWorld, &GameWorld::collidedWithObstacle, &gameModel, &GameModel::checkObstacleCollision);
 
     connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);

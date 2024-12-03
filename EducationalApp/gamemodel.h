@@ -67,6 +67,7 @@ signals:
     void letterInfo(QList <QPoint> letterCoords, QStringList letters);
     void sendPrompt(SurvivalPrompt::Prompt& survivalPrompt);
     void createTent();
-
+    void incorrectCollidedLetter();
+    void correctCollidedLetter();
 };
 #endif // GAMEMODEL_H
