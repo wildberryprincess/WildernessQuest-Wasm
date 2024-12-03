@@ -282,31 +282,36 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 }
 
 
-void GameWorld::generateTent(){
+void GameWorld::generateTent() {
     deferredActions.push([this]() {
         levelUpTent = new Tent();
 
         b2BodyDef tentBodyDef;
         tentBodyDef.type = b2_staticBody;
-        tentBodyDef.position.Set(levelUpTent->getBoundingRect().x() / SCALE,
-                                 levelUpTent->getBoundingRect().y() / SCALE);
+        tentBodyDef.position.Set((levelUpTent->getBoundingRect().x() + levelUpTent->getBoundingRect().width() / 2.0f) / SCALE,
+                                 (levelUpTent->getBoundingRect().y() + levelUpTent->getBoundingRect().height() / 2.0f) / SCALE);
         b2Body* tentBody = world.CreateBody(&tentBodyDef);
 
         b2PolygonShape tentShape;
-        tentShape.SetAsBox(levelUpTent->getBoundingRect().width() / (2.0f * SCALE),
-                           levelUpTent->getBoundingRect().height() / (2.0f * SCALE));
+
+        // Fine-tuned dimensions for the collision box
+        float widthFactor = 0.4f;  // Adjust this to shrink width
+        float heightFactor = 0.6f; // Adjust this to shrink height
+        tentShape.SetAsBox((levelUpTent->getBoundingRect().width() * widthFactor) / (2.0f * SCALE),
+                           (levelUpTent->getBoundingRect().height() * heightFactor) / (2.0f * SCALE));
 
         b2FixtureDef tentFixtureDef;
         tentFixtureDef.shape = &tentShape;
-        tentFixtureDef.isSensor = true; // Mark this fixture as a sensor
+        tentFixtureDef.isSensor = true;
         tentBody->CreateFixture(&tentFixtureDef);
 
         BodyData* tentData = new BodyData("tent", levelUpTent);
         tentBody->SetUserData(tentData);
 
-        qDebug() << "Tent body created.";
+        qDebug() << "Tent body created with adjusted collision box.";
     });
 }
+
 
 
 

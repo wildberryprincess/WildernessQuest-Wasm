@@ -19,6 +19,7 @@ private:
     bool gameOver;
     QString currentCorrectAnswer = "a";
     int numQuestionsAnswered;
+    bool allQuestionsAnswered;
     vector <QString> backgroundImages;
 
     QList<QPoint> levelOnePlatformCoords;

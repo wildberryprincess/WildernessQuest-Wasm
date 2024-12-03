@@ -27,7 +27,7 @@ GameModel::~GameModel() {
 
 void GameModel:: setLevel(int level){
     currentLevel = level;
-
+    allQuestionsAnswered = false;
     // Emit platform and background info
     QString bgPath = backgroundImages.at(currentLevel - 1);
     emit setBackground(bgPath);
@@ -162,12 +162,9 @@ void GameModel::checkCollidedLetter(QString letter) {
 
         numQuestionsAnswered++; // Increment the correct answer count
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
-
         // Check if the user answered enough questions to advance
         if (numQuestionsAnswered >= 2) {
-            qDebug() << "Advancing to the next level.";
-            currentLevel++;
-            setLevel(currentLevel);
+            allQuestionsAnswered = true;
             numQuestionsAnswered = 0; // Reset question counter for the new level
         } else {
             updatePrompts(); // Emit the next prompt
@@ -230,7 +227,17 @@ void GameModel::checkObstacleCollision(){
 
 void GameModel::checkTentCollision() {
     qDebug() << "Inside model, the user has collided with a tent";
+    if (allQuestionsAnswered) {
+        qDebug() << "Advancing to the next level.";
+        currentLevel++;
+        allQuestionsAnswered = false; // Reset for the next level
+        numQuestionsAnswered = 0;    // Reset the question counter
+        setLevel(currentLevel);
+    } else {
+        qDebug() << "Cannot advance: not all questions answered.";
+    }
 }
+
 
 
 
