@@ -6,6 +6,7 @@ Reviewer: Alexis Brown (.cpp &.h)
 
 This file creates a "BodyData" struct that is used to store the name of an object, as well as it's type. It is used primarily
 inside of GameContactListener so that the contact listener can identity the type of object the user has colliding with.
+Because Box2D dosent inherently know the types of objects involved in a collsions, BodyData is a way to store the necessary information.
 While body data is a struct, it behaves as an object and stores the platform, main character, tent, and obstacle data.
 */
 #ifndef BODYDATA_H
