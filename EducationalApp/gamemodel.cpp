@@ -13,6 +13,7 @@ GameModel::GameModel(){
     currentLevel = 1;
     lives = 3;
     gameOver = false;
+    numQuestionsAnswered = 0;
 
     instantiateBackgrounds();
     setPlatformCoords();
@@ -80,7 +81,7 @@ void GameModel::emitPromptsForLevel(int level) {
         prompts = &allPrompts.levelFourPrompts;
         break;
     default:
-        qWarning() << "Invalid level number:" << level;
+        qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!
         return;
     }
 
@@ -88,7 +89,7 @@ void GameModel::emitPromptsForLevel(int level) {
     if (prompts && !prompts->isEmpty()) {
         auto& prompt = prompts->front();
         emit sendPrompt(prompt);
-       // currentCorrectAnswer = prompt.correctAnswer.at(0).toLower(); //SET CORRECT ANSWER HERE
+        currentCorrectAnswer = prompt.correctAnswer.at(0).toLower(); //SET CORRECT ANSWER HERE
     } else {
         qWarning() << "No prompts available for level" << level;
     }
@@ -156,6 +157,13 @@ void GameModel::randomizeSurvivalPrompts(){
 void GameModel::checkCollidedLetter(QString letter) {
     if(letter == currentCorrectAnswer) {
         qDebug() << "the user selected the correct answer " << letter;
+        numQuestionsAnswered = numQuestionsAnswered + 1;
+        qDebug() << "Number of correct answered Questions" << numQuestionsAnswered;
+        if(numQuestionsAnswered == 2) {
+            currentLevel = currentLevel + 1;
+            setLevel(currentLevel);
+        }
+
     } else {
         qDebug() << "the user collided with the incorrect letter: user letter:" << letter << " correct letter: " << currentCorrectAnswer;
     }
