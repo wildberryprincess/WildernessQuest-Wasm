@@ -56,6 +56,7 @@ public slots:
     void setLevel(int level);
     void checkCollidedLetter(QString letter);
     void checkObstacleCollision();
+    void checkTentCollision();
 
 signals:
     void platformInfo(QList <QPoint> coords, QList <QPoint> sizes);

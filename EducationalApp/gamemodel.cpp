@@ -171,5 +171,9 @@ void GameModel::checkObstacleCollision(){
     }
 }
 
+void GameModel::checkTentCollision() {
+    qDebug() << "Inside model, the user has collided with a tent";
+}
+
 
 

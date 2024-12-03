@@ -2,7 +2,8 @@
 #include "letterobjects.h"
 #include "platform.h"
 #include "obstacle.h"
-#include "maincharacter.h" // Include for mainCharacter
+#include "maincharacter.h"
+#include "tent.h"
 #include <QDebug>
 
 // Default constructor
@@ -25,6 +26,9 @@ BodyData::~BodyData() {
     } else if (type == "player") {
         qDebug() << "Deleting MainCharacter.";
         delete static_cast<mainCharacter*>(object);
+    } else if (type == "tent") {
+        qDebug() << "Deleting Tent.";
+        delete static_cast<Tent*>(object);
     } else {
         qDebug() << "Unknown type in BodyData, no cleanup performed.";
     }

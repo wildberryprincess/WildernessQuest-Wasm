@@ -329,3 +329,7 @@ void GameWorld::handleObstacleCollisions() {
     emit collidedWithObstacle(); // emits to model to handle obstacle collisions
 }
 
+void GameWorld::handleTentCollisions() {
+    emit collidedWithTent();
+}
+

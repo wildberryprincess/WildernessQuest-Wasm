@@ -44,7 +44,12 @@ void GameContactListener::BeginContact(b2Contact* contact) {
     } else if (otherData->type == "obstacle") {
         gameWorld->handleObstacleCollisions();
         qDebug() << "Player collided with an obstacle!";
-    } else {
+    }
+        else if (otherData->type == "tent") {
+            gameWorld->handleTentCollisions();
+            qDebug() << "Player collided with a tent!";
+        }
+     else {
         qWarning() << "Unknown collision type:" << otherData->type;
     }
 }
@@ -73,6 +78,8 @@ void GameContactListener::EndContact(b2Contact* contact) {
             qDebug() << "Player is no longer in contact with a letter.";
         } else if (otherData->type == "obstacle") {
             qDebug() << "Player is no longer in contact with an obstacle.";
+        } else if (otherData->type == "tent") {
+            qDebug() << "Player is no longer in contact with a tent.";
         }
     } else {
         qDebug() << "Collision ended but not involving player.";

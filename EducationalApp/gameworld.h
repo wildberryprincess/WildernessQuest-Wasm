@@ -37,6 +37,7 @@ public slots:
     void generateLetters(QList<QPoint> coords, QStringList letters);
     void generateTent();
     void displayPrompt(SurvivalPrompt::Prompt& prompt);
+    void handleTentCollisions();
     void setCharacterType(int type);
 
 private:
@@ -65,5 +66,6 @@ private:
 signals:
     void checkLetterInModel(QString letter);
     void collidedWithObstacle();
+    void collidedWithTent();
 };
 #endif // GAMEWORLD_H

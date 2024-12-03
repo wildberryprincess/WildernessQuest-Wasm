@@ -32,6 +32,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(&gameModel,&GameModel::createTent, gameWorld, &GameWorld::generateTent);
 
+    connect(gameWorld, &GameWorld::collidedWithTent, &gameModel, &GameModel::checkTentCollision);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View
