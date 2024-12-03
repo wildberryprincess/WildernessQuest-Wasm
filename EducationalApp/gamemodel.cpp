@@ -103,7 +103,7 @@ void GameModel:: instantiateBackgrounds(){
     //Adding all the background images into vector
     //TODO: maybe remove pixmap obj
     QPixmap levelOneBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(":/Images/background_level2.PNG"); //TESTING LEVEL 2 PHOTO PUT BACK IN LEVEL 1 LATER
+    backgroundImages.push_back(":/Images/background_level3.PNG"); //TESTING LEVEL 3 PHOTO PUT BACK IN LEVEL 1 LATER
 
     QPixmap levelTwoBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level2.PNG");
