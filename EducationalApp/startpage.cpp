@@ -25,6 +25,7 @@ void StartPage::on_startButton_clicked()
     instructionsLabel->hide();
     ui->girlScoutButton->show();
     ui->boyScoutButton->show();
+    ui->gameNameLabel->show();
 }
 
 // Girl Scout is 0, Boy Scout is 1

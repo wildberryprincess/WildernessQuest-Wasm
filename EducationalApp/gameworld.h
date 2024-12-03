@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <functional> // For std::function
 #include "platform.h"
+#include <queue>
 #include "letterobjects.h"
 #include "obstacle.h"
 #include "gamecontactlistener.h" // Include here to use GameContactListener
