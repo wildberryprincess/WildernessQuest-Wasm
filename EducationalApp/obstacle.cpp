@@ -17,3 +17,5 @@ QRect Obstacle::getBoundingRect() {
 QImage Obstacle::getImage() {
     return image;
 }
+
+// QImage Obstacle::

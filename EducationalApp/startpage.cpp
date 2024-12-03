@@ -28,7 +28,7 @@ void StartPage::on_startButton_clicked()
     ui->gameNameLabel->show();
 }
 
-// Girl Scout is 0, Boy Scout is 1
+// Girl Scout is 0, Boy Scout is 1, NonBinary Scout is 2
 void StartPage::on_girlScoutButton_clicked()
 {
     emit updateCharacterInfo(0);
@@ -42,6 +42,11 @@ void StartPage::on_boyScoutButton_clicked()
     this->hide();
 }
 
+void StartPage::on_nonBinaryScoutButton_clicked()
+{
+    emit updateCharacterInfo(2);
+    this->hide();
+}
 
 void StartPage::on_instructionsButton_clicked()
 {

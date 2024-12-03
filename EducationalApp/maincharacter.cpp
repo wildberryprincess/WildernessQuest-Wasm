@@ -12,6 +12,9 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     } else if (characterType == 1) {
         image = QImage(":/Images/boyScout.png"); // Need to change
         image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    } else if (characterType == 2) {
+        image = QImage(":/Images/bear.png"); // Need to change
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
     // image = QImage(":/Images/girlScout.png");
     // image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
