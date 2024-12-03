@@ -12,6 +12,7 @@
         <file>bear.png</file>
         <file>tent.png</file>
         <file>boyScout.png</file>
+        <file>background_level3.PNG</file>
     </qresource>
     <qresource prefix="/Prompts"/>
 </RCC>
