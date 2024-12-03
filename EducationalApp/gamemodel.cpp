@@ -108,13 +108,13 @@ void GameModel:: instantiateBackgrounds(){
     //Adding all the background images into vector
     //TODO: maybe remove pixmap obj
     QPixmap levelOneBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(":/Images/background_level3.PNG"); //TESTING LEVEL 3 PHOTO PUT BACK IN LEVEL 1 LATER
+    backgroundImages.push_back(":/Images/background_level1.PNG"); //TESTING LEVEL 3 PHOTO PUT BACK IN LEVEL 1 LATER
 
     QPixmap levelTwoBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level2.PNG");
 
     QPixmap levelThreeBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(":/Images/background_level1.PNG");
+    backgroundImages.push_back(":/Images/background_level3.PNG");
 
     QPixmap levelFourBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level1.PNG");
@@ -155,19 +155,58 @@ void GameModel::randomizeSurvivalPrompts(){
 }
 
 void GameModel::checkCollidedLetter(QString letter) {
-    if(letter == currentCorrectAnswer) {
-        qDebug() << "the user selected the correct answer " << letter;
-        numQuestionsAnswered = numQuestionsAnswered + 1;
-        qDebug() << "Number of correct answered Questions" << numQuestionsAnswered;
-        if(numQuestionsAnswered == 2) {
+    if (letter == currentCorrectAnswer) {
+        if (numQuestionsAnswered == 2) {
             currentLevel = currentLevel + 1;
             setLevel(currentLevel);
+        } else {
+            qDebug() << "the user selected the correct answer " << letter;
+            numQuestionsAnswered = numQuestionsAnswered + 1;
+            qDebug() << "Number of correct answered Questions" << numQuestionsAnswered;
+            updatePrompts();
         }
-
     } else {
-        qDebug() << "the user collided with the incorrect letter: user letter:" << letter << " correct letter: " << currentCorrectAnswer;
+        qDebug() << "The user collided with the incorrect letter: user letter: "
+                 << letter << " correct letter: " << currentCorrectAnswer;
     }
 }
+
+void GameModel::updatePrompts() {
+    // Remove the answered question from the current prompts
+    QVector<SurvivalPrompt::Prompt>* prompts = nullptr;
+
+    switch (currentLevel) {
+    case 1:
+        prompts = &allPrompts.levelOnePrompts;
+        break;
+    case 2:
+        prompts = &allPrompts.levelTwoPrompts;
+        break;
+    case 3:
+        prompts = &allPrompts.levelThreePrompts;
+        break;
+    case 4:
+        prompts = &allPrompts.levelFourPrompts;
+        break;
+    default:
+        qWarning() << "Invalid level number:" << currentLevel;
+        return;
+    }
+
+    if (prompts && !prompts->isEmpty()) {
+        prompts->pop_front(); // Remove the answered prompt
+    }
+
+    // Emit the next prompt or level up if no prompts are left
+    if (prompts && !prompts->isEmpty()) {
+        auto& nextPrompt = prompts->front();
+        emit sendPrompt(nextPrompt);
+        currentCorrectAnswer = nextPrompt.correctAnswer.at(0).toLower();
+    } else {
+        qDebug() << "All questions answered for level " << currentLevel;
+    }
+}
+
 
 void GameModel::checkObstacleCollision(){
     qDebug() << "Inside model, the user collided with a bear";

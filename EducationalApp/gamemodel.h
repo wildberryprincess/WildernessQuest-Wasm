@@ -51,6 +51,7 @@ private:
     void generateLetters(QList<QPoint> letterCoords, QStringList letters);
     void randomizeSurvivalPrompts();
     void emitPromptsForLevel(int level);
+    void updatePrompts();
 
 
 public slots:

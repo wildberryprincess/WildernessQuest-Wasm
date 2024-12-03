@@ -18,7 +18,7 @@ GameWorld::GameWorld(QWidget *parent)
     promptLabel(new QLabel(this)),
     contactListener(new GameContactListener())
 {
-
+    std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
     characterType = 0;
@@ -96,6 +96,12 @@ void GameWorld::updateWorld() {
     // Step the physics world
     world.Step(1.0f / 60.0f, 6, 2);
 
+    // Process deferred actions (e.g., creating new bodies)
+    while (!deferredActions.empty()) {
+        deferredActions.front()(); // Execute the action
+        deferredActions.pop();
+    }
+
     // Update the main character's movement
     mainPlayer->update();
 
@@ -157,7 +163,6 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
 }
 
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
-
     qDebug() << "Obstacle list size: " << positionList.size();
 
     for (int i = 0; i < positionList.size(); ++i) {
@@ -165,33 +170,38 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
         Obstacle obstacle(positionList[i]);
         obstaclesList.append(obstacle);
 
-        // Create a static body in the Box2D world
-        b2BodyDef obstacleBodyDef;
-        obstacleBodyDef.type = b2_staticBody;
-        obstacleBodyDef.position.Set(positionList[i].x() / SCALE, positionList[i].y() / SCALE);
-        b2Body* obstacleBody = world.CreateBody(&obstacleBodyDef);
+        // Capture positionList[i] explicitly in the lambda
+        deferredActions.push([this, obstacle, position = positionList[i]]() {
+            // Create a static body in the Box2D world
+            b2BodyDef obstacleBodyDef;
+            obstacleBodyDef.type = b2_staticBody;
+            obstacleBodyDef.position.Set(position.x() / SCALE, position.y() / SCALE);
+            b2Body* obstacleBody = world.CreateBody(&obstacleBodyDef);
 
-        // Define the shape for the obstacle
-        b2PolygonShape obstacleShape;
-        obstacleShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Adjust size as needed
+            // Define the shape for the obstacle
+            b2PolygonShape obstacleShape;
+            obstacleShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Adjust size as needed
 
-        // Define the fixture for the obstacle
-        b2FixtureDef obstacleFixtureDef;
-        obstacleFixtureDef.shape = &obstacleShape;
-        obstacleFixtureDef.isSensor = true; // Mark this fixture as a sensor
-        obstacleBody->CreateFixture(&obstacleFixtureDef);
+            // Define the fixture for the obstacle
+            b2FixtureDef obstacleFixtureDef;
+            obstacleFixtureDef.shape = &obstacleShape;
+            obstacleFixtureDef.isSensor = true; // Mark this fixture as a sensor
+            obstacleBody->CreateFixture(&obstacleFixtureDef);
 
-        // Attach user data for collision handling
-        BodyData* obstacleData = new BodyData("obstacle", new Obstacle(obstacle));
-        obstacleBody->SetUserData(obstacleData);
+            // Attach user data for collision handling
+            BodyData* obstacleData = new BodyData("obstacle", new Obstacle(obstacle));
+            obstacleBody->SetUserData(obstacleData);
 
-        qDebug() << "Obstacle created with UserData:" << obstacleBody;
+            qDebug() << "Obstacle created with UserData:" << obstacleBody;
+        });
     }
 }
+
 
 void GameWorld::createPlatformGrid() {
 
     for (Platform& platform : platformsList) {
+          deferredActions.push([this, platform]() {
 
         // Calculate center of platform (This is how the collision works)
         float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
@@ -216,7 +226,7 @@ void GameWorld::createPlatformGrid() {
         platformFixtureDef.density = 0.0f;
         platformFixtureDef.friction = 0.1f;
         platformBody->CreateFixture(&platformFixtureDef);
-
+        });
 
     }
 }
@@ -236,58 +246,58 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
         LetterObjects letter(letterCoords[i], letters[i]);
         letter.changeImageDimensions(50, 50);
 
-        // Create a static body for the letter
-        b2BodyDef letterBodyDef;
-        letterBodyDef.type = b2_staticBody;
-        letterBodyDef.position.Set(letterCoords[i].x() / SCALE, letterCoords[i].y() / SCALE);
+        // Capture the current letter and position explicitly in the lambda
+        QPoint position = letterCoords[i];
+        deferredActions.push([this, letter, position]() {
+            // Create a static body for the letter
+            b2BodyDef letterBodyDef;
+            letterBodyDef.type = b2_staticBody;
+            letterBodyDef.position.Set(position.x() / SCALE, position.y() / SCALE);
 
-        b2Body* letterBody = world.CreateBody(&letterBodyDef);
+            b2Body* letterBody = world.CreateBody(&letterBodyDef);
 
-        b2PolygonShape letterShape;
-        letterShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Half width/height
+            b2PolygonShape letterShape;
+            letterShape.SetAsBox(3.0f / SCALE, 3.0f / SCALE); // Half width/height
 
-        b2FixtureDef letterFixtureDef;
-        letterFixtureDef.shape = &letterShape;
-        letterFixtureDef.density = 0.0f;
-        letterBody->CreateFixture(&letterFixtureDef);
+            b2FixtureDef letterFixtureDef;
+            letterFixtureDef.shape = &letterShape;
+            letterFixtureDef.density = 0.0f;
+            letterBody->CreateFixture(&letterFixtureDef);
 
-        BodyData* letterData = new BodyData{"letter", new LetterObjects(letter)};
-        letterBody->SetUserData(letterData);
+            BodyData* letterData = new BodyData{"letter", new LetterObjects(letter)};
+            letterBody->SetUserData(letterData);
 
-        letterObjectsList.append(letter);
+            letterObjectsList.append(letter);
+        });
     }
-
     update(); // Trigger a repaint
 }
 
+
 void GameWorld::generateTent(){
-    // Create the Tent object
-    Tent* tent = new Tent();
-    levelUpTent = tent; // Store the tent instance for rendering
+    deferredActions.push([this]() {
+        levelUpTent = new Tent();
 
-    // Create a static body in the Box2D world
-    b2BodyDef tentBodyDef;
-    tentBodyDef.type = b2_staticBody;
-    tentBodyDef.position.Set(tent->getBoundingRect().center().x() / SCALE,
-                             tent->getBoundingRect().center().y() / SCALE);
-    b2Body* tentBody = world.CreateBody(&tentBodyDef);
+        b2BodyDef tentBodyDef;
+        tentBodyDef.type = b2_staticBody;
+        tentBodyDef.position.Set(levelUpTent->getBoundingRect().x() / SCALE,
+                                 levelUpTent->getBoundingRect().y() / SCALE);
+        b2Body* tentBody = world.CreateBody(&tentBodyDef);
 
-    // Define the shape for the tent
-    b2PolygonShape tentShape;
-    tentShape.SetAsBox(tent->getBoundingRect().width() / (3.0f * SCALE),
-                       tent->getBoundingRect().height() / (3.0f * SCALE));
+        b2PolygonShape tentShape;
+        tentShape.SetAsBox(levelUpTent->getBoundingRect().width() / (2.0f * SCALE),
+                           levelUpTent->getBoundingRect().height() / (2.0f * SCALE));
 
-    // Define the fixture for the tent
-    b2FixtureDef tentFixtureDef;
-    tentFixtureDef.shape = &tentShape;
-    tentFixtureDef.isSensor = true; // Mark this fixture as a sensor
-    tentBody->CreateFixture(&tentFixtureDef);
+        b2FixtureDef tentFixtureDef;
+        tentFixtureDef.shape = &tentShape;
+        tentFixtureDef.density = 0.0f;
+        tentBody->CreateFixture(&tentFixtureDef);
 
-    // Attach user data for collision handling
-    BodyData* tentData = new BodyData("tent", tent);
-    tentBody->SetUserData(tentData);
+        BodyData* tentData = new BodyData("tent", levelUpTent);
+        tentBody->SetUserData(tentData);
 
-    qDebug() << "Tent created with UserData:" << tentBody;
+        qDebug() << "Tent body created.";
+    });
 }
 
 

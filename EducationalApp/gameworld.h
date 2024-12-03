@@ -6,6 +6,7 @@
 #include <QString>
 #include <QTimer>
 #include <QLabel>
+#include <functional> // For std::function
 #include "platform.h"
 #include "letterobjects.h"
 #include "obstacle.h"
@@ -55,6 +56,8 @@ private:
     SurvivalPrompt survivalPrompts;
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
     QLabel* promptLabel; //display for the question
+
+    std::queue<std::function<void()>> deferredActions;
 
     ~GameWorld();
 
