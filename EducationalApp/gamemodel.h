@@ -19,6 +19,7 @@ private:
     bool gameOver;
     QString currentCorrectAnswer = "a";
     int numQuestionsAnswered;
+    bool allQuestionsAnswered;
     vector <QString> backgroundImages;
 
     QList<QPoint> levelOnePlatformCoords;
@@ -69,5 +70,6 @@ signals:
     void createTent();
     void incorrectCollidedLetter();
     void correctCollidedLetter();
+    void sendGameInfo(int level);
 };
 #endif // GAMEMODEL_H

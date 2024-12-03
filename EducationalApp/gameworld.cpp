@@ -16,7 +16,8 @@ GameWorld::GameWorld(QWidget *parent)
     timer(this),
     currentBackground(nullptr),
     contactListener(new GameContactListener()),
-    promptLabel(new QLabel(this))
+    promptLabel(new QLabel(this)),
+    gameInfoLabel(new QLabel(this))
 {
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
     // Ensure GameWorld has focus to handle key events
@@ -46,6 +47,12 @@ GameWorld::GameWorld(QWidget *parent)
     promptLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
     promptLabel->setStyleSheet("font-size: 14px; color: black; font-family: Courier;");
     promptLabel->setGeometry(725, 10, 700, 300);
+
+    // Set up the game info display
+    gameInfoLabel->setWordWrap(true);
+    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    gameInfoLabel->setStyleSheet("font-size: 24px; color: black; font-family: Courier;");
+    gameInfoLabel->setGeometry(10, 10, 400, 50);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -275,31 +282,36 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
 }
 
 
-void GameWorld::generateTent(){
+void GameWorld::generateTent() {
     deferredActions.push([this]() {
         levelUpTent = new Tent();
 
         b2BodyDef tentBodyDef;
         tentBodyDef.type = b2_staticBody;
-        tentBodyDef.position.Set(levelUpTent->getBoundingRect().x() / SCALE,
-                                 levelUpTent->getBoundingRect().y() / SCALE);
+        tentBodyDef.position.Set((levelUpTent->getBoundingRect().x() + levelUpTent->getBoundingRect().width() / 2.0f) / SCALE,
+                                 (levelUpTent->getBoundingRect().y() + levelUpTent->getBoundingRect().height() / 2.0f) / SCALE);
         b2Body* tentBody = world.CreateBody(&tentBodyDef);
 
         b2PolygonShape tentShape;
-        tentShape.SetAsBox(levelUpTent->getBoundingRect().width() / (2.0f * SCALE),
-                           levelUpTent->getBoundingRect().height() / (2.0f * SCALE));
+
+        // Fine-tuned dimensions for the collision box
+        float widthFactor = 0.4f;  // Adjust this to shrink width
+        float heightFactor = 0.6f; // Adjust this to shrink height
+        tentShape.SetAsBox((levelUpTent->getBoundingRect().width() * widthFactor) / (2.0f * SCALE),
+                           (levelUpTent->getBoundingRect().height() * heightFactor) / (2.0f * SCALE));
 
         b2FixtureDef tentFixtureDef;
         tentFixtureDef.shape = &tentShape;
-        tentFixtureDef.isSensor = true; // Mark this fixture as a sensor
+        tentFixtureDef.isSensor = true;
         tentBody->CreateFixture(&tentFixtureDef);
 
         BodyData* tentData = new BodyData("tent", levelUpTent);
         tentBody->SetUserData(tentData);
 
-        qDebug() << "Tent body created.";
+        qDebug() << "Tent body created with adjusted collision box.";
     });
 }
+
 
 
 
@@ -330,6 +342,13 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     qDebug() << "The prompt is being displayed.";
     // Update the label with the formatted content
     promptLabel->setText(quizContent);
+}
+
+void GameWorld::displayGameInfo(int level) {
+    QString levelString = "<br><br><span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
+                          + QString::number(level)
+                          + "<br><span style='color: red; font-weight: bold;'>Lives: </span>";
+    gameInfoLabel->setText(levelString);
 }
 
 void GameWorld::checkLetter(QString letter) {
@@ -387,7 +406,7 @@ void GameWorld::handleCorrectCollidedLetter() {
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
-    //"Correct!" disappears after 3 seconds
+    //"Good job!" disappears after 3 seconds
     QTimer::singleShot(3000, this, [this, currentText]() {
         promptLabel->setText(currentText);
     });

@@ -19,6 +19,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(&gameModel, &GameModel::setBackground, gameWorld, &GameWorld::setBackgroundPixMap);
 
+    connect(&gameModel, &GameModel::sendGameInfo, gameWorld, &GameWorld::displayGameInfo);
+
     connect(&gameModel, &GameModel::letterInfo, gameWorld, &GameWorld::generateLetters);
 
     connect(&gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
