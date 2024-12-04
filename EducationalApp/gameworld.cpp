@@ -50,9 +50,9 @@ GameWorld::GameWorld(QWidget *parent)
 
     // Set up the game info display
     gameInfoLabel->setWordWrap(true);
-    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    gameInfoLabel->setStyleSheet("font-size: 14px; color: black; font-family: Courier;");
-    gameInfoLabel->setGeometry(5, 0, 300, 250);
+    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    gameInfoLabel->setStyleSheet("font-size: 20px; color: black; font-family: Courier;");
+    gameInfoLabel->setGeometry(0, 0, 300, 250);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
