@@ -15,7 +15,7 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
         image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 2) {
         image = QImage(":/Images/nonBinaryScout.png");
-        image = image.scaled(120, 120, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         // 70, 70 works best for jumping but is very tiny
     }
 
