@@ -120,7 +120,7 @@ void GameModel:: instantiateBackgrounds(){
     backgroundImages.push_back(":/Images/background_level3.PNG");
 
     QPixmap levelFourBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(":/Images/background_level1.PNG");
+    backgroundImages.push_back(":/Images/background_level4.PNG");
 }
 
 
