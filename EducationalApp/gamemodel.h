@@ -75,6 +75,7 @@ signals:
     void incorrectCollidedLetter();
     void correctCollidedLetter();
     void sendGameInfo(int level);
+    void livesUpdated(int lives);
     void gameOver(bool win);
 };
 #endif // GAMEMODEL_H

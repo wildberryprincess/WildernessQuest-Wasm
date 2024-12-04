@@ -14,6 +14,7 @@
 #include "gamecontactlistener.h" // Include here to use GameContactListener
 #include "maincharacter.h"
 #include "tent.h"
+#include "heart.h"
 #include "bodydata.h"
 #include "gamemodel.h"
 
@@ -44,12 +45,15 @@ public slots:
     void handleIncorrectCollidedLetter();
     void handleCorrectCollidedLetter();
     void displayGameInfo(int level);
+    void updateLivesDisplay(int lives);
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
     b2World world;
     QTimer timer;
     QPixmap* currentBackground;
+    int currentLives = 3;
+    QList<Heart> heartsList;
     QList<Platform> platformsList;
     QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
@@ -66,8 +70,9 @@ private:
 
     ~GameWorld();
     void createPlatformGrid();
-
     void initializePlayerPosition();
+    void initializeHearts();
+
 signals:
     void checkLetterInModel(QString letter);
     void collidedWithObstacle(QPoint collidedObstaclePosition);

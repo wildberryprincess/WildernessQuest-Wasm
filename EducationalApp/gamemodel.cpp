@@ -232,6 +232,7 @@ void GameModel::updatePrompts() {
 void GameModel::checkObstacleCollision(QPoint obstaclePosition){
     qDebug() << "Inside model, the user collided with a bear";
     lives--;
+    emit livesUpdated(lives);
     qDebug() << "Lives left: " << lives;
 
     if (currentLevel == 1) {

@@ -25,6 +25,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(&gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
 
+    connect(&gameModel, &GameModel::livesUpdated, gameWorld, &GameWorld::updateLivesDisplay);
+
     connect(gameWorld, &GameWorld::checkLetterInModel, &gameModel, &GameModel::checkCollidedLetter);
 
     connect(&gameModel, &GameModel::incorrectCollidedLetter, gameWorld, &GameWorld::handleIncorrectCollidedLetter);

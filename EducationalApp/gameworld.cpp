@@ -36,6 +36,7 @@ GameWorld::GameWorld(QWidget *parent)
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     initializePlayerPosition();
+    initializeHearts();
     levelUpTent = new Tent();
 
     world.SetContactListener(contactListener); // Sets the collision detection
@@ -96,6 +97,14 @@ void GameWorld::paintEvent(QPaintEvent *) {
 
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
+
+    // Draw hearts
+    for (int i = 0; i < currentLives; ++i) {
+        if (i < heartsList.size()) {
+            Heart& heart = heartsList[i];
+            painter.drawImage(heart.getPosition(), heart.getImage());
+        }
+    }
 }
 
 void GameWorld::updateWorld() {
@@ -324,6 +333,20 @@ void GameWorld::initializePlayerPosition() {
     qDebug() << "Initial Box2D body position (x, y):" << initialBodyPosition.x * SCALE << initialBodyPosition.y * SCALE;
 }
 
+void GameWorld::initializeHearts() {
+    heartsList.clear();
+
+    // Fixed positions for the hearts
+    int startX = 95; // Starting x-coordinate
+    int startY = 25; // Fixed y-coordinate
+    int spacing = 60; // Spacing between hearts
+
+    for (int i = 0; i < currentLives; ++i) { // Assuming 3 lives
+        QPoint position(startX + i * spacing, startY);
+        heartsList.append(Heart(position));
+    }
+}
+
 void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     // Combine the question and answers into a single string
     QString quizContent = QString(
@@ -347,9 +370,15 @@ void GameWorld::displayGameInfo(int level) {
     QString levelString =
         "<span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
         "<span style='font-weight: bold;'>" + QString::number(level) + "</span>"
-                                   "<br><span style='color: brown; font-weight: bold;'>Lives: </span>";
+                                   "<br><span style='color: black; font-weight: bold;'>Lives: </span>";
     gameInfoLabel->setText(levelString);
 
+}
+
+void GameWorld::updateLivesDisplay(int lives) {
+    qDebug() << "Updating lives display with lives:" << lives;
+    currentLives = lives;  // Update the local state of lives
+    update();
 }
 
 void GameWorld::checkLetter(QString letter) {
@@ -418,6 +447,8 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
     obstaclesList.removeAll(obstacle);
     qDebug() << "Obstacles count after collision removal: " << obstaclesList.size();
     emit collidedWithObstacle(obstaclePosition);    // emits to model to handle obstacle collisions
+
+    //update lives hearts
 
     update();
 }
