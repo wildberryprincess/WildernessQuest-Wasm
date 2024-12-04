@@ -16,10 +16,13 @@ public:
     explicit StartPage(QWidget *parent = nullptr);
     ~StartPage();
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 signals:
     void updateCharacterInfo(int characterType);
 
-private slots:
+public slots:
     void on_startButton_clicked();
 
     void on_girlScoutButton_clicked();
@@ -30,10 +33,20 @@ private slots:
 
     void on_nonBinaryScoutButton_clicked();
 
+    void updateWinScreen();
+
+    void updateLoseScreen();
+
 private:
     Ui::StartPage *ui;
 
     QLabel* instructionsLabel;
+    QPixmap uiBackground;
+    QLabel* boyScoutLabel;
+    QLabel* girlScoutLabel;
+    QLabel* nonBinaryScoutLabel;
+
+    void setBackground(const QString &imagePath);
 };
 
 #endif // STARTPAGE_H

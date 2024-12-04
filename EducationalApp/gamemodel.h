@@ -16,7 +16,7 @@ private:
     int currentLevel;
     int lives;
     int levelProgress;
-    bool gameOver;
+    bool win;
     QString currentCorrectAnswer = "a";
     int numQuestionsAnswered;
     bool allQuestionsAnswered;
@@ -39,6 +39,10 @@ private:
     QList<QPoint> levelFourObstaclePosition;
 
     QList<QPoint> questionOneLetterCoords;
+    QList<QPoint> questionTwoLetterCoords;
+    QList<QPoint> questionThreeLetterCoords;
+    QList<QPoint> questionFourLetterCoords;
+
 
     QStringList letters;
 
@@ -71,5 +75,6 @@ signals:
     void incorrectCollidedLetter();
     void correctCollidedLetter();
     void sendGameInfo(int level);
+    void gameOver(bool win);
 };
 #endif // GAMEMODEL_H

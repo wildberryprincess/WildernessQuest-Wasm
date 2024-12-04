@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/Images">
         <file>log2.0.png</file>
-        <file>trial_background.png</file>
         <file>girlScout.png</file>
         <file>background_level1.PNG</file>
         <file>A.png</file>
@@ -14,6 +13,8 @@
         <file>boyScout.png</file>
         <file>background_level3.PNG</file>
         <file>background_level4.PNG</file>
+        <file>heart.png</file>
+        <file>nonBinaryScout.png</file>
     </qresource>
     <qresource prefix="/Prompts"/>
 </RCC>

@@ -1,16 +1,72 @@
 #include "startpage.h"
 #include "ui_startpage.h"
+#include <QPainter>
 
 StartPage::StartPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::StartPage)
 {
     ui->setupUi(this);
-    ui->gameNameLabel->setStyleSheet("font: 30px Courier;");
+    uiBackground = QPixmap(":/Images/background_level2.PNG");
+    ui->gameNameLabel->setStyleSheet("font: 50px Courier;");
     ui->gameNameLabel->setAlignment(Qt::AlignCenter);
+
+    ui->startButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #c1c19e;"  // Button background
+        "   color: black;"              // Text color
+        "   font: 18px Courier;"
+        "   border: 2px solid #c1c19e;" // Border
+        "   border-radius: 10px;"       // Rounded corners
+        "}"
+        );
+
+    ui->instructionsButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #c1c19e;"  // Button background
+        "   color: black;"              // Text color
+        "   font: 18px Courier;"
+        "   border: 2px solid #c1c19e;" // Border
+        "   border-radius: 10px;"       // Rounded corners
+        "}"
+        );
+
     ui->girlScoutButton->hide();
+    ui->girlScoutButton->setFixedSize(150, 50);
+    ui->girlScoutButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #F2D2BD;"  // Button background
+        "   color: black;"              // Text color
+        "   font: 18px Courier;"
+        "   border: 2px solid #F2D2BD;" // Border
+        "   border-radius: 10px;"       // Rounded corners
+        "}"
+        );
+
     ui->boyScoutButton->hide();
+    ui->boyScoutButton->setFixedSize(150, 50);
+    ui->boyScoutButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #F2D2BD;"  // Button background
+        "   color: black;"              // Text color
+        "   font: 18px Courier;"
+        "   border: 2px solid #F2D2BD;" // Border
+        "   border-radius: 10px;"       // Rounded corners
+        "}"
+        );
+
     ui->nonBinaryScoutButton->hide();
+    ui->nonBinaryScoutButton->setFixedSize(200, 50);
+    ui->nonBinaryScoutButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #F2D2BD;"  // Button background
+        "   color: black;"              // Text color
+        "   font: 18px Courier;"
+        "   border: 2px solid #F2D2BD;" // Border
+        "   border-radius: 10px;"       // Rounded corners
+        "}"
+        );
+
     instructionsLabel = new QLabel(this);
 }
 
@@ -24,9 +80,42 @@ void StartPage::on_startButton_clicked()
     ui->startButton->hide();
     ui->instructionsButton->hide();
     instructionsLabel->hide();
+
     ui->girlScoutButton->show();
+    girlScoutLabel = new QLabel(this);
+    girlScoutLabel->show();
+    girlScoutLabel->setStyleSheet(
+        "background-color: #c1c19e;;"  // Set the background color
+        "background-image: url(:/Images/girlScout.png);"
+        "background-position: center;"
+        );
+    girlScoutLabel->setFixedSize(160, 200);
+    girlScoutLabel->move(880, 390);
+
     ui->boyScoutButton->show();
+    boyScoutLabel = new QLabel(this);
+    boyScoutLabel->show();
+    boyScoutLabel->setStyleSheet(
+        "background-color: #c1c19e;;"  // Set the background color
+        "background-image: url(:/Images/boyScout.png);"
+        "background-position: center;"
+        );
+    boyScoutLabel->setFixedSize(150, 200);
+    boyScoutLabel->move(425, 390);
+
+
     ui->nonBinaryScoutButton->show();
+    nonBinaryScoutLabel = new QLabel(this);
+    nonBinaryScoutLabel->show();
+    nonBinaryScoutLabel->setStyleSheet(
+        "background-color: #c1c19e;;"  // Set the background color
+        "background-image: url(:/Images/nonBinaryScout.png);"
+        "background-position: center;"
+        "background-repeat: no-repeat;"
+        );
+    nonBinaryScoutLabel->setFixedSize(200, 200);
+    nonBinaryScoutLabel->move(630, 390);
+
     ui->gameNameLabel->show();
 }
 
@@ -53,13 +142,14 @@ void StartPage::on_nonBinaryScoutButton_clicked()
 void StartPage::on_instructionsButton_clicked()
 {
     ui->startButton->show();
-    ui->startButton->move(680, 700);
+    ui->startButton->move(650, 650);
     ui->instructionsButton->hide();
     ui->gameNameLabel->hide();
 
     instructionsLabel->resize(1000, 500);
     instructionsLabel->setAlignment(Qt::AlignCenter);
     instructionsLabel->setWordWrap(true);
+    instructionsLabel->setStyleSheet("background: white");
 
     int x = (this->width() - instructionsLabel->width()) / 2;
     int y = (this->height() - instructionsLabel->height()) / 2;
@@ -75,5 +165,53 @@ void StartPage::on_instructionsButton_clicked()
         "Finish all 4 levels to win! Have fun and good luck fearless Scout!"
         "</div>"
         );
+}
+
+void StartPage::updateWinScreen() {
+    this->show();
+    setBackground(":/Images/background_level1.PNG");
+
+    ui->startButton->hide();
+    ui->instructionsButton->hide();
+    ui->girlScoutButton->hide();
+    ui->boyScoutButton->hide();
+    ui->nonBinaryScoutButton->hide();
+    girlScoutLabel->hide();
+    boyScoutLabel->hide();
+    nonBinaryScoutLabel->hide();
+    ui->gameNameLabel->setText("You Win!");
+}
+
+void StartPage::updateLoseScreen() {
+    qDebug() << "Player Lost! Should display end screen.";
+    this->show();
+    setBackground(":/Images/background_level1.PNG");
+
+    ui->startButton->hide();
+    ui->instructionsButton->hide();
+    ui->girlScoutButton->hide();
+    ui->boyScoutButton->hide();
+    ui->nonBinaryScoutButton->hide();
+    girlScoutLabel->hide();
+    boyScoutLabel->hide();
+    nonBinaryScoutLabel->hide();
+    ui->gameNameLabel->setText("You Lose!");
+}
+
+void StartPage::setBackground(const QString &imagePath) {
+    QPixmap newBackground(imagePath);
+    if (!newBackground.isNull()) {
+        uiBackground = newBackground;
+        update();
+    }
+}
+
+void StartPage::paintEvent(QPaintEvent* event) {
+    QPainter painter(this);
+
+    if (!uiBackground.isNull()) {
+        painter.drawPixmap(0, 0, this->width(), this->height(), uiBackground);
+    }
+    QWidget::paintEvent(event);
 }
 
