@@ -312,8 +312,6 @@ void GameWorld::generateTent() {
     });
 }
 
-
-
 void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,400); // Adjust to start above a platform
     qDebug() << "Inside initializePlayerPosition: " << characterType;
