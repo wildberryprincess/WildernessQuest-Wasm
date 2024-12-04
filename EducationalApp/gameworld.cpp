@@ -51,8 +51,8 @@ GameWorld::GameWorld(QWidget *parent)
     // Set up the game info display
     gameInfoLabel->setWordWrap(true);
     gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    gameInfoLabel->setStyleSheet("font-size: 24px; color: black; font-family: Courier;");
-    gameInfoLabel->setGeometry(10, 10, 400, 50);
+    gameInfoLabel->setStyleSheet("font-size: 14px; color: black; font-family: Courier;");
+    gameInfoLabel->setGeometry(5, 0, 300, 250);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -347,6 +347,7 @@ void GameWorld::displayGameInfo(int level) {
                           + QString::number(level)
                           + "<br><span style='color: red; font-weight: bold;'>Lives: </span>";
     gameInfoLabel->setText(levelString);
+    qDebug() << "displayGameInfo text is " << levelString;
 }
 
 void GameWorld::checkLetter(QString letter) {
