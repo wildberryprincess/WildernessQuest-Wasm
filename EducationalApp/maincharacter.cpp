@@ -9,12 +9,15 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     // Load and scale the character image
     if (characterType == 0) {
         image = QImage(":/Images/girlScout.png");
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 1) {
         image = QImage(":/Images/boyScout.png");
+        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 2) {
-        image = QImage(":/Images/bear.png"); // Need to change
+        image = QImage(":/Images/nonBinaryScout.png");
+        image = image.scaled(120, 120, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        // 70, 70 works best for jumping but is very tiny
     }
-    image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     // Initialize bounding rectangle directly at the position
     boundingRect = QRect(position, image.size());

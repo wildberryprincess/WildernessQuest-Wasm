@@ -91,6 +91,5 @@ void StartPage::updateLoseScreen() {
     ui->boyScoutButton->hide();
     ui->nonBinaryScoutButton->hide();
     ui->gameNameLabel->setText("You Lose!");
-
 }
 
