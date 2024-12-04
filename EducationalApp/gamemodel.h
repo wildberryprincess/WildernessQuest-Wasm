@@ -39,6 +39,10 @@ private:
     QList<QPoint> levelFourObstaclePosition;
 
     QList<QPoint> questionOneLetterCoords;
+    QList<QPoint> questionTwoLetterCoords;
+    QList<QPoint> questionThreeLetterCoords;
+    QList<QPoint> questionFourLetterCoords;
+
 
     QStringList letters;
 
