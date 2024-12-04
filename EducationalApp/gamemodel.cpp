@@ -167,13 +167,15 @@ void GameModel::checkCollidedLetter(QString letter) {
 
         numQuestionsAnswered++; // Increment the correct answer count
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
-        // Check if the user answered enough questions to advance
+
+        // Check if the user answered enough questions to stop updates
         if (numQuestionsAnswered >= 2) {
             allQuestionsAnswered = true;
-            numQuestionsAnswered = 0; // Reset question counter for the new level
+            qDebug() << "All questions answered for current level.";
         } else {
             updatePrompts(); // Emit the next prompt
         }
+
         emit correctCollidedLetter(); // Notify of correct answer collision
     } else {
         qDebug() << "The user collided with an incorrect letter. User letter: "
@@ -184,6 +186,12 @@ void GameModel::checkCollidedLetter(QString letter) {
 
 
 void GameModel::updatePrompts() {
+     // Check if user has answered enough questions to stop updating
+        if (numQuestionsAnswered >= 2) {
+        qDebug() << "No further prompts; user has answered 2 questions.";
+        return;
+    }
+
     // Remove the answered question from the current prompts
     QVector<SurvivalPrompt::Prompt>* prompts = nullptr;
 
@@ -194,7 +202,7 @@ void GameModel::updatePrompts() {
     case 2:
         prompts = &allPrompts.levelTwoPrompts;
         break;
-    case 3: //TEST TEST
+    case 3:
         prompts = &allPrompts.levelThreePrompts;
         break;
     case 4:
@@ -209,7 +217,7 @@ void GameModel::updatePrompts() {
         prompts->pop_front(); // Remove the answered prompt
     }
 
-    // Emit the next prompt or level up if no prompts are left
+    // Emit the next prompt or stop updating if no prompts are left
     if (prompts && !prompts->isEmpty()) {
         auto& nextPrompt = prompts->front();
         emit sendPrompt(nextPrompt);
