@@ -6,6 +6,7 @@
 #include <QString>
 #include <QTimer>
 #include <QLabel>
+#include <QProgressBar>
 #include <functional> // For std::function
 #include "platform.h"
 #include <queue>
@@ -65,6 +66,7 @@ private:
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
     QLabel* promptLabel; //display for the question
     QLabel* gameInfoLabel; //display level and lives
+    QProgressBar* progressBar;
 
     std::queue<std::function<void()>> deferredActions;
 
