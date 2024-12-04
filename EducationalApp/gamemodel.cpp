@@ -100,7 +100,9 @@ void GameModel::emitPromptsForLevel(int level) {
 
 void GameModel::setLetterPositions(){
     letters = { "a", "b", "c", "d"};
-    questionOneLetterCoords = { QPoint(385, 475), QPoint(500, 200), QPoint(1055, 275), QPoint(1305, 450) };
+    questionTwoLetterCoords = { QPoint(385, 475), QPoint(575, 275), QPoint(1055, 275), QPoint(1305, 450) };
+    questionOneLetterCoords = { QPoint(1425, 260), QPoint(500, 255), QPoint(250, 105), QPoint(650, 658) };
+
 
     //DO THE SAME FOR OTHER Questions
 }
@@ -110,27 +112,27 @@ void GameModel:: instantiateBackgrounds(){
 
     //Adding all the background images into vector
     //TODO: maybe remove pixmap obj
-    QPixmap levelOneBG(":/Images/background_level1.PNG");
-    backgroundImages.push_back(":/Images/background_level1.PNG"); //TESTING LEVEL 3 PHOTO PUT BACK IN LEVEL 1 LATER
+    //QPixmap levelOneBG(":/Images/background_level1.PNG");
+    backgroundImages.push_back(":/Images/background_level1.PNG"); //TESTING LEVEL 3 PHOTO PUT BACK IN LEVEL 1 LATERR
 
-    QPixmap levelTwoBG(":/Images/background_level1.PNG");
+    //QPixmap levelTwoBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level2.PNG");
 
-    QPixmap levelThreeBG(":/Images/background_level1.PNG");
+    //QPixmap levelThreeBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level3.PNG");
 
-    QPixmap levelFourBG(":/Images/background_level1.PNG");
+    //QPixmap levelFourBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level1.PNG");
 }
 
-
+//Adjust the coords for all the levels and for the letters and obstacles
 void GameModel::setPlatformCoords(){
-
-    levelOnePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {425, 250}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {600, 400}};
-    levelOnePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {300, 50}};
-
+    //switched level one and level two
     levelTwoPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelTwoPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+
+    levelOnePlatformCoords =  { {10, 375}, {200, 150}, {450, 300}, {700, 375}, {400, 500}, {1200, 300}, {900, 600}, {1100, 450}, {600, 700}, {300, 800}};
+    levelOnePlatformSizes = {    {300, 50}, {150, 50}, {150, 50}, {150, 50}, {300, 50}, {300, 50}, {150, 50}, {150, 50}, {150, 50}, {150, 50}};
 
     levelThreePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelThreePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
@@ -139,9 +141,10 @@ void GameModel::setPlatformCoords(){
     levelFourPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
 }
 
+//Switched levels one and two
 void GameModel::setObstaclePositions() {
-    levelOneObstaclePosition = { {975, 570}, {300, 645}, {670, 340}};
-    levelTwoObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
+    levelTwoObstaclePosition = { {900, 570}, {300, 645}};
+    levelOneObstaclePosition = { {425, 450}, {750, 320}, {1300, 250} };
     levelThreeObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
     levelFourObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
 }
