@@ -161,6 +161,7 @@ void GameWorld::setBackgroundPixMap(QString filepath) {
 }
 
 void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
+    platformsList.clear();
     for (int i = 0; i < positionList.size(); i++) {
         Platform platform(QPoint(positionList[i].x(), positionList[i].y()));
         platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
