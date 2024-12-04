@@ -51,8 +51,8 @@ GameWorld::GameWorld(QWidget *parent)
     // Set up the game info display
     gameInfoLabel->setWordWrap(true);
     gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    gameInfoLabel->setStyleSheet("font-size: 20px; color: black; font-family: Courier;");
-    gameInfoLabel->setGeometry(0, 0, 300, 250);
+    gameInfoLabel->setStyleSheet("font-size: 24px; color: black; font-family: Courier;");
+    gameInfoLabel->setGeometry(5, 0, 375, 250);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -344,11 +344,12 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
 }
 
 void GameWorld::displayGameInfo(int level) {
-    QString levelString = "<br><br><span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
-                          + QString::number(level)
-                          + "<br><span style='color: red; font-weight: bold;'>Lives: </span>";
+    QString levelString =
+        "<span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
+        "<span style='font-weight: bold;'>" + QString::number(level) + "</span>"
+                                   "<br><span style='color: brown; font-weight: bold;'>Lives: </span>";
     gameInfoLabel->setText(levelString);
-    qDebug() << "displayGameInfo text is " << levelString;
+
 }
 
 void GameWorld::checkLetter(QString letter) {
