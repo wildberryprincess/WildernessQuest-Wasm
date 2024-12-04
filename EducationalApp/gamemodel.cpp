@@ -52,7 +52,7 @@ void GameModel:: setLevel(int level){
         emit createTent();
         break;
     case 4:
-        emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes);
+        emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes); //TESTING TO PUSH
         emit obstacleInfo(levelFourObstaclePosition);
         emit createTent();
         break;
