@@ -235,7 +235,6 @@ void GameWorld::createPlatformGrid() {
         platformFixtureDef.friction = 0.1f;
         platformBody->CreateFixture(&platformFixtureDef);
         });
-
     }
 }
 
