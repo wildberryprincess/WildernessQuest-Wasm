@@ -19,7 +19,7 @@ public:
 signals:
     void updateCharacterInfo(int characterType);
 
-private slots:
+public slots:
     void on_startButton_clicked();
 
     void on_girlScoutButton_clicked();
@@ -29,6 +29,10 @@ private slots:
     void on_instructionsButton_clicked();
 
     void on_nonBinaryScoutButton_clicked();
+
+    void updateWinScreen();
+
+    void updateLoseScreen();
 
 private:
     Ui::StartPage *ui;

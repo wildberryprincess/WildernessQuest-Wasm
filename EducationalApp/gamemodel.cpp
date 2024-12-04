@@ -12,7 +12,7 @@ GameModel::GameModel(){
     //initial game logisitcs
     currentLevel = 1;
     lives = 3;
-    gameOver = false;
+    win = false;
     numQuestionsAnswered = 0;
 
     instantiateBackgrounds();
@@ -224,9 +224,16 @@ void GameModel::checkObstacleCollision(QPoint obstaclePosition){
 
     if (currentLevel == 1) {
         levelOneObstaclePosition.removeAll(obstaclePosition);
+    } else if (currentLevel == 3) {
+        levelTwoObstaclePosition.removeAll(obstaclePosition);
+    } else if (currentLevel == 2) {
+        levelThreeObstaclePosition.removeAll(obstaclePosition);
+    } else if (currentLevel == 4) {
+        levelFourObstaclePosition.removeAll(obstaclePosition);
     }
 
     if (lives == 0) {
+        emit gameOver(win);
         qDebug() << "Game Over! There are 0 Lives!";
     }
 }
@@ -242,6 +249,10 @@ void GameModel::checkTentCollision() {
     } else {
         qDebug() << "Cannot advance: not all questions answered.";
     }
+
+    // Somewhere in the collision check, once all questions in level 4 are answered correctly, and tent is collided with, then send emit gameOver(win);
+    // win = true;
+    // emit gameOver(win);
 }
 
 

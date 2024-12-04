@@ -16,7 +16,7 @@ private:
     int currentLevel;
     int lives;
     int levelProgress;
-    bool gameOver;
+    bool win;
     QString currentCorrectAnswer = "a";
     int numQuestionsAnswered;
     bool allQuestionsAnswered;
@@ -71,5 +71,6 @@ signals:
     void incorrectCollidedLetter();
     void correctCollidedLetter();
     void sendGameInfo(int level);
+    void gameOver(bool win);
 };
 #endif // GAMEMODEL_H

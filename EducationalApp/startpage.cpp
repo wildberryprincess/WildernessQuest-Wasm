@@ -77,3 +77,20 @@ void StartPage::on_instructionsButton_clicked()
         );
 }
 
+void StartPage::updateWinScreen() {
+    this->show();
+
+}
+
+void StartPage::updateLoseScreen() {
+    qDebug() << "Player Lost! Should display end screen.";
+    this->show();
+    ui->startButton->hide();
+    ui->instructionsButton->hide();
+    ui->girlScoutButton->hide();
+    ui->boyScoutButton->hide();
+    ui->nonBinaryScoutButton->hide();
+    ui->gameNameLabel->setText("You Lose!");
+
+}
+

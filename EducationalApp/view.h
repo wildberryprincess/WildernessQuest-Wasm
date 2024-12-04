@@ -22,6 +22,8 @@ public:
 signals:
     void setUpModel(int level);
     void updateCharacter(int characterTupe);
+    void showWinScreen();
+    void showLoseScreen();
 
 private:
     Ui::View *ui; // Ensure this is declared
@@ -31,6 +33,7 @@ private:
 
 public slots:
     void displayGame(int characterType);
+    void displayEndScreen(bool win);
 
 };
 

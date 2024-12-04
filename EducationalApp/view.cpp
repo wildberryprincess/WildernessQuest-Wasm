@@ -40,6 +40,10 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(gameWorld, &GameWorld::collidedWithTent, &gameModel, &GameModel::checkTentCollision);
 
+    connect(&gameModel, &GameModel::gameOver, this, &View::displayEndScreen);
+    connect(this, &View::showWinScreen, &startScreen, &StartPage::updateWinScreen);
+    connect(this, &View::showLoseScreen, &startScreen, &StartPage::updateLoseScreen);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View
@@ -59,4 +63,16 @@ void View::displayGame(int characterType) {
     this->show();
     emit updateCharacter(characterType);
     qDebug() << "Inside displayGame: " << characterType;
+}
+
+void View::displayEndScreen(bool win) {
+    this->hide();
+
+    if (win) {
+        qDebug() << "Hides Screen! Win";
+        emit showWinScreen();
+    } else {
+        qDebug() << "Hides Screen! Lose";
+        emit showLoseScreen();
+    }
 }
