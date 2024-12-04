@@ -46,7 +46,15 @@ void GameContactListener::BeginContact(b2Contact* contact) {
             qWarning() << "Null letter object in collision.";
         }
     } else if (otherData->type == "obstacle") {
-        gameWorld->handleObstacleCollisions();
+        Obstacle* obstacle = static_cast<Obstacle*>(otherData->object);
+        if (obstacle) {
+            collidedObstaclePosition = obstacle->getPosition();
+            gameWorld->handleObstacleCollisions(*obstacle);
+            qDebug() << "Player collided bear:" << collidedObstaclePosition;
+        } else {
+            qWarning() << "Null obstacle object in collision.";
+        }
+
         // qDebug() << "Player collided with an obstacle!";
     } else if (otherData->type == "tent") {
         gameWorld->handleTentCollisions();

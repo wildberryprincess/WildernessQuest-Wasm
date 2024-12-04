@@ -18,4 +18,10 @@ QImage Obstacle::getImage() {
     return image;
 }
 
-// QImage Obstacle::
+QPoint Obstacle::getPosition() {
+    return position;
+}
+
+bool Obstacle::operator==(const Obstacle& other) const {
+    return this->position == other.position; // Compare based on position
+}

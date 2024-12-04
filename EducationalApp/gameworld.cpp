@@ -412,8 +412,13 @@ void GameWorld::handleCorrectCollidedLetter() {
     });
 }
 
-void GameWorld::handleObstacleCollisions() {
-    emit collidedWithObstacle(); // emits to model to handle obstacle collisions
+void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
+    QPoint obstaclePosition = obstacle.getPosition();
+    obstaclesList.removeAll(obstacle);
+    qDebug() << "Obstacles count after collision removal: " << obstaclesList.size();
+    emit collidedWithObstacle(obstaclePosition);    // emits to model to handle obstacle collisions
+
+    update();
 }
 
 void GameWorld::handleTentCollisions() {

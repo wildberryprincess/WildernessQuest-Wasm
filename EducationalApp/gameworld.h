@@ -24,7 +24,7 @@ public:
     explicit GameWorld(QWidget *parent = nullptr);
     void setGameModel(GameModel& model);
     void checkLetter(QString letter);
-    void handleObstacleCollisions();
+    void handleObstacleCollisions(Obstacle collidedObstacle);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -65,15 +65,12 @@ private:
     std::queue<std::function<void()>> deferredActions;
 
     ~GameWorld();
-
-
-
     void createPlatformGrid();
 
     void initializePlayerPosition();
 signals:
     void checkLetterInModel(QString letter);
-    void collidedWithObstacle();
+    void collidedWithObstacle(QPoint collidedObstaclePosition);
     void collidedWithTent();
 };
 #endif // GAMEWORLD_H

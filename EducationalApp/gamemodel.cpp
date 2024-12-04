@@ -19,11 +19,11 @@ GameModel::GameModel(){
     setPlatformCoords();
     setLetterPositions();
     setObstaclePositions();
-    }
+    qDebug() << "GameModel constructor obstacle count: " << levelOneObstaclePosition.size();
+}
 
 GameModel::~GameModel() {
-
-    }
+}
 
 void GameModel:: setLevel(int level){
     currentLevel = level;
@@ -36,6 +36,8 @@ void GameModel:: setLevel(int level){
     case 1:
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
+
+        qDebug() << "Inside setLevel obstacle count: " << levelOneObstaclePosition.size();
         emit obstacleInfo(levelOneObstaclePosition);
         emit createTent();
         break;
@@ -98,7 +100,7 @@ void GameModel::emitPromptsForLevel(int level) {
 
 void GameModel::setLetterPositions(){
     letters = { "a", "b", "c", "d"};
-    questionOneLetterCoords = { QPoint(385, 475), QPoint(575, 275), QPoint(1055, 275), QPoint(1305, 450) };
+    questionOneLetterCoords = { QPoint(385, 475), QPoint(500, 200), QPoint(1055, 275), QPoint(1305, 450) };
 
     //DO THE SAME FOR OTHER Questions
 }
@@ -124,8 +126,8 @@ void GameModel:: instantiateBackgrounds(){
 
 void GameModel::setPlatformCoords(){
 
-    levelOnePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
-    levelOnePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
+    levelOnePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {425, 250}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {600, 400}};
+    levelOnePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {300, 50}};
 
     levelTwoPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}};
     levelTwoPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}};
@@ -138,7 +140,7 @@ void GameModel::setPlatformCoords(){
 }
 
 void GameModel::setObstaclePositions() {
-    levelOneObstaclePosition = { {900, 570}, {300, 645}};
+    levelOneObstaclePosition = { {975, 570}, {300, 645}, {650, 340}};
     levelTwoObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
     levelThreeObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
     levelFourObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
@@ -215,10 +217,14 @@ void GameModel::updatePrompts() {
 }
 
 
-void GameModel::checkObstacleCollision(){
+void GameModel::checkObstacleCollision(QPoint obstaclePosition){
     qDebug() << "Inside model, the user collided with a bear";
     lives--;
     qDebug() << "Lives left: " << lives;
+
+    if (currentLevel == 1) {
+        levelOneObstaclePosition.removeAll(obstaclePosition);
+    }
 
     if (lives == 0) {
         qDebug() << "Game Over! There are 0 Lives!";

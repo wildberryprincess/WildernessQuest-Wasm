@@ -12,6 +12,8 @@ public:
 
     QRect getBoundingRect();
     QImage getImage();
+    QPoint getPosition();
+    bool operator==(const Obstacle& other) const;
 
 private:
     QRect boundingRect;

@@ -49,6 +49,7 @@ public:
     void setGameWorld(GameWorld* world);
 
     QString collidedLetter; // Stores the letter the player collided with
+    QPoint collidedObstaclePosition;
 
 private:
     b2Body* playerBody;
