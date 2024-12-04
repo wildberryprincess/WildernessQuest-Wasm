@@ -17,12 +17,18 @@ GameWorld::GameWorld(QWidget *parent)
     currentBackground(nullptr),
     contactListener(new GameContactListener()),
     promptLabel(new QLabel(this)),
-    gameInfoLabel(new QLabel(this))
+    gameInfoLabel(new QLabel(this)),
+    progressBar(new QProgressBar(this))
 {
+    progressBar->setValue(50);
+    progressBar->setFixedSize(300, 10);
+    progressBar->move(10, 10);
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
+
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
     characterType = 0;
+
 
     // Define the ground body
     b2BodyDef groundBodyDef;
@@ -204,7 +210,6 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
         });
     }
 }
-
 
 void GameWorld::createPlatformGrid() {
 
