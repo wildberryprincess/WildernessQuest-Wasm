@@ -314,15 +314,16 @@ void GameWorld::generateTent() {
 
 
 
-
-
 void GameWorld::initializePlayerPosition() {
-    QPoint playerPosition(100,0); // Adjust to start above a platform
+    QPoint playerPosition(100,400); // Adjust to start above a platform
     qDebug() << "Inside initializePlayerPosition: " << characterType;
     mainPlayer = new mainCharacter(playerPosition, &world, contactListener, characterType);
 
     BodyData* playerData = new BodyData("player", mainPlayer);
     mainPlayer->getBody()->SetUserData(playerData);
+
+    b2Vec2 initialBodyPosition = mainPlayer->getBody()->GetPosition();
+    qDebug() << "Initial Box2D body position (x, y):" << initialBodyPosition.x * SCALE << initialBodyPosition.y * SCALE;
 }
 
 void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
