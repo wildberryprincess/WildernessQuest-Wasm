@@ -16,6 +16,9 @@ public:
     explicit StartPage(QWidget *parent = nullptr);
     ~StartPage();
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 signals:
     void updateCharacterInfo(int characterType);
 
@@ -38,6 +41,12 @@ private:
     Ui::StartPage *ui;
 
     QLabel* instructionsLabel;
+    QPixmap uiBackground;
+    QLabel* boyScoutLabel;
+    QLabel* girlScoutLabel;
+    QLabel* nonBinaryScoutLabel;
+
+    void setBackground(const QString &imagePath);
 };
 
 #endif // STARTPAGE_H
