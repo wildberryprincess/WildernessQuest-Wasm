@@ -225,38 +225,6 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
     }
 }
 
-void GameWorld::createPlatformGrid() {
-
-    for (Platform& platform : platformsList) {
-          deferredActions.push([this, platform]() {
-
-        // Calculate center of platform (This is how the collision works)
-        float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
-        float centerY = platform.position.y() + (platform.imageSize.y() / 2.0f);
-
-        // Create a static body in the Box2D world
-        b2BodyDef platformBodyDef;
-        platformBodyDef.type = b2_staticBody;
-        platformBodyDef.position.Set(centerX / SCALE, centerY / SCALE);
-        b2Body* platformBody = world.CreateBody(&platformBodyDef);
-        BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
-        platformBody->SetUserData(platformData);
-        qDebug() << "Set platform UserData for body:" << platformBody;
-
-        // Define the shape for the platform
-        b2PolygonShape platformShape;
-        platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
-
-        // Define the fixture for the platform with low friction
-        b2FixtureDef platformFixtureDef;
-        platformFixtureDef.shape = &platformShape;
-        platformFixtureDef.density = 0.0f;
-        platformFixtureDef.friction = 0.1f;
-        platformBody->CreateFixture(&platformFixtureDef);
-        });
-    }
-}
-
 void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters) {
     qDebug() << "Letter coordinates size:" << letterCoords.size();
     qDebug() << "Letters size:" << letters.size();
