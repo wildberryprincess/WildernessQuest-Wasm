@@ -28,6 +28,8 @@ GameModel::~GameModel() {
 void GameModel:: setLevel(int level){
     currentLevel = level;
     allQuestionsAnswered = false;
+    lives = 3; //reset lives each level
+    emit livesUpdated(lives);
     // Emit platform and background info
     QString bgPath = backgroundImages.at(currentLevel - 1);
     emit setBackground(bgPath);
