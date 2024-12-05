@@ -22,7 +22,7 @@ GameWorld::GameWorld(QWidget *parent)
 {
     progressBar->setValue(50);
     progressBar->setFixedSize(300, 10);
-    progressBar->move(10, 10);
+    progressBar->move(10, 70);
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
 
     // Ensure GameWorld has focus to handle key events

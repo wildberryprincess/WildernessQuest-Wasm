@@ -8,7 +8,7 @@ StartPage::StartPage(QWidget *parent)
 {
     ui->setupUi(this);
     uiBackground = QPixmap(":/Images/background_level2.PNG");
-    ui->gameNameLabel->setStyleSheet("font: 50px Courier;");
+    ui->gameNameLabel->setStyleSheet("font: 50px Courier; color: black;");
     ui->gameNameLabel->setAlignment(Qt::AlignCenter);
 
     ui->startButton->setStyleSheet(
