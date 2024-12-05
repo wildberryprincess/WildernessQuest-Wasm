@@ -21,14 +21,14 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar(new QProgressBar(this))
 {
     progressBar->setValue(0);
-    progressBar->setMaximum(1); // Adjust this to fit the number of questions per level
+    progressBar->setMaximum(2); // Adjust this to fit the number of questions per level
     progressBar->setFixedSize(300, 10);
-    progressBar->move(15, 70);
+    progressBar->move(15, 75);
 
-    numOfQuestionsLeft = 1;
+    numOfQuestionsLeft = 0;
     progressLabel = new QLabel(this);
     progressLabel->show();
-    progressLabel->move(20, 80);
+    progressLabel->move(20, 85);
     progressLabel->setFixedSize(300, 25);
 
 
