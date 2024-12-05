@@ -24,6 +24,19 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar->setMaximum(2); // Adjust this to fit the number of questions per level
     progressBar->setFixedSize(300, 10);
     progressBar->move(15, 75);
+    progressBar->setTextVisible(false); // Hide percentage
+    progressBar->setStyleSheet(R"(
+    QProgressBar {
+        border: 2px solid #A8DADC; /* Light blue border */
+        border-radius: 15px;
+        background-color: #F1FAEE; /* Soft sky color */
+    }
+    QProgressBar::chunk {
+        background-color: #A8DF65; /* Light green (grass-like) chunk */
+        border-radius: 8px; /* Rounded edges for the filled portion */
+        margin: 2px;
+    }
+)");
 
     numOfQuestionsLeft = 0;
     progressLabel = new QLabel(this);
@@ -572,6 +585,9 @@ void GameWorld::changeProgressBar(int numAnswered) {
 
     numOfQuestionsLeft = 2 - numAnswered;
     progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+    QString progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+    QFont courierFont("Courier", 12);
+    progressLabel->setFont(courierFont);
 
     //QString progressText = QString("%1 questions to go").arg(numOfQuestionsLeft);
     progressLabel->setText(progressText);
@@ -580,4 +596,7 @@ void GameWorld::changeProgressBar(int numAnswered) {
 void GameWorld::setProgressBarToZero() {
     progressBar->setValue(0);
     progressLabel->setText("2 questions to go!");
+    QFont courierFont("Courier", 12); // Font: Courier, size: 12
+    progressLabel->setFont(courierFont);
+    progressLabel->setText("0 questions to go!");
 }
