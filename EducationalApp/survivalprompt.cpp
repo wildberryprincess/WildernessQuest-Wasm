@@ -16,13 +16,12 @@ void SurvivalPrompt:: deserializePrompts(QString filename){
     } else {
         qWarning("Error opening file: %s", qPrintable(filename));
     }
-    //TODO: Get rid of this to clean up
-    qDebug() << "sucessfully opened file!";
 
     //Access the JSON data
     QJsonObject allPrompts = promptDoc.object();
 
 
+    //Gathering the prompts for the specific levels
     QJsonArray levelOneJsonPrompts = allPrompts["levelOne"].toArray();
     deserializeHelper(levelOneJsonPrompts, levelOnePrompts);
 
