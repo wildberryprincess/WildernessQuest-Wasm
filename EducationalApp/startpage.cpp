@@ -7,7 +7,7 @@ StartPage::StartPage(QWidget *parent)
     , ui(new Ui::StartPage)
 {
     ui->setupUi(this);
-    uiBackground = QPixmap(":/Images/background_level2.PNG");
+    uiBackground = QPixmap(":/Images/background_level1.PNG");
     ui->gameNameLabel->setStyleSheet("font: 50px Courier; color: black;");
     ui->gameNameLabel->setAlignment(Qt::AlignCenter);
 
@@ -169,7 +169,7 @@ void StartPage::on_instructionsButton_clicked()
 
 void StartPage::updateWinScreen() {
     this->show();
-    setBackground(":/Images/background_level1.PNG");
+    setBackground(":/Images/background_level4.PNG");
 
     ui->startButton->hide();
     ui->instructionsButton->hide();
@@ -185,7 +185,7 @@ void StartPage::updateWinScreen() {
 void StartPage::updateLoseScreen() {
     qDebug() << "Player Lost! Should display end screen.";
     this->show();
-    setBackground(":/Images/background_level1.PNG");
+    setBackground(":/Images/background_level4.PNG");
 
     ui->startButton->hide();
     ui->instructionsButton->hide();

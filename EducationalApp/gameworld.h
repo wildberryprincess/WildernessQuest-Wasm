@@ -173,7 +173,16 @@ public slots:
      * This happens at the beginning of each level
      */
     void removeExistingLetters();
+
+    /**
+     * @brief changeProgressBar: Changes the progress bar based on the number of correctly answered questions
+     * @param numOfQuestions: Number of questions that have been answered
+     */
     void changeProgressBar(int numOfQuestions);
+
+    /**
+     * @brief setProgressBarToZero: Resets the progress bar back to zero when a new level begins
+     */
     void setProgressBarToZero();
 
 private:

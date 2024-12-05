@@ -570,8 +570,9 @@ void GameWorld::handleTentCollisions() {
 void GameWorld::changeProgressBar(int numAnswered) {
     progressBar->setValue(numAnswered);
 
-    numOfQuestionsLeft = 1 - numAnswered;
+    numOfQuestionsLeft = 2 - numAnswered;
     QString progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+
     //QString progressText = QString("%1 questions to go").arg(numOfQuestionsLeft);
     progressLabel->setText(progressText);
 }
