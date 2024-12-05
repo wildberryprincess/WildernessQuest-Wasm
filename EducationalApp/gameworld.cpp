@@ -20,9 +20,18 @@ GameWorld::GameWorld(QWidget *parent)
     gameInfoLabel(new QLabel(this)),
     progressBar(new QProgressBar(this))
 {
-    progressBar->setValue(50);
+    progressBar->setValue(0);
+    progressBar->setMaximum(2); // Adjust this to fit the number of questions per level
     progressBar->setFixedSize(300, 10);
-    progressBar->move(10, 70);
+    progressBar->move(15, 75);
+
+    numOfQuestionsLeft = 0;
+    progressLabel = new QLabel(this);
+    progressLabel->show();
+    progressLabel->move(20, 85);
+    progressLabel->setFixedSize(300, 25);
+
+
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
 
     // Ensure GameWorld has focus to handle key events
@@ -188,6 +197,7 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
 
 
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
+    obstaclesList.clear();
     qDebug() << "Obstacle list size: " << positionList.size();
 
     for (const QPoint& position : positionList) {
@@ -488,9 +498,10 @@ void GameWorld::handleCorrectCollidedLetter() {
 }
 
 void GameWorld::handleProceedToNextLevel() {
-   QString currentText = promptLabel->text();
+    QString currentText = promptLabel->text();
     QString updatedText = currentText +  "<br><br><span style='color: green; font-weight: bold;'>You've completed all of the questions for this level! Now, run to the tent!</span>";
-   promptLabel->setText(updatedText);
+    promptLabel->setText(updatedText);
+
 
 }
 
@@ -550,3 +561,16 @@ void GameWorld::handleTentCollisions() {
     emit collidedWithTent();
 }
 
+void GameWorld::changeProgressBar(int numAnswered) {
+    progressBar->setValue(numAnswered);
+
+    numOfQuestionsLeft = 1 - numAnswered;
+    QString progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+    //QString progressText = QString("%1 questions to go").arg(numOfQuestionsLeft);
+    progressLabel->setText(progressText);
+}
+
+void GameWorld::setProgressBarToZero() {
+    progressBar->setValue(0);
+    progressLabel->setText("0 questions to go!");
+}
