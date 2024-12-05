@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QLabel>
 #include <functional> // For std::function
+#include <map>
 #include "platform.h"
 #include <queue>
 #include "letterobjects.h"
@@ -63,6 +64,10 @@ private:
     QLabel* gameInfoLabel; //display level and lives
 
     std::queue<std::function<void()>> deferredActions;
+
+
+
+    QVector<std::pair<QPoint, b2Body*>> obstacleBodies;
 
     ~GameWorld();
     void createPlatformGrid();

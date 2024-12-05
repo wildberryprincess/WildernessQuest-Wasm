@@ -103,12 +103,6 @@ void GameWorld::updateWorld() {
     // Step the physics world
     world.Step(1.0f / 60.0f, 6, 2);
 
-    // Process deferred actions (e.g., creating new bodies)
-    while (!deferredActions.empty()) {
-        deferredActions.front()(); // Execute the action
-        deferredActions.pop();
-    }
-
     // Update the main character's movement
     mainPlayer->update();
 
@@ -117,6 +111,13 @@ void GameWorld::updateWorld() {
         qDebug() << "Player collided with letter:" << contactListener->collidedLetter;
         // Process the collision, e.g., remove the letter or update the game state
         contactListener->collidedLetter.clear(); // Reset after processing
+    }
+
+
+    // Process deferred actions (e.g., creating new bodies)
+    while (!deferredActions.empty()) {
+        deferredActions.front()(); // Execute the action
+        deferredActions.pop();
     }
 
     // Trigger a repaint
@@ -170,16 +171,17 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
     createPlatformGrid();
 }
 
+
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
     qDebug() << "Obstacle list size: " << positionList.size();
 
-    for (int i = 0; i < positionList.size(); ++i) {
+    for (const QPoint& position : positionList) {
         // Create the obstacle
-        Obstacle obstacle(positionList[i]);
+        Obstacle obstacle(position);
         obstaclesList.append(obstacle);
 
-        // Capture positionList[i] explicitly in the lambda
-        deferredActions.push([this, obstacle, position = positionList[i]]() {
+        // Capture position in the lambda for deferred creation
+        deferredActions.push([this, position, obstacle]() {
             // Create a static body in the Box2D world
             b2BodyDef obstacleBodyDef;
             obstacleBodyDef.type = b2_staticBody;
@@ -200,43 +202,14 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
             BodyData* obstacleData = new BodyData("obstacle", new Obstacle(obstacle));
             obstacleBody->SetUserData(obstacleData);
 
+            // Add the obstacle to the list of managed bodies
+            obstacleBodies.append(std::make_pair(position, obstacleBody));
+
             qDebug() << "Obstacle created with UserData:" << obstacleBody;
         });
     }
 }
 
-
-void GameWorld::createPlatformGrid() {
-
-    for (Platform& platform : platformsList) {
-          deferredActions.push([this, platform]() {
-
-        // Calculate center of platform (This is how the collision works)
-        float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
-        float centerY = platform.position.y() + (platform.imageSize.y() / 2.0f);
-
-        // Create a static body in the Box2D world
-        b2BodyDef platformBodyDef;
-        platformBodyDef.type = b2_staticBody;
-        platformBodyDef.position.Set(centerX / SCALE, centerY / SCALE);
-        b2Body* platformBody = world.CreateBody(&platformBodyDef);
-        BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
-        platformBody->SetUserData(platformData);
-        qDebug() << "Set platform UserData for body:" << platformBody;
-
-        // Define the shape for the platform
-        b2PolygonShape platformShape;
-        platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
-
-        // Define the fixture for the platform with low friction
-        b2FixtureDef platformFixtureDef;
-        platformFixtureDef.shape = &platformShape;
-        platformFixtureDef.density = 0.0f;
-        platformFixtureDef.friction = 0.1f;
-        platformBody->CreateFixture(&platformFixtureDef);
-        });
-    }
-}
 
 void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters) {
     qDebug() << "Letter coordinates size:" << letterCoords.size();
@@ -279,6 +252,38 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
         });
     }
     update(); // Trigger a repaint
+}
+
+void GameWorld::createPlatformGrid() {
+
+    for (Platform& platform : platformsList) {
+        deferredActions.push([this, platform]() {
+
+            // Calculate center of platform (This is how the collision works)
+            float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
+            float centerY = platform.position.y() + (platform.imageSize.y() / 2.0f);
+
+            // Create a static body in the Box2D world
+            b2BodyDef platformBodyDef;
+            platformBodyDef.type = b2_staticBody;
+            platformBodyDef.position.Set(centerX / SCALE, centerY / SCALE);
+            b2Body* platformBody = world.CreateBody(&platformBodyDef);
+            BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
+            platformBody->SetUserData(platformData);
+            qDebug() << "Set platform UserData for body:" << platformBody;
+
+            // Define the shape for the platform
+            b2PolygonShape platformShape;
+            platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
+
+            // Define the fixture for the platform with low friction
+            b2FixtureDef platformFixtureDef;
+            platformFixtureDef.shape = &platformShape;
+            platformFixtureDef.density = 0.0f;
+            platformFixtureDef.friction = 0.1f;
+            platformBody->CreateFixture(&platformFixtureDef);
+        });
+    }
 }
 
 
@@ -413,11 +418,26 @@ void GameWorld::handleCorrectCollidedLetter() {
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
     QPoint obstaclePosition = obstacle.getPosition();
-    obstaclesList.removeAll(obstacle);
-    qDebug() << "Obstacles count after collision removal: " << obstaclesList.size();
-    emit collidedWithObstacle(obstaclePosition);    // emits to model to handle obstacle collisions
 
-    update();
+    // Remove the obstacle from the list
+    obstaclesList.removeAll(obstacle);
+
+    for (int i = 0; i < obstacleBodies.size(); ++i) {
+        if (obstacleBodies[i].first == obstaclePosition) {
+            b2Body* body = obstacleBodies[i].second; // Store the body in a temporary variable
+            int index = i; // Store the index
+            deferredActions.push([this, body, index]() mutable {
+                world.DestroyBody(body); // Destroy the body
+                obstacleBodies.removeAt(index); // Remove the entry
+            });
+            break;
+        }
+    }
+
+    qDebug() << "Obstacles count after collision removal: " << obstaclesList.size();
+    emit collidedWithObstacle(obstaclePosition); // Notify model of the collision
+
+    update(); // Trigger a repaint
 }
 
 void GameWorld::handleTentCollisions() {

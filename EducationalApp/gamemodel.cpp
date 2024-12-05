@@ -255,18 +255,22 @@ void GameModel::checkObstacleCollision(QPoint obstaclePosition){
 void GameModel::checkTentCollision() {
     qDebug() << "Inside model, the user has collided with a tent";
     if (allQuestionsAnswered) {
-        qDebug() << "Advancing to the next level.";
-        currentLevel++;
-        allQuestionsAnswered = false; // Reset for the next level
-        numQuestionsAnswered = 0;    // Reset the question counter
-        setLevel(currentLevel);
+        if(currentLevel == 4){
+            allQuestionsAnswered = false; // Reset for the next level
+            numQuestionsAnswered = 0;
+            win = true;
+            emit gameOver(win);
+        } else {
+            qDebug() << "Advancing to the next level.";
+            currentLevel++;
+            allQuestionsAnswered = false; // Reset for the next level
+            numQuestionsAnswered = 0;    // Reset the question counter
+            setLevel(currentLevel);
+        }
     } else {
         qDebug() << "Cannot advance: not all questions answered.";
     }
 
-    // Somewhere in the collision check, once all questions in level 4 are answered correctly, and tent is collided with, then send emit gameOver(win);
-    // win = true;
-    // emit gameOver(win);
 }
 
 
