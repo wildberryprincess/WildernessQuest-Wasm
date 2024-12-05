@@ -33,6 +33,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(&gameModel, &GameModel::correctCollidedLetter, gameWorld, &GameWorld::handleCorrectCollidedLetter);
 
+    connect(&gameModel, &GameModel::proceedToNextLevel, gameWorld, &GameWorld::handleProceedToNextLevel);
+
     connect(gameWorld, &GameWorld::collidedWithObstacle, &gameModel, &GameModel::checkObstacleCollision);
 
     connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);

@@ -437,14 +437,47 @@ void GameWorld::handleCorrectCollidedLetter() {
         qWarning() << "promptLabel is not initialized!";
         return;
     }
+
+    // Clear any existing timers or reset the message
+    static QTimer* timer = nullptr;
+
+    if (!timer) {
+        // Create the timer if it doesn't exist
+        timer = new QTimer(this);
+        timer->setSingleShot(true);
+
+        // Restore the original text when the timer times out
+        connect(timer, &QTimer::timeout, this, [this]() {
+            QString currentText = promptLabel->text();
+            // Remove the "Good job!" portion from the text
+            int index = currentText.indexOf("<br><br><span style='color: green; font-weight: bold;'>Good job!</span>");
+            if (index != -1) {
+                currentText = currentText.left(index);
+                promptLabel->setText(currentText);
+            }
+            qDebug() << "'Good job!' message removed.";
+        });
+    }
+
+    // Append or overwrite the "Good job!" message
     QString currentText = promptLabel->text();
+    int index = currentText.indexOf("<br><br><span style='color: green; font-weight: bold;'>Good job!</span>");
+    if (index != -1) {
+        currentText = currentText.left(index); // Remove existing "Good job!" message
+    }
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
-    //"Good job!" disappears after 3 seconds
-    QTimer::singleShot(3000, this, [this, currentText]() {
-        promptLabel->setText(currentText);
-    });
+    qDebug() << "Displayed 'Good job!' message.";
+
+    // Start or restart the timer
+    timer->start(3000); // 3 seconds
+}
+
+void GameWorld::handleProceedToNextLevel() {
+   QString currentText = promptLabel->text();
+    QString updatedText = currentText +  "<br><br><span style='color: green; font-weight: bold;'>You've completed all of the questions for this level! Now, run to the tent!</span>";
+   promptLabel->setText(updatedText);
 }
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {

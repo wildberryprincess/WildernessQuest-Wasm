@@ -45,6 +45,7 @@ public slots:
     void setCharacterType(int type);
     void handleIncorrectCollidedLetter();
     void handleCorrectCollidedLetter();
+    void handleProceedToNextLevel();
     void displayGameInfo(int level);
     void updateLivesDisplay(int lives);
 

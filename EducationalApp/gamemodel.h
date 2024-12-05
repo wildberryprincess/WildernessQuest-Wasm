@@ -18,6 +18,7 @@ private:
     int levelProgress;
     bool win;
     QString currentCorrectAnswer = "a";
+    int numQuestionsPerLevel = 5;
     int numQuestionsAnswered;
     bool allQuestionsAnswered;
     vector <QString> backgroundImages;
@@ -74,6 +75,7 @@ signals:
     void createTent();
     void incorrectCollidedLetter();
     void correctCollidedLetter();
+    void proceedToNextLevel();
     void sendGameInfo(int level);
     void livesUpdated(int lives);
     void gameOver(bool win);
