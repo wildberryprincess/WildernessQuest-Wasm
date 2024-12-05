@@ -51,6 +51,8 @@ public slots:
     void updateLivesDisplay(int lives);
     void removeExistingPlatforms();
     void removeExistingLetters();
+    void changeProgressBar(int numOfQuestions);
+    void setProgressBarToZero();
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
@@ -71,6 +73,8 @@ private:
     QLabel* promptLabel; //display for the question
     QLabel* gameInfoLabel; //display level and lives
     QProgressBar* progressBar;
+    QLabel* progressLabel;
+    int numOfQuestionsLeft;
 
     std::queue<std::function<void()>> deferredActions;
 

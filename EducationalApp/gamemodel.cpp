@@ -41,6 +41,7 @@ void GameModel:: setLevel(int level){
         qDebug() << "Inside setLevel obstacle count: " << levelOneObstaclePosition.size();
         emit obstacleInfo(levelOneObstaclePosition);
         emit createTent();
+        emit removeOldLetterBodies();
         break;
     case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
@@ -178,6 +179,7 @@ void GameModel::checkCollidedLetter(QString letter) {
         qDebug() << "The user selected the correct answer: " << letter;
 
         numQuestionsAnswered++; // Increment the correct answer count
+        emit updateProgressBar(numQuestionsAnswered);
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
 
         // Check if the user answered enough questions to stop updates
@@ -276,12 +278,12 @@ void GameModel::checkTentCollision() {
             currentLevel++;
             allQuestionsAnswered = false; // Reset for the next level
             numQuestionsAnswered = 0;    // Reset the question counter
+            emit resetProgressBar();
             setLevel(currentLevel);
         }
     } else {
         qDebug() << "Cannot advance: not all questions answered.";
     }
-
 }
 
 

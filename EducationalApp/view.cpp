@@ -51,6 +51,9 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(&gameModel, &GameModel::removeOldPlatformBodies, gameWorld, &GameWorld::removeExistingPlatforms);
     connect(&gameModel, &GameModel::removeOldLetterBodies, gameWorld, &GameWorld::removeExistingLetters);
 
+    connect(&gameModel, &GameModel::updateProgressBar, gameWorld, &GameWorld::changeProgressBar);
+    connect(&gameModel, &GameModel::resetProgressBar, gameWorld, &GameWorld::setProgressBarToZero);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View
