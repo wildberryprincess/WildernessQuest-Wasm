@@ -24,6 +24,21 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar->setMaximum(2); // Adjust this to fit the number of questions per level
     progressBar->setFixedSize(300, 10);
     progressBar->move(15, 75);
+    progressBar->setStyleSheet(R"(
+    QProgressBar {
+        border: 2px solid #A8DADC; /* Light blue border */
+        border-radius: 10px;
+        background-color: #F1FAEE; /* Soft sky color */
+        text-align: center;
+        color: #1D3557; /* Dark blue text color for contrast */
+        font: bold 12px;
+    }
+    QProgressBar::chunk {
+        background-color: #A8DF65; /* Light green (grass-like) chunk */
+        border-radius: 8px; /* Rounded edges for the filled portion */
+        margin: 2px;
+    }
+)");
 
     numOfQuestionsLeft = 0;
     progressLabel = new QLabel(this);
