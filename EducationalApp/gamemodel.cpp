@@ -36,7 +36,6 @@ void GameModel:: setLevel(int level){
     case 1:
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
-
         qDebug() << "Inside setLevel obstacle count: " << levelOneObstaclePosition.size();
         emit obstacleInfo(levelOneObstaclePosition);
         emit createTent();
@@ -46,18 +45,24 @@ void GameModel:: setLevel(int level){
         emit obstacleInfo(levelTwoObstaclePosition);
         emit letterInfo(questionTwoLetterCoords, letters);
         emit createTent();
+        emit removeOldPlatformBodies();
+        emit removeOldLetterBodies();
         break;
     case 3:
+        emit removeOldPlatformBodies();
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
         emit obstacleInfo(levelThreeObstaclePosition);
         emit letterInfo(questionThreeLetterCoords, letters);
         emit createTent();
+        emit removeOldLetterBodies();
         break;
     case 4:
+        emit removeOldPlatformBodies();
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes); //TESTING TO PUSH
         emit obstacleInfo(levelFourObstaclePosition);
         emit letterInfo(questionFourLetterCoords, letters);
         emit createTent();
+        emit removeOldLetterBodies();
         break;
     default:
         qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!
@@ -177,8 +182,9 @@ void GameModel::checkCollidedLetter(QString letter) {
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
 
         // Check if the user answered enough questions to stop updates
-        if (numQuestionsAnswered >= 2) {
+        if (numQuestionsAnswered >= 1) {
             allQuestionsAnswered = true;
+            emit proceedToNextLevel();
             qDebug() << "All questions answered for current level.";
         } else {
             updatePrompts(); // Emit the next prompt
@@ -195,8 +201,8 @@ void GameModel::checkCollidedLetter(QString letter) {
 
 void GameModel::updatePrompts() {
      // Check if user has answered enough questions to stop updating
-        if (numQuestionsAnswered >= 2) {
-        qDebug() << "No further prompts; user has answered 2 questions.";
+        if (numQuestionsAnswered >= numQuestionsPerLevel) {
+        qDebug() << "No further prompts; user has answered the required questions.";
         return;
     }
 
@@ -239,6 +245,7 @@ void GameModel::updatePrompts() {
 void GameModel::checkObstacleCollision(QPoint obstaclePosition){
     qDebug() << "Inside model, the user collided with a bear";
     lives--;
+    emit livesUpdated(lives);
     qDebug() << "Lives left: " << lives;
 
     if (currentLevel == 1) {
@@ -260,18 +267,22 @@ void GameModel::checkObstacleCollision(QPoint obstaclePosition){
 void GameModel::checkTentCollision() {
     qDebug() << "Inside model, the user has collided with a tent";
     if (allQuestionsAnswered) {
-        qDebug() << "Advancing to the next level.";
-        currentLevel++;
-        allQuestionsAnswered = false; // Reset for the next level
-        numQuestionsAnswered = 0;    // Reset the question counter
-        setLevel(currentLevel);
+        if(currentLevel == 4){
+            allQuestionsAnswered = false; // Reset for the next level
+            numQuestionsAnswered = 0;
+            win = true;
+            emit gameOver(win);
+        } else {
+            qDebug() << "Advancing to the next level.";
+            currentLevel++;
+            allQuestionsAnswered = false; // Reset for the next level
+            numQuestionsAnswered = 0;    // Reset the question counter
+            setLevel(currentLevel);
+        }
     } else {
         qDebug() << "Cannot advance: not all questions answered.";
     }
 
-    // Somewhere in the collision check, once all questions in level 4 are answered correctly, and tent is collided with, then send emit gameOver(win);
-    // win = true;
-    // emit gameOver(win);
 }
 
 

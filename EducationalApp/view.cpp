@@ -25,11 +25,15 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     connect(&gameModel, &GameModel::sendPrompt, gameWorld, &GameWorld::displayPrompt);
 
+    connect(&gameModel, &GameModel::livesUpdated, gameWorld, &GameWorld::updateLivesDisplay);
+
     connect(gameWorld, &GameWorld::checkLetterInModel, &gameModel, &GameModel::checkCollidedLetter);
 
     connect(&gameModel, &GameModel::incorrectCollidedLetter, gameWorld, &GameWorld::handleIncorrectCollidedLetter);
 
     connect(&gameModel, &GameModel::correctCollidedLetter, gameWorld, &GameWorld::handleCorrectCollidedLetter);
+
+    connect(&gameModel, &GameModel::proceedToNextLevel, gameWorld, &GameWorld::handleProceedToNextLevel);
 
     connect(gameWorld, &GameWorld::collidedWithObstacle, &gameModel, &GameModel::checkObstacleCollision);
 
@@ -43,6 +47,9 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(&gameModel, &GameModel::gameOver, this, &View::displayEndScreen);
     connect(this, &View::showWinScreen, &startScreen, &StartPage::updateWinScreen);
     connect(this, &View::showLoseScreen, &startScreen, &StartPage::updateLoseScreen);
+
+    connect(&gameModel, &GameModel::removeOldPlatformBodies, gameWorld, &GameWorld::removeExistingPlatforms);
+    connect(&gameModel, &GameModel::removeOldLetterBodies, gameWorld, &GameWorld::removeExistingLetters);
 
     setUpInitialGameModel(); // Call to Initialize model
 

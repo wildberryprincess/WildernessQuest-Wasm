@@ -6,7 +6,9 @@
 #include <QString>
 #include <QTimer>
 #include <QLabel>
+#include <QProgressBar>
 #include <functional> // For std::function
+#include <map>
 #include "platform.h"
 #include <queue>
 #include "letterobjects.h"
@@ -14,6 +16,7 @@
 #include "gamecontactlistener.h" // Include here to use GameContactListener
 #include "maincharacter.h"
 #include "tent.h"
+#include "heart.h"
 #include "bodydata.h"
 #include "gamemodel.h"
 
@@ -43,13 +46,19 @@ public slots:
     void setCharacterType(int type);
     void handleIncorrectCollidedLetter();
     void handleCorrectCollidedLetter();
+    void handleProceedToNextLevel();
     void displayGameInfo(int level);
+    void updateLivesDisplay(int lives);
+    void removeExistingPlatforms();
+    void removeExistingLetters();
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
     b2World world;
     QTimer timer;
     QPixmap* currentBackground;
+    int currentLives = 3;
+    QList<Heart> heartsList;
     QList<Platform> platformsList;
     QList<Obstacle> obstaclesList;
     mainCharacter* mainPlayer;
@@ -61,13 +70,19 @@ private:
     vector<SurvivalPrompt>::iterator currentPrompt; //iterator for current question
     QLabel* promptLabel; //display for the question
     QLabel* gameInfoLabel; //display level and lives
+    QProgressBar* progressBar;
 
     std::queue<std::function<void()>> deferredActions;
 
+    QVector<std::pair<QPoint, b2Body*>> obstacleBodies;
+    QVector<std::pair<QPoint, b2Body*>> platformBodies;
+    QVector<std::pair<QPoint, b2Body*>> letterBodies;
+
     ~GameWorld();
     void createPlatformGrid();
-
     void initializePlayerPosition();
+    void initializeHearts();
+
 signals:
     void checkLetterInModel(QString letter);
     void collidedWithObstacle(QPoint collidedObstaclePosition);

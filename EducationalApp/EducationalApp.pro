@@ -59,6 +59,7 @@ SOURCES += \
     gamecontactlistener.cpp \
     gamemodel.cpp \
     gameworld.cpp \
+    heart.cpp \
     letterobjects.cpp \
     main.cpp \
     maincharacter.cpp \
@@ -121,6 +122,7 @@ HEADERS += \
     gamecontactlistener.h \
     gamemodel.h \
     gameworld.h \
+    heart.h \
     letterobjects.h \
     maincharacter.h \
     obstacle.h \
