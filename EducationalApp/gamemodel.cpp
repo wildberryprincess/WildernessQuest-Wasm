@@ -44,16 +44,19 @@ void GameModel:: setLevel(int level){
     case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
         emit obstacleInfo(levelTwoObstaclePosition);
+        emit letterInfo(questionTwoLetterCoords, letters);
         emit createTent();
         break;
     case 3:
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
         emit obstacleInfo(levelThreeObstaclePosition);
+        emit letterInfo(questionThreeLetterCoords, letters);
         emit createTent();
         break;
     case 4:
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes); //TESTING TO PUSH
         emit obstacleInfo(levelFourObstaclePosition);
+        emit letterInfo(questionFourLetterCoords, letters);
         emit createTent();
         break;
     default:
@@ -99,10 +102,14 @@ void GameModel::emitPromptsForLevel(int level) {
     }
 }
 
+//switched one and three
 void GameModel::setLetterPositions(){
     letters = { "a", "b", "c", "d"};
+    //top one is level one letter coords
     questionTwoLetterCoords = { QPoint(385, 475), QPoint(575, 275), QPoint(1055, 275), QPoint(1305, 450) };
-    questionOneLetterCoords = { QPoint(1300, 260), QPoint(500, 255), QPoint(250, 105), QPoint(650, 658) };
+    questionTwoLetterCoords = { QPoint(1350, 260), QPoint(500, 255), QPoint(250, 105), QPoint(650, 658) };
+    questionOneLetterCoords = { QPoint(550, 50), QPoint(100, 600), QPoint(1350, 550), QPoint(750, 650) };
+
 
 
     //DO THE SAME FOR OTHER Questions
@@ -122,31 +129,31 @@ void GameModel:: instantiateBackgrounds(){
     //QPixmap levelThreeBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level3.PNG");
 
-    QPixmap levelFourBG(":/Images/background_level1.PNG");
+    // QPixmap levelFourBG(":/Images/background_level1.PNG");
     backgroundImages.push_back(":/Images/background_level4.PNG");
 }
 
 //Adjust the coords for all the levels and for the letters and obstacles
 void GameModel::setPlatformCoords(){
-    //switched level one and level two
-    levelTwoPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}, {-15, 870}};
-    levelTwoPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}, {1450, 50}};
-
-    levelOnePlatformCoords =  { {10, 375}, {200, 150}, {450, 300}, {700, 375}, {400, 500}, {1130, 300}, {900, 600}, {1080, 450}, {600, 700}, {300, 800}, {-15, 870}};
-    levelOnePlatformSizes = { {300, 50}, {150, 50}, {150, 50}, {150, 50}, {300, 50}, {300, 50}, {150, 50}, {150, 50}, {150, 50}, {150, 50}, {1450, 50}};
-
-    levelThreePlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}, {-15, 870}};
-    levelThreePlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}, {1450, 50}};
-
+    //switched level three and level one
     levelFourPlatformCoords =  { {10, 375}, {330, 525}, {800, 625}, {550, 800}, {500, 325}, {1000, 325}, {200, 700}, {1100, 800}, {1250, 500}, {675, 450}, {-15, 870}};
     levelFourPlatformSizes = { {300, 50}, {150, 50}, {300, 50}, {250, 50}, {200, 50}, {150, 50}, {300, 50}, {150, 50}, {150, 50}, {200, 50}, {1450, 50}};
+
+    levelTwoPlatformCoords =  { {10, 375}, {200, 150}, {450, 300}, {700, 375}, {400, 500}, {1150, 300}, {850, 600}, {1000, 450}, {600, 700}, {300, 800}, {-15, 870}};
+    levelTwoPlatformSizes = { {300, 50}, {150, 50}, {150, 50}, {150, 50}, {300, 50}, {300, 50}, {150, 50}, {150, 50}, {150, 50}, {150, 50}, {1450, 50}};
+
+    levelThreePlatformCoords =  { {10, 375}, {250, 250}, {475, 100}, {450, 400}, {75, 650}, {600, 500}, {700, 700}, {900, 450}, {1200, 375}, {1300, 600}, {-15, 870}};
+    levelThreePlatformSizes = {     {300, 50}, {150, 50}, {200, 50}, {150, 50}, {400, 50}, {150, 50}, {150, 50}, {300, 50}, {150, 50}, {200, 50}, {1450, 50}};
+
+    levelOnePlatformCoords =  { {10, 375}, {200, 150}, {450, 300}, {600, 150}, {300, 500}, {100, 750}, {700, 600}, {900, 600}, {1050, 500}, {1300, 600}, {-15, 870}};
+    levelOnePlatformSizes = {     {300, 50}, {100, 50}, {100, 50}, {100, 50}, {300, 50}, {150, 50}, {100, 50}, {100, 50}, {200, 50}, {150, 50}, {1450, 50}};
 }
 
-//Switched levels one and two
+//Switched levels one and three
 void GameModel::setObstaclePositions() {
-    levelTwoObstaclePosition = { {900, 570}, {300, 645}};
-    levelOneObstaclePosition = { {425, 450}, {750, 320}, {1170, 250} };
-    levelThreeObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
+    levelThreeObstaclePosition = { {900, 570}, {300, 645}};
+    levelTwoObstaclePosition = { {425, 450}, {750, 320}, {1250, 250} };
+    levelOneObstaclePosition = { {200, 600}, {400, 600}, {1050, 400} };
     levelFourObstaclePosition = { {100, 100}, {200, 200}, {300, 300} };
 }
 
