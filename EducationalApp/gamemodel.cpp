@@ -42,6 +42,7 @@ void GameModel:: setLevel(int level){
         emit obstacleInfo(levelOneObstaclePosition);
         emit createTent();
         emit removeOldLetterBodies();
+        emit removeOldObstacleBodies();
         break;
     case 2:
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
@@ -50,6 +51,7 @@ void GameModel:: setLevel(int level){
         emit createTent();
         emit removeOldPlatformBodies();
         emit removeOldLetterBodies();
+        emit removeOldObstacleBodies();
         break;
     case 3:
         emit removeOldPlatformBodies();
@@ -58,6 +60,7 @@ void GameModel:: setLevel(int level){
         emit letterInfo(questionThreeLetterCoords, letters);
         emit createTent();
         emit removeOldLetterBodies();
+        emit removeOldObstacleBodies();
         break;
     case 4:
         emit removeOldPlatformBodies();
@@ -66,6 +69,7 @@ void GameModel:: setLevel(int level){
         emit letterInfo(questionFourLetterCoords, letters);
         emit createTent();
         emit removeOldLetterBodies();
+        emit removeOldObstacleBodies();
         break;
     default:
         qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!

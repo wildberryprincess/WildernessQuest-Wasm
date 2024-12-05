@@ -159,6 +159,9 @@ void GameWorld::updateWorld() {
         deferredActions.pop();
     }
 
+    numOfQuestionsLeft = 2;
+    progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+
     // Trigger a repaint
     update();
 }
@@ -536,6 +539,17 @@ void GameWorld::removeExistingLetters() {
     }
 }
 
+void GameWorld::removeExistingObstacles() {
+    for (int i = 0; i < obstacleBodies.size(); ++i) {
+            b2Body* body = obstacleBodies[i].second; // Store the body in a temporary variable
+            int index = i; // Store the index
+            deferredActions.push([this, body, index]() mutable {
+                world.DestroyBody(body); // Destroy the body
+                obstacleBodies.removeAt(index); // Remove the entry
+            });
+            break;
+        }
+    }
 
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
@@ -571,7 +585,7 @@ void GameWorld::changeProgressBar(int numAnswered) {
     progressBar->setValue(numAnswered);
 
     numOfQuestionsLeft = 2 - numAnswered;
-    QString progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+    progressText = QString::number(numOfQuestionsLeft) + " question to go!";
 
     //QString progressText = QString("%1 questions to go").arg(numOfQuestionsLeft);
     progressLabel->setText(progressText);
@@ -579,5 +593,5 @@ void GameWorld::changeProgressBar(int numAnswered) {
 
 void GameWorld::setProgressBarToZero() {
     progressBar->setValue(0);
-    progressLabel->setText("0 questions to go!");
+    progressLabel->setText("2 questions to go!");
 }

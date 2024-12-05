@@ -82,6 +82,7 @@ signals:
     void removeOldPlatformBodies();
     void removeOldLetterBodies();
     void updateProgressBar(int numOfQuestionsAnswered);
+    void removeOldObstacleBodies();
     void resetProgressBar();
 };
 #endif // GAMEMODEL_H
