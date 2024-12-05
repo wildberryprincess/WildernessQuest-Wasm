@@ -254,38 +254,87 @@
     }
   ]
   ,
-"levelFour": [
-    {
-      "question": "this is a question1",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionA"
-    },
-    {
-      "question": "this is a question2",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionB"
-    },
-    {
-      "question": "this is a question3",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionC"
-    },
-    {
-      "question": "this is a question4",
-      "optionA": "this is optionA",
-      "optionB": "this is optionB",
-      "optionC": "this is optionC",
-      "optionD": "this is optionD",
-      "correctAnswer": "this is optionD"
-    }
+  "levelFour": [
+      {
+        "question": "Which of the following flowers is commonly found blooming in Utah’s desert regions during spring?",
+        "optionA": "a. Desert Marigold",
+        "optionB": "b. Alpine Forget-Me-Not",
+        "optionC": "c. Columbine",
+        "optionD": "d. Glacier Lily",
+        "correctAnswer": "a. Desert Marigold"
+      },
+      {
+        "question": "Which of these flowers is commonly found in Utah’s alpine regions during spring?",
+        "optionA": "a. Indian Paintbrush",
+        "optionB": "b. Sego Lily",
+        "optionC": "c. Glacier Lily",
+        "optionD": "d. Desert Evening Primrose",
+        "correctAnswer": "c. Glacier Lily"
+      },
+      {
+        "question": "What is the best way to avoid a bear encounter while camping or backpacking in Utah?",
+        "optionA": "a. Sleep with food inside your tent to keep it safe.",
+        "optionB": "b. Cook and store food at least 100 feet away from your sleeping area.",
+        "optionC": "c. Make your campsite as quiet and inconspicuous as possible.",
+        "optionD": "d. Leave trash near your tent to avoid carrying it far.",
+        "correctAnswer": "b. Cook and store food at least 100 feet away from your sleeping area."
+      },
+      {
+        "question": "What should you do if you encounter a bear while hiking or camping in Utah?",
+        "optionA": "a. Run away as fast as possible.",
+        "optionB": "b. Make yourself appear larger and speak calmly to the bear.",
+        "optionC": "c. Play dead immediately.",
+        "optionD": "d. Throw food at the bear to distract it.",
+        "correctAnswer": "b. Make yourself appear larger and speak calmly to the bear."
+      },
+      {
+        "question": "Which of the following birds native to Utah is most easily identifiable in springtime due to its bright plumage or distinctive song?",
+        "optionA": "a. American Goldfinch",
+        "optionB": "b. Sandhill Crane",
+        "optionC": "c. Great Horned Owl",
+        "optionD": "d. Mountain Bluebird",
+        "correctAnswer": "d. Mountain Bluebird"
+      },
+      {
+        "question": "What is the safest way to cross a river while backpacking in Utah during spring?",
+        "optionA": "a. Cross barefoot to avoid getting your boots wet.",
+        "optionB": "b. Cross at the widest, slowest section of the river.",
+        "optionC": "c. Cross directly downstream from a waterfall.",
+        "optionD": "d. Cross at the narrowest point, regardless of water speed.",
+        "correctAnswer": "b. Cross at the widest, slowest section of the river."
+      },
+      {
+        "question": "Which of the following is the safest source of drinking water while backpacking in alpine Utah during spring?",
+        "optionA": "a. Water directly from a fast-moving stream.",
+        "optionB": "b. Melted snow boiled or filtered before drinking.",
+        "optionC": "c. Water from a still pond or lake without treatment.",
+        "optionD": "d. Rainwater collected in your cooking pot without filtering.",
+        "correctAnswer": "b. Melted snow boiled or filtered before drinking."
+      },
+      {
+        "question": "What should you do if you fall through a frozen lake in springtime?",
+        "optionA": "a. Swim straight down to find a warm underwater current.",
+        "optionB": "b. Panic and splash to alert nearby help.",
+        "optionC": "c. Turn toward the direction you came from, spread your arms out, and kick to pull yourself onto the ice.",
+        "optionD": "d. Remove heavy clothing to swim faster.",
+        "correctAnswer": "c. Turn toward the direction you came from, spread your arms out, and kick to pull yourself onto the ice."
+      },
+      {
+        "question": "What is the best way to hike on muddy trails in Utah during spring to minimize damage to the trail?",
+        "optionA": "a. Walk off-trail to avoid the mud.",
+        "optionB": "b. Walk through the center of the trail, even if it is muddy.",
+        "optionC": "c. Widen the trail by creating a new path around the mud.",
+        "optionD": "d. Avoid hiking on muddy trails altogether.",
+        "correctAnswer": "b. Walk through the center of the trail, even if it is muddy."
+      },
+      {
+        "question": "What is the best way to stay safe from flash floods while hiking in Utah’s desert canyon lands?",
+        "optionA": "a. Camp in a dry streambed to avoid high winds.",
+        "optionB": "b. Climb to higher ground immediately if you see or hear signs of a flash flood.",
+        "optionC": "c. Try to outrun the flood along the canyon floor.",
+        "optionD": "d. Wait in a narrow canyon to minimize exposure to rain.",
+        "correctAnswer": "b. Climb to higher ground immediately if you see or hear signs of a flash flood."
+      }
   ]
+
 }
