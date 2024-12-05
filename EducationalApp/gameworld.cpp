@@ -525,16 +525,17 @@ void GameWorld::removeExistingLetters() {
 }
 
 void GameWorld::removeExistingObstacles() {
-    for (int i = 0; i < obstacleBodies.size(); ++i) {
-            b2Body* body = obstacleBodies[i].second; // Store the body in a temporary variable
-            int index = i; // Store the index
-            deferredActions.push([this, body, index]() mutable {
+    for(int i = obstacleBodies.size() - 1; i >=0; --i) {
+        b2Body* body = obstacleBodies[i].second;
+        deferredActions.push([this, body, i]() mutable {
+            if (i < obstacleBodies.size()) { // Ensure the index is still valid
                 world.DestroyBody(body); // Destroy the body
-                obstacleBodies.removeAt(index); // Remove the entry
-            });
-            break;
-        }
+                obstacleBodies.removeAt(i); // Remove the entry from the vector
+            }
+        });
     }
+}
+
 
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
