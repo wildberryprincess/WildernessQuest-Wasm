@@ -23,7 +23,7 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar->setValue(50);
     progressBar->setFixedSize(300, 10);
     progressBar->move(10, 70);
-    std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
+    std::queue<std::function<void()>> deferredActions;
 
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
@@ -379,7 +379,6 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
                               .arg(prompt.optionC)
                               .arg(prompt.optionD);
 
-    qDebug() << "The prompt is being displayed.";
     // Update the label with the formatted content
     promptLabel->setText(quizContent);
 }
@@ -394,7 +393,6 @@ void GameWorld::displayGameInfo(int level) {
 }
 
 void GameWorld::updateLivesDisplay(int lives) {
-    qDebug() << "Updating lives display with lives:" << lives;
     currentLives = lives;  // Update the local state of lives
     update();
 }
@@ -426,7 +424,6 @@ void GameWorld::handleIncorrectCollidedLetter() {
                 currentText = currentText.left(index);
                 promptLabel->setText(currentText);
             }
-            qDebug() << "'Try again!' message removed.";
         });
     }
 
@@ -438,8 +435,6 @@ void GameWorld::handleIncorrectCollidedLetter() {
     }
     QString updatedText = currentText + "<br><br><span style='color: red; font-weight: bold;'>Try again!</span>";
     promptLabel->setText(updatedText);
-
-    qDebug() << "Displayed 'Try again!' message.";
 
     // Start or restart the timer
     timer->start(3000); // 3 seconds
@@ -468,7 +463,6 @@ void GameWorld::handleCorrectCollidedLetter() {
                 currentText = currentText.left(index);
                 promptLabel->setText(currentText);
             }
-            qDebug() << "'Good job!' message removed.";
         });
     }
 
@@ -480,8 +474,6 @@ void GameWorld::handleCorrectCollidedLetter() {
     }
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
-
-    qDebug() << "Displayed 'Good job!' message.";
 
     // Start or restart the timer
     timer->start(3000); // 3 seconds
@@ -538,7 +530,6 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
         }
     }
 
-    qDebug() << "Obstacles count after collision removal: " << obstaclesList.size();
     emit collidedWithObstacle(obstaclePosition); // Notify model of the collision
 
     update(); // Trigger a repaint

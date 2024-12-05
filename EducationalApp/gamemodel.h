@@ -18,7 +18,7 @@ private:
     int levelProgress;
     bool win;
     QString currentCorrectAnswer = "a";
-    int numQuestionsPerLevel = 5;
+    int numQuestionsPerLevel = 1;
     int numQuestionsAnswered;
     bool allQuestionsAnswered;
     vector <QString> backgroundImages;
