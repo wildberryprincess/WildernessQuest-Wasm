@@ -173,6 +173,8 @@ public slots:
      * This happens at the beginning of each level
      */
     void removeExistingLetters();
+    void changeProgressBar(int numOfQuestions);
+    void setProgressBarToZero();
 
 private:
     b2World world;
@@ -192,6 +194,8 @@ private:
     QLabel* promptLabel; //display for the question
     QLabel* gameInfoLabel; //display level and lives
     QProgressBar* progressBar;
+    QLabel* progressLabel;
+    int numOfQuestionsLeft;
 
     std::queue<std::function<void()>> deferredActions;
 

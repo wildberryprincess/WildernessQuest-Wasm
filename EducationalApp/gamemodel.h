@@ -18,7 +18,7 @@ private:
     int levelProgress;
     bool win;
     QString currentCorrectAnswer = "a";
-    int numQuestionsPerLevel = 1;
+    int numQuestionsPerLevel = 2;
     int numQuestionsAnswered;
     bool allQuestionsAnswered;
     vector <QString> backgroundImages;
@@ -81,5 +81,7 @@ signals:
     void gameOver(bool win);
     void removeOldPlatformBodies();
     void removeOldLetterBodies();
+    void updateProgressBar(int numOfQuestionsAnswered);
+    void resetProgressBar();
 };
 #endif // GAMEMODEL_H
