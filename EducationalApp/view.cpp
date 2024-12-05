@@ -48,6 +48,9 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(this, &View::showWinScreen, &startScreen, &StartPage::updateWinScreen);
     connect(this, &View::showLoseScreen, &startScreen, &StartPage::updateLoseScreen);
 
+    connect(&gameModel, &GameModel::removeOldPlatformBodies, gameWorld, &GameWorld::removeExistingPlatforms);
+    connect(&gameModel, &GameModel::removeOldLetterBodies, gameWorld, &GameWorld::removeExistingLetters);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View

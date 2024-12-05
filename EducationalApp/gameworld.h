@@ -49,6 +49,8 @@ public slots:
     void handleProceedToNextLevel();
     void displayGameInfo(int level);
     void updateLivesDisplay(int lives);
+    void removeExistingPlatforms();
+    void removeExistingLetters();
 
 private:
     GameModel *gameModel = nullptr; // Add GameModel pointer
@@ -72,9 +74,9 @@ private:
 
     std::queue<std::function<void()>> deferredActions;
 
-
-
     QVector<std::pair<QPoint, b2Body*>> obstacleBodies;
+    QVector<std::pair<QPoint, b2Body*>> platformBodies;
+    QVector<std::pair<QPoint, b2Body*>> letterBodies;
 
     ~GameWorld();
     void createPlatformGrid();

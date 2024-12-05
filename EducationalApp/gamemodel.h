@@ -79,5 +79,7 @@ signals:
     void sendGameInfo(int level);
     void livesUpdated(int lives);
     void gameOver(bool win);
+    void removeOldPlatformBodies();
+    void removeOldLetterBodies();
 };
 #endif // GAMEMODEL_H

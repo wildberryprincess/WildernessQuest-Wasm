@@ -263,19 +263,23 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
             letterBody->SetUserData(letterData);
 
             letterObjectsList.append(letter);
+
+            // Append the platform position and body to platformBodies
+            platformBodies.append(std::make_pair(position, letterBody));
         });
     }
     update(); // Trigger a repaint
 }
 
 void GameWorld::createPlatformGrid() {
-
     for (Platform& platform : platformsList) {
         deferredActions.push([this, platform]() {
+            // Calculate the top-left position of the platform
+            QPoint position = platform.position; // Assuming platform.position gives the top-left QPoint
 
-            // Calculate center of platform (This is how the collision works)
-            float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
-            float centerY = platform.position.y() + (platform.imageSize.y() / 2.0f);
+            // Calculate center of platform for collision
+            float centerX = position.x() + (platform.imageSize.x() / 2.0f);
+            float centerY = position.y() + (platform.imageSize.y() / 2.0f);
 
             // Create a static body in the Box2D world
             b2BodyDef platformBodyDef;
@@ -296,9 +300,13 @@ void GameWorld::createPlatformGrid() {
             platformFixtureDef.density = 0.0f;
             platformFixtureDef.friction = 0.1f;
             platformBody->CreateFixture(&platformFixtureDef);
+
+            // Append the platform position and body to platformBodies
+            platformBodies.append(std::make_pair(position, platformBody));
         });
     }
 }
+
 
 
 void GameWorld::generateTent() {
@@ -483,7 +491,34 @@ void GameWorld::handleProceedToNextLevel() {
    QString currentText = promptLabel->text();
     QString updatedText = currentText +  "<br><br><span style='color: green; font-weight: bold;'>You've completed all of the questions for this level! Now, run to the tent!</span>";
    promptLabel->setText(updatedText);
+
 }
+
+void GameWorld::removeExistingPlatforms() {
+    for (int i = platformBodies.size() - 1; i >= 0; --i) { // Iterate backward for safe removal
+        b2Body* body = platformBodies[i].second;
+        deferredActions.push([this, body, i]() mutable {
+            if (i < platformBodies.size()) { // Ensure the index is still valid
+                world.DestroyBody(body); // Destroy the body
+                platformBodies.removeAt(i); // Remove the entry from the vector
+            }
+        });
+    }
+}
+
+void GameWorld::removeExistingLetters() {
+    for(int i = letterBodies.size() - 1; i >=0; --i) {
+        b2Body* body = letterBodies[i].second;
+        deferredActions.push([this, body, i]() mutable {
+            if (i < letterBodies.size()) { // Ensure the index is still valid
+                world.DestroyBody(body); // Destroy the body
+                letterBodies.removeAt(i); // Remove the entry from the vector
+            }
+        });
+    }
+}
+
+
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
     QPoint obstaclePosition = obstacle.getPosition();
@@ -508,7 +543,6 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
 
     update(); // Trigger a repaint
     //update lives hearts
-
     
 }
 

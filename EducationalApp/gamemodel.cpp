@@ -36,7 +36,6 @@ void GameModel:: setLevel(int level){
     case 1:
         emit platformInfo(levelOnePlatformCoords, levelOnePlatformSizes);
         emit letterInfo(questionOneLetterCoords, letters);
-
         qDebug() << "Inside setLevel obstacle count: " << levelOneObstaclePosition.size();
         emit obstacleInfo(levelOneObstaclePosition);
         emit createTent();
@@ -45,16 +44,22 @@ void GameModel:: setLevel(int level){
         emit platformInfo(levelTwoPlatformCoords, levelTwoPlatformSizes);
         emit obstacleInfo(levelTwoObstaclePosition);
         emit createTent();
+        emit removeOldPlatformBodies();
+        emit removeOldLetterBodies();
         break;
     case 3:
+        emit removeOldPlatformBodies();
         emit platformInfo(levelThreePlatformCoords, levelThreePlatformSizes);
         emit obstacleInfo(levelThreeObstaclePosition);
         emit createTent();
+        emit removeOldLetterBodies();
         break;
     case 4:
+        emit removeOldPlatformBodies();
         emit platformInfo(levelFourPlatformCoords, levelFourPlatformSizes); //TESTING TO PUSH
         emit obstacleInfo(levelFourObstaclePosition);
         emit createTent();
+        emit removeOldLetterBodies();
         break;
     default:
         qWarning() << "Invalid level number:" << level; // END GAME HERE!!!! TO DO!!!
@@ -170,7 +175,7 @@ void GameModel::checkCollidedLetter(QString letter) {
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
 
         // Check if the user answered enough questions to stop updates
-        if (numQuestionsAnswered >= numQuestionsPerLevel) {
+        if (numQuestionsAnswered >= 1) {
             allQuestionsAnswered = true;
             emit proceedToNextLevel();
             qDebug() << "All questions answered for current level.";
