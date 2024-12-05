@@ -17,12 +17,18 @@ GameWorld::GameWorld(QWidget *parent)
     currentBackground(nullptr),
     contactListener(new GameContactListener()),
     promptLabel(new QLabel(this)),
-    gameInfoLabel(new QLabel(this))
+    gameInfoLabel(new QLabel(this)),
+    progressBar(new QProgressBar(this))
 {
+    progressBar->setValue(50);
+    progressBar->setFixedSize(300, 10);
+    progressBar->move(10, 10);
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
+
     // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
     characterType = 0;
+
 
     // Define the ground body
     b2BodyDef groundBodyDef;
@@ -36,6 +42,7 @@ GameWorld::GameWorld(QWidget *parent)
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     initializePlayerPosition();
+    initializeHearts();
     levelUpTent = new Tent();
 
     world.SetContactListener(contactListener); // Sets the collision detection
@@ -50,9 +57,9 @@ GameWorld::GameWorld(QWidget *parent)
 
     // Set up the game info display
     gameInfoLabel->setWordWrap(true);
-    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    gameInfoLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     gameInfoLabel->setStyleSheet("font-size: 24px; color: black; font-family: Courier;");
-    gameInfoLabel->setGeometry(10, 10, 400, 50);
+    gameInfoLabel->setGeometry(5, 0, 375, 250);
 
     // Set up the timer for the game loop
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
@@ -96,6 +103,14 @@ void GameWorld::paintEvent(QPaintEvent *) {
 
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
+
+    // Draw hearts
+    for (int i = 0; i < currentLives; ++i) {
+        if (i < heartsList.size()) {
+            Heart& heart = heartsList[i];
+            painter.drawImage(heart.getPosition(), heart.getImage());
+        }
+    }
 }
 
 void GameWorld::updateWorld() {
@@ -210,6 +225,37 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
     }
 }
 
+void GameWorld::createPlatformGrid() {
+
+    for (Platform& platform : platformsList) {
+          deferredActions.push([this, platform]() {
+
+        // Calculate center of platform (This is how the collision works)
+        float centerX = platform.position.x() + (platform.imageSize.x() / 2.0f);
+        float centerY = platform.position.y() + (platform.imageSize.y() / 2.0f);
+
+        // Create a static body in the Box2D world
+        b2BodyDef platformBodyDef;
+        platformBodyDef.type = b2_staticBody;
+        platformBodyDef.position.Set(centerX / SCALE, centerY / SCALE);
+        b2Body* platformBody = world.CreateBody(&platformBodyDef);
+        BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
+        platformBody->SetUserData(platformData);
+        qDebug() << "Set platform UserData for body:" << platformBody;
+
+        // Define the shape for the platform
+        b2PolygonShape platformShape;
+        platformShape.SetAsBox(platform.imageSize.x() / (2.0f * SCALE), platform.imageSize.y() / (2.0f * SCALE));
+
+        // Define the fixture for the platform with low friction
+        b2FixtureDef platformFixtureDef;
+        platformFixtureDef.shape = &platformShape;
+        platformFixtureDef.density = 0.0f;
+        platformFixtureDef.friction = 0.1f;
+        platformBody->CreateFixture(&platformFixtureDef);
+        });
+    }
+}
 
 void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters) {
     qDebug() << "Letter coordinates size:" << letterCoords.size();
@@ -329,6 +375,20 @@ void GameWorld::initializePlayerPosition() {
     qDebug() << "Initial Box2D body position (x, y):" << initialBodyPosition.x * SCALE << initialBodyPosition.y * SCALE;
 }
 
+void GameWorld::initializeHearts() {
+    heartsList.clear();
+
+    // Fixed positions for the hearts
+    int startX = 95; // Starting x-coordinate
+    int startY = 25; // Fixed y-coordinate
+    int spacing = 60; // Spacing between hearts
+
+    for (int i = 0; i < currentLives; ++i) { // Assuming 3 lives
+        QPoint position(startX + i * spacing, startY);
+        heartsList.append(Heart(position));
+    }
+}
+
 void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
     // Combine the question and answers into a single string
     QString quizContent = QString(
@@ -349,10 +409,18 @@ void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
 }
 
 void GameWorld::displayGameInfo(int level) {
-    QString levelString = "<br><br><span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
-                          + QString::number(level)
-                          + "<br><span style='color: red; font-weight: bold;'>Lives: </span>";
+    QString levelString =
+        "<span style='color: black; font-weight: bold;'>Wilderness Quest: Level </span>"
+        "<span style='font-weight: bold;'>" + QString::number(level) + "</span>"
+                                   "<br><span style='color: black; font-weight: bold;'>Lives: </span>";
     gameInfoLabel->setText(levelString);
+
+}
+
+void GameWorld::updateLivesDisplay(int lives) {
+    qDebug() << "Updating lives display with lives:" << lives;
+    currentLives = lives;  // Update the local state of lives
+    update();
 }
 
 void GameWorld::checkLetter(QString letter) {
@@ -406,14 +474,47 @@ void GameWorld::handleCorrectCollidedLetter() {
         qWarning() << "promptLabel is not initialized!";
         return;
     }
+
+    // Clear any existing timers or reset the message
+    static QTimer* timer = nullptr;
+
+    if (!timer) {
+        // Create the timer if it doesn't exist
+        timer = new QTimer(this);
+        timer->setSingleShot(true);
+
+        // Restore the original text when the timer times out
+        connect(timer, &QTimer::timeout, this, [this]() {
+            QString currentText = promptLabel->text();
+            // Remove the "Good job!" portion from the text
+            int index = currentText.indexOf("<br><br><span style='color: green; font-weight: bold;'>Good job!</span>");
+            if (index != -1) {
+                currentText = currentText.left(index);
+                promptLabel->setText(currentText);
+            }
+            qDebug() << "'Good job!' message removed.";
+        });
+    }
+
+    // Append or overwrite the "Good job!" message
     QString currentText = promptLabel->text();
+    int index = currentText.indexOf("<br><br><span style='color: green; font-weight: bold;'>Good job!</span>");
+    if (index != -1) {
+        currentText = currentText.left(index); // Remove existing "Good job!" message
+    }
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
-    //"Good job!" disappears after 3 seconds
-    QTimer::singleShot(3000, this, [this, currentText]() {
-        promptLabel->setText(currentText);
-    });
+    qDebug() << "Displayed 'Good job!' message.";
+
+    // Start or restart the timer
+    timer->start(3000); // 3 seconds
+}
+
+void GameWorld::handleProceedToNextLevel() {
+   QString currentText = promptLabel->text();
+    QString updatedText = currentText +  "<br><br><span style='color: green; font-weight: bold;'>You've completed all of the questions for this level! Now, run to the tent!</span>";
+   promptLabel->setText(updatedText);
 }
 
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
@@ -438,6 +539,9 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
     emit collidedWithObstacle(obstaclePosition); // Notify model of the collision
 
     update(); // Trigger a repaint
+    //update lives hearts
+
+    
 }
 
 void GameWorld::handleTentCollisions() {
