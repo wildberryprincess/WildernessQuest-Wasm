@@ -183,7 +183,7 @@ void GameModel::checkCollidedLetter(QString letter) {
         qDebug() << "Number of correctly answered questions: " << numQuestionsAnswered;
 
         // Check if the user answered enough questions to stop updates
-        if (numQuestionsAnswered >= 1) {
+        if (numQuestionsAnswered >= numQuestionsPerLevel) {
             allQuestionsAnswered = true;
             emit proceedToNextLevel();
             qDebug() << "All questions answered for current level.";
