@@ -54,6 +54,8 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(&gameModel, &GameModel::updateProgressBar, gameWorld, &GameWorld::changeProgressBar);
     connect(&gameModel, &GameModel::resetProgressBar, gameWorld, &GameWorld::setProgressBarToZero);
 
+    connect(&gameModel, &GameModel::removeOldObstacleBodies, gameWorld, &GameWorld::removeExistingObstacles);
+
     setUpInitialGameModel(); // Call to Initialize model
 
     // Add gameWorld as the central widget for the View

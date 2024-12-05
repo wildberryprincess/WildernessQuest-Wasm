@@ -185,6 +185,8 @@ public slots:
      */
     void setProgressBarToZero();
 
+    void removeExistingObstacles();
+
 private:
     b2World world;
     QTimer timer;
@@ -205,6 +207,7 @@ private:
     QProgressBar* progressBar;
     QLabel* progressLabel;
     int numOfQuestionsLeft;
+    QString progressText;
 
     std::queue<std::function<void()>> deferredActions;
 
