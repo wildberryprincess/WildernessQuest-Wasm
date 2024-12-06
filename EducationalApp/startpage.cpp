@@ -139,7 +139,7 @@ void StartPage::on_nonBinaryScoutButton_clicked()
 void StartPage::on_instructionsButton_clicked()
 {
     ui->startButton->show();
-    ui->startButton->move(650, 650);
+    ui->startButton->move(650, 700);
     ui->instructionsButton->hide();
     ui->gameNameLabel->hide();
 
@@ -155,11 +155,11 @@ void StartPage::on_instructionsButton_clicked()
     instructionsLabel->show();
     instructionsLabel->setText(
         "<div style='font-family:Times New Roman; font-size:20px; color:black;'>"
-        "Hey there, adventurer! Welcome to the Wilderness Quest! Out here, it's all about brains and bravery. Your mission is to navigate this rugged terrain, answer 10 questions, and make it back to the tent without running into any bears!<br><br>"
-        "<b>1.</b> Read the question at the top, then use the arrow keys to move your Scout, to the right platforms. Collect the right answer and another questions will appear. Don't worry, if you find the wrong answer you will survive! Remember, you are here to learn.<br>"
-        "<b>2.</b> Once you have answered all 10 questions correctly, guide your scout to the tent to get to safety. Reaching the tent will advance you to the next level.<br>"
-        "<b>3.</b> BEWARE OF BEARS. Bears are always in the wild. If you run into a bear, you loose a life. Loose all 3 lives and you loose! Jump to avoid them. Use the platforms strategically.<br><br><br>"
-        "Finish all 4 levels to win! Have fun and good luck fearless Scout!"
+        "Hey there, adventurer! Welcome to the Wilderness Quest! Out here, it's all about brains and bravery. Your mission is to navigate this rugged terrain, correctly answer wilderness questions, and make it back to the tent without running into any bears!<br><br>"
+        "<b>1.</b> At the start of a level, first read the question at the top, then use the arrow keys to move your Scout to the platform corresponding to your answer choice. Collect the right answer and another question will appear. Don't worry if you answer incorrectly, you will still survive! Remember, you are here to learn.<br>"
+        "<b>2.</b> Once you have answered all 5 questions correctly, guide your Scout to the tent to get to safety. Reaching the tent will advance you to the next level.<br>"
+        "<b>3.</b> BEWARE OF BEARS! Bears are always in the wild. Jump to avoid them and use the platforms strategically. If you run into a bear, you lose a life. If you lose all 3 lives, you fail to survive in the wild and lose the game!<br><br><br>"
+        "Finish all 4 levels to win and be the ultimate wilderness survivor! Have fun and good luck fearless Scout!"
         "</div>"
         );
 }
