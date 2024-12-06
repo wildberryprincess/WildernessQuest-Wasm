@@ -5,6 +5,6 @@
     Demo: 
     
 ### Overview of the Educational App: Wilderness Quest
-    This program is an educational game for all ages, predomenately adults, who want to learn abot wilderness safety in a fun interactive way. 
+    This program is an educational game for all ages, predominately adults, who want to learn about wilderness safety in a fun interactive way. 
     Our game is written is c++, using QT and Box2D library. Player can select a scout to begin game and can navigate through 4 seasons to learn 
-    about various safety tips to surve the wild. 
+    about various safety tips to survive the wild. 

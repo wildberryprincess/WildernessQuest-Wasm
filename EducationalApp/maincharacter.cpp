@@ -1,6 +1,7 @@
 #include "maincharacter.h"
 #include "gamecontactlistener.h"
 #include <QWidget>
+
 #define SCALE 30.0f
 
 mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContactListener* contactListener, int characterType)
@@ -9,15 +10,14 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     // Load and scale the character image
     if (characterType == 0) {
         image = QImage(":/Images/girlScout.png");
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 1) {
         image = QImage(":/Images/boyScout.png");
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     } else if (characterType == 2) {
         image = QImage(":/Images/nonBinaryScout.png");
-        image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        // 70, 70 works best for jumping but is very tiny
     }
+
+    // 70, 70 works best for jumping but is very tiny
+    image = image.scaled(70, 70, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     // Initialize bounding rectangle directly at the position
     boundingRect = QRect(position, image.size());
@@ -44,13 +44,12 @@ mainCharacter::mainCharacter(const QPoint& position, b2World* world, GameContact
     fixtureDef.restitution = 0.0f;
 
     body->CreateFixture(&fixtureDef);
-
 }
 
-// gets the boundary of the character which is helpful for collisions
 QRect mainCharacter::getBoundingRect(){
     return boundingRect;
 }
+
 QImage mainCharacter::getImage(){
     return image;
 }
@@ -91,7 +90,6 @@ void mainCharacter::keyReleaseEvent(QKeyEvent *event) {
 
 void mainCharacter::update() {
     b2Vec2 velocity = body->GetLinearVelocity();
-
     float verticalVelocity = velocity.y;
 
     if (moveLeft) {
@@ -109,7 +107,6 @@ void mainCharacter::update() {
     b2Vec2 position = body->GetPosition();
     boundingRect.moveTo(position.x * SCALE - boundingRect.width() / 2,
                         position.y * SCALE - boundingRect.height() / 4); // Center correctly
-
 }
 
 
@@ -124,8 +121,3 @@ void mainCharacter::jump() {
 b2Body* mainCharacter::getBody() {
     return body;
 }
-
-
-
-
-

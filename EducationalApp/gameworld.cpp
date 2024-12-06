@@ -7,8 +7,8 @@
 #include <QGraphicsRectItem>
 #include <cstdlib>
 #include <bodydata.h>
-#define SCALE 30.0f
 
+#define SCALE 30.0f
 
 GameWorld::GameWorld(QWidget *parent)
     : QWidget(parent),
@@ -27,12 +27,12 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar->setTextVisible(false); // Hide percentage
     progressBar->setStyleSheet(R"(
     QProgressBar {
-        border: 2px solid #A8DADC; /* Light blue border */
+        border: 2px solid #c1c19e; /* Light blue border */
         border-radius: 15px;
         background-color: #F1FAEE; /* Soft sky color */
     }
     QProgressBar::chunk {
-        background-color: #A8DF65; /* Light green (grass-like) chunk */
+        background-color: #c1c19e; /* Light green (grass-like) chunk */
         border-radius: 8px; /* Rounded edges for the filled portion */
         margin: 2px;
     }
@@ -43,6 +43,7 @@ GameWorld::GameWorld(QWidget *parent)
     progressLabel->show();
     progressLabel->move(20, 85);
     progressLabel->setFixedSize(300, 25);
+    progressLabel->setStyleSheet("color: black;");
 
 
     std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
@@ -90,7 +91,6 @@ GameWorld::GameWorld(QWidget *parent)
 
 
 void GameWorld::paintEvent(QPaintEvent *) {
-
     QPainter painter(this);
 
     if (currentBackground) {
@@ -122,7 +122,6 @@ void GameWorld::paintEvent(QPaintEvent *) {
     // Draw Tent
     painter.drawImage(levelUpTent->getBoundingRect().topLeft(), levelUpTent->getImage());
 
-
     // Draw the main player
     painter.drawImage(mainPlayer->getBoundingRect().topLeft(), mainPlayer->getImage());
 
@@ -150,7 +149,6 @@ void GameWorld::updateWorld() {
         contactListener->collidedLetter.clear(); // Reset after processing
     }
 
-
     // Process deferred actions (e.g., creating new bodies)
     while (!deferredActions.empty()) {
         deferredActions.front()(); // Execute the action
@@ -173,7 +171,6 @@ void GameWorld::keyReleaseEvent(QKeyEvent *event) {
 }
 
 GameWorld::~GameWorld() {
-
     platformsList.clear();
     letterObjectsList.clear();
     obstaclesList.clear();
@@ -189,8 +186,8 @@ void GameWorld::setCharacterType(int type) {
 
     initializePlayerPosition();
 }
-void GameWorld::setBackgroundPixMap(QString filepath) {
 
+void GameWorld::setBackgroundPixMap(QString filepath) {
     if (currentBackground) {
         delete currentBackground;
         currentBackground = nullptr;
@@ -208,6 +205,7 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
         platform.changeImageDimensions(sizeList[i].x(), sizeList[i].y());
         platformsList.append(platform);
     }
+
     createPlatformGrid();
 }
 
@@ -294,6 +292,7 @@ void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters)
             platformBodies.append(std::make_pair(position, letterBody));
         });
     }
+
     update(); // Trigger a repaint
 }
 
@@ -332,8 +331,6 @@ void GameWorld::createPlatformGrid() {
         });
     }
 }
-
-
 
 void GameWorld::generateTent() {
     deferredActions.push([this]() {
@@ -392,6 +389,7 @@ void GameWorld::initializeHearts() {
 }
 
 void GameWorld::displayPrompt(SurvivalPrompt::Prompt& prompt) {
+
     // Combine the question and answers into a single string
     QString quizContent = QString(
                               "<b>Question:</b> %1<br><br>"
@@ -415,7 +413,6 @@ void GameWorld::displayGameInfo(int level) {
         "<span style='font-weight: bold;'>" + QString::number(level) + "</span>"
                                    "<br><span style='color: black; font-weight: bold;'>Lives: </span>";
     gameInfoLabel->setText(levelString);
-
 }
 
 void GameWorld::updateLivesDisplay(int lives) {
@@ -498,6 +495,7 @@ void GameWorld::handleCorrectCollidedLetter() {
     if (index != -1) {
         currentText = currentText.left(index); // Remove existing "Good job!" message
     }
+
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
@@ -509,8 +507,6 @@ void GameWorld::handleProceedToNextLevel() {
     QString currentText = promptLabel->text();
     QString updatedText = currentText +  "<br><br><span style='color: green; font-weight: bold;'>You've completed all of the questions for this level! Now, run to the tent!</span>";
     promptLabel->setText(updatedText);
-
-
 }
 
 void GameWorld::removeExistingPlatforms() {
@@ -549,8 +545,6 @@ void GameWorld::removeExistingObstacles() {
     }
 }
 
-
-
 void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
     QPoint obstaclePosition = obstacle.getPosition();
 
@@ -584,12 +578,13 @@ void GameWorld::changeProgressBar(int numAnswered) {
     progressBar->setValue(numAnswered);
 
     numOfQuestionsLeft = 2 - numAnswered;
+    if (numOfQuestionsLeft < 0) {
+        numOfQuestionsLeft = 0;
+    }
+
     progressText = QString::number(numOfQuestionsLeft) + " question to go!";
-    QString progressText = QString::number(numOfQuestionsLeft) + " question to go!";
     QFont courierFont("Courier", 12);
     progressLabel->setFont(courierFont);
-
-    //QString progressText = QString("%1 questions to go").arg(numOfQuestionsLeft);
     progressLabel->setText(progressText);
 }
 
@@ -598,5 +593,4 @@ void GameWorld::setProgressBarToZero() {
     progressLabel->setText("2 questions to go!");
     QFont courierFont("Courier", 12); // Font: Courier, size: 12
     progressLabel->setFont(courierFont);
-    progressLabel->setText("0 questions to go!");
 }

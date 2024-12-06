@@ -9,6 +9,7 @@ inside of GameContactListener so that the contact listener can identity the type
 Because Box2D dosent inherently know the types of objects involved in a collsions, BodyData is a way to store the necessary information.
 While body data is a struct, it behaves as an object and stores the platform, main character, tent, and obstacle data.
 */
+
 #ifndef BODYDATA_H
 #define BODYDATA_H
 

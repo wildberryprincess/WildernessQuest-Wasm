@@ -103,7 +103,6 @@ void StartPage::on_startButton_clicked()
     boyScoutLabel->setFixedSize(150, 200);
     boyScoutLabel->move(425, 390);
 
-
     ui->nonBinaryScoutButton->show();
     nonBinaryScoutLabel = new QLabel(this);
     nonBinaryScoutLabel->show();
@@ -119,13 +118,11 @@ void StartPage::on_startButton_clicked()
     ui->gameNameLabel->show();
 }
 
-// Girl Scout is 0, Boy Scout is 1, NonBinary Scout is 2
 void StartPage::on_girlScoutButton_clicked()
 {
     emit updateCharacterInfo(0);
     this->hide();
 }
-
 
 void StartPage::on_boyScoutButton_clicked()
 {
@@ -183,7 +180,6 @@ void StartPage::updateWinScreen() {
 }
 
 void StartPage::updateLoseScreen() {
-    qDebug() << "Player Lost! Should display end screen.";
     this->show();
     setBackground(":/Images/background_level4.PNG");
 
@@ -214,4 +210,3 @@ void StartPage::paintEvent(QPaintEvent* event) {
     }
     QWidget::paintEvent(event);
 }
-

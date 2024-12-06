@@ -1,9 +1,6 @@
 #include "obstacle.h"
-#include <QDebug>
 
 Obstacle::Obstacle(const QPoint& position) : position(position) {
-    qDebug() << "Inside obstacle Constructor";
-
     image = QImage(":/Images/bear.png");
     image = image.scaled(60, 60, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 

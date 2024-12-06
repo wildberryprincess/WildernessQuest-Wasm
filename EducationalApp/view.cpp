@@ -12,6 +12,7 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
 
     // Connect setUpModel signal in View to setLevel slot in GameModel
     connect(this, &View::setUpModel, &gameModel, &GameModel::setLevel);
+
     // Connect GameModel's platformInfo signal to GameWorld's generatePlatforms slot
     connect(&gameModel, &GameModel::platformInfo, gameWorld, &GameWorld::generatePlatforms);
 
@@ -38,6 +39,7 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(gameWorld, &GameWorld::collidedWithObstacle, &gameModel, &GameModel::checkObstacleCollision);
 
     connect(&startScreen, &StartPage::updateCharacterInfo, this, &View::displayGame);
+
     connect(this, &View::updateCharacter, gameWorld, &GameWorld::setCharacterType);
 
     connect(&gameModel,&GameModel::createTent, gameWorld, &GameWorld::generateTent);
@@ -45,13 +47,17 @@ View::View(StartPage& startScreen, GameModel& gameModel, QWidget *parent)
     connect(gameWorld, &GameWorld::collidedWithTent, &gameModel, &GameModel::checkTentCollision);
 
     connect(&gameModel, &GameModel::gameOver, this, &View::displayEndScreen);
+
     connect(this, &View::showWinScreen, &startScreen, &StartPage::updateWinScreen);
+
     connect(this, &View::showLoseScreen, &startScreen, &StartPage::updateLoseScreen);
 
     connect(&gameModel, &GameModel::removeOldPlatformBodies, gameWorld, &GameWorld::removeExistingPlatforms);
+
     connect(&gameModel, &GameModel::removeOldLetterBodies, gameWorld, &GameWorld::removeExistingLetters);
 
     connect(&gameModel, &GameModel::updateProgressBar, gameWorld, &GameWorld::changeProgressBar);
+
     connect(&gameModel, &GameModel::resetProgressBar, gameWorld, &GameWorld::setProgressBarToZero);
 
     connect(&gameModel, &GameModel::removeOldObstacleBodies, gameWorld, &GameWorld::removeExistingObstacles);

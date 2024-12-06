@@ -7,8 +7,6 @@
 #include <QDebug>
 
 void GameContactListener::BeginContact(b2Contact* contact) {
-    // qDebug() << "BeginContact triggered";
-
     void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
     void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 
@@ -54,19 +52,14 @@ void GameContactListener::BeginContact(b2Contact* contact) {
         } else {
             qWarning() << "Null obstacle object in collision.";
         }
-
-        // qDebug() << "Player collided with an obstacle!";
     } else if (otherData->type == "tent") {
         gameWorld->handleTentCollisions();
-        // qDebug() << "Player collided with a tent!";
     } else {
         // qWarning() << "Unknown collision type:" << otherData->type;
     }
 }
 
 void GameContactListener::EndContact(b2Contact* contact) {
-    // qDebug() << "EndContact triggered";
-
     void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
     void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 
@@ -86,13 +79,9 @@ void GameContactListener::EndContact(b2Contact* contact) {
     if (playerData && otherData) {
         if (otherData->type == "platform") {
             isGrounded = false; // Set player as airborne
-            // qDebug() << "Player is no longer grounded on a platform.";
         } else if (otherData->type == "letter") {
-            // qDebug() << "Player is no longer in contact with a letter.";
         } else if (otherData->type == "obstacle") {
-            // qDebug() << "Player is no longer in contact with an obstacle.";
         } else if (otherData->type == "tent") {
-            // qDebug() << "Player is no longer in contact with a tent.";
         }
     } else {
         // qDebug() << "Collision ended but not involving player.";

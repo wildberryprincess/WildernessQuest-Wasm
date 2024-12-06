@@ -185,6 +185,9 @@ public slots:
      */
     void setProgressBarToZero();
 
+    /**
+     * @brief removeExistingObstacles: Removes the bears from previous levels to clear up the screen for new level.
+     */
     void removeExistingObstacles();
 
 private:
@@ -208,12 +211,11 @@ private:
     QLabel* progressLabel;
     int numOfQuestionsLeft;
     QString progressText;
-
-    std::queue<std::function<void()>> deferredActions;
-
     QVector<std::pair<QPoint, b2Body*>> obstacleBodies;
     QVector<std::pair<QPoint, b2Body*>> platformBodies;
     QVector<std::pair<QPoint, b2Body*>> letterBodies;
+
+    std::queue<std::function<void()>> deferredActions;
 
     ~GameWorld();
 
@@ -253,4 +255,5 @@ signals:
      */
     void collidedWithTent();
 };
+
 #endif // GAMEWORLD_H

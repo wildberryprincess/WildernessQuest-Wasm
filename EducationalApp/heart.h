@@ -5,8 +5,10 @@ Reviewer: Emilie Parra (.cpp &.h)
 
 This class creates a heart object that is used to visualize how many lives our player has
 */
+
 #ifndef HEART_H
 #define HEART_H
+
 #include <QPoint>
 #include <QImage>
 
@@ -31,4 +33,5 @@ private:
     QImage image;
      QPoint position;
 };
+
 #endif // HEART_H

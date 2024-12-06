@@ -7,7 +7,6 @@ Heart::Heart(QPoint position) : position(position) {
     image = image.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
-
 QImage Heart::getImage() {
     return image;
 }
