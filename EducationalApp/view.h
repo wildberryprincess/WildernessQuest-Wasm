@@ -29,6 +29,9 @@ public:
      */
     explicit View(StartPage& startscreen, GameModel& gameModel, QWidget *parent = nullptr);
 
+    /**
+     * @brief setUpInitialGameModel: sends a signal to set up the gameModel
+     */
     void setUpInitialGameModel();
     ~View();
 
