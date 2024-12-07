@@ -144,7 +144,6 @@ void GameWorld::updateWorld() {
 
 
     if (!contactListener->collidedLetter.isEmpty()) {
-        qDebug() << "Player collided with letter:" << contactListener->collidedLetter;
         // Process the collision, e.g., remove the letter or update the game state
         contactListener->collidedLetter.clear(); // Reset after processing
     }
@@ -182,7 +181,6 @@ GameWorld::~GameWorld() {
 
 void GameWorld::setCharacterType(int type) {
     characterType = type;
-    qDebug() << "Inside setCharacterType: " << characterType;
 
     initializePlayerPosition();
 }
@@ -212,7 +210,6 @@ void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> size
 
 void GameWorld::generateObstacles(QList<QPoint> positionList) {
     obstaclesList.clear();
-    qDebug() << "Obstacle list size: " << positionList.size();
 
     for (const QPoint& position : positionList) {
         // Create the obstacle
@@ -244,14 +241,11 @@ void GameWorld::generateObstacles(QList<QPoint> positionList) {
             // Add the obstacle to the list of managed bodies
             obstacleBodies.append(std::make_pair(position, obstacleBody));
 
-            qDebug() << "Obstacle created with UserData:" << obstacleBody;
         });
     }
 }
 
 void GameWorld::generateLetters(QList<QPoint> letterCoords, QStringList letters) {
-    qDebug() << "Letter coordinates size:" << letterCoords.size();
-    qDebug() << "Letters size:" << letters.size();
 
     if (letterCoords.size() != letters.size()) {
         qWarning() << "Mismatch between letter coordinates and letter strings!";
@@ -313,7 +307,6 @@ void GameWorld::createPlatformGrid() {
             b2Body* platformBody = world.CreateBody(&platformBodyDef);
             BodyData* platformData = new BodyData("platform", new Platform(platform)); // Allocate dynamically
             platformBody->SetUserData(platformData);
-            qDebug() << "Set platform UserData for body:" << platformBody;
 
             // Define the shape for the platform
             b2PolygonShape platformShape;
@@ -358,20 +351,17 @@ void GameWorld::generateTent() {
         BodyData* tentData = new BodyData("tent", levelUpTent);
         tentBody->SetUserData(tentData);
 
-        qDebug() << "Tent body created with adjusted collision box.";
     });
 }
 
 void GameWorld::initializePlayerPosition() {
     QPoint playerPosition(100,400); // Adjust to start above a platform
-    qDebug() << "Inside initializePlayerPosition: " << characterType;
     mainPlayer = new mainCharacter(playerPosition, &world, contactListener, characterType);
 
     BodyData* playerData = new BodyData("player", mainPlayer);
     mainPlayer->getBody()->SetUserData(playerData);
 
     b2Vec2 initialBodyPosition = mainPlayer->getBody()->GetPosition();
-    qDebug() << "Initial Box2D body position (x, y):" << initialBodyPosition.x * SCALE << initialBodyPosition.y * SCALE;
 }
 
 void GameWorld::initializeHearts() {
