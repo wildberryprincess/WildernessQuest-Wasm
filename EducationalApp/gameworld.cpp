@@ -46,12 +46,10 @@ GameWorld::GameWorld(QWidget *parent)
     progressLabel->setStyleSheet("color: black;");
 
 
-    std::queue<std::function<void()>> deferredActions; // THIS IS TO BE ABLE TO ADJUST LEVELS
+    std::queue<std::function<void()>> deferredActions;
 
-    // Ensure GameWorld has focus to handle key events
     setFocusPolicy(Qt::StrongFocus);
     characterType = 0;
-
 
     // Define the ground body
     b2BodyDef groundBodyDef;
@@ -88,7 +86,6 @@ GameWorld::GameWorld(QWidget *parent)
     connect(&timer, &QTimer::timeout, this, &GameWorld::updateWorld);
     timer.start(10);
 }
-
 
 void GameWorld::paintEvent(QPaintEvent *) {
     QPainter painter(this);
@@ -142,9 +139,7 @@ void GameWorld::updateWorld() {
     // Update the main character's movement
     mainPlayer->update();
 
-
     if (!contactListener->collidedLetter.isEmpty()) {
-        // Process the collision, e.g., remove the letter or update the game state
         contactListener->collidedLetter.clear(); // Reset after processing
     }
 
@@ -157,7 +152,6 @@ void GameWorld::updateWorld() {
     numOfQuestionsLeft = 2;
     progressText = QString::number(numOfQuestionsLeft) + " question to go!";
 
-    // Trigger a repaint
     update();
 }
 
@@ -193,7 +187,7 @@ void GameWorld::setBackgroundPixMap(QString filepath) {
 
     currentBackground = new QPixmap(filepath);
 
-    update(); // This triggers a repaint
+    update();
 }
 
 void GameWorld::generatePlatforms(QList<QPoint> positionList, QList<QPoint> sizeList) {
@@ -372,7 +366,7 @@ void GameWorld::initializeHearts() {
     int startY = 25; // Fixed y-coordinate
     int spacing = 60; // Spacing between hearts
 
-    for (int i = 0; i < currentLives; ++i) { // Assuming 3 lives
+    for (int i = 0; i < currentLives; ++i) {
         QPoint position(startX + i * spacing, startY);
         heartsList.append(Heart(position));
     }
@@ -420,7 +414,6 @@ void GameWorld::handleIncorrectCollidedLetter() {
         return;
     }
 
-    // Clear any existing timers or reset the message
     static QTimer* timer = nullptr;
 
     if (!timer) {
@@ -449,8 +442,7 @@ void GameWorld::handleIncorrectCollidedLetter() {
     QString updatedText = currentText + "<br><br><span style='color: red; font-weight: bold;'>Try again!</span>";
     promptLabel->setText(updatedText);
 
-    // Start or restart the timer
-    timer->start(3000); // 3 seconds
+    timer->start(3000);
 }
 
 void GameWorld::handleCorrectCollidedLetter() {
@@ -459,7 +451,6 @@ void GameWorld::handleCorrectCollidedLetter() {
         return;
     }
 
-    // Clear any existing timers or reset the message
     static QTimer* timer = nullptr;
 
     if (!timer) {
@@ -489,8 +480,7 @@ void GameWorld::handleCorrectCollidedLetter() {
     QString updatedText = currentText + "<br><br><span style='color: green; font-weight: bold;'>Good job!</span>";
     promptLabel->setText(updatedText);
 
-    // Start or restart the timer
-    timer->start(3000); // 3 seconds
+    timer->start(3000);
 }
 
 void GameWorld::handleProceedToNextLevel() {
@@ -500,7 +490,7 @@ void GameWorld::handleProceedToNextLevel() {
 }
 
 void GameWorld::removeExistingPlatforms() {
-    for (int i = platformBodies.size() - 1; i >= 0; --i) { // Iterate backward for safe removal
+    for (int i = platformBodies.size() - 1; i >= 0; --i) {
         b2Body* body = platformBodies[i].second;
         deferredActions.push([this, body, i]() mutable {
             if (i < platformBodies.size()) { // Ensure the index is still valid
@@ -515,9 +505,9 @@ void GameWorld::removeExistingLetters() {
     for(int i = letterBodies.size() - 1; i >=0; --i) {
         b2Body* body = letterBodies[i].second;
         deferredActions.push([this, body, i]() mutable {
-            if (i < letterBodies.size()) { // Ensure the index is still valid
-                world.DestroyBody(body); // Destroy the body
-                letterBodies.removeAt(i); // Remove the entry from the vector
+            if (i < letterBodies.size()) {
+                world.DestroyBody(body);
+                letterBodies.removeAt(i);
             }
         });
     }
@@ -527,9 +517,9 @@ void GameWorld::removeExistingObstacles() {
     for(int i = obstacleBodies.size() - 1; i >=0; --i) {
         b2Body* body = obstacleBodies[i].second;
         deferredActions.push([this, body, i]() mutable {
-            if (i < obstacleBodies.size()) { // Ensure the index is still valid
-                world.DestroyBody(body); // Destroy the body
-                obstacleBodies.removeAt(i); // Remove the entry from the vector
+            if (i < obstacleBodies.size()) {
+                world.DestroyBody(body);
+                obstacleBodies.removeAt(i);
             }
         });
     }
@@ -543,11 +533,11 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
 
     for (int i = 0; i < obstacleBodies.size(); ++i) {
         if (obstacleBodies[i].first == obstaclePosition) {
-            b2Body* body = obstacleBodies[i].second; // Store the body in a temporary variable
-            int index = i; // Store the index
+            b2Body* body = obstacleBodies[i].second;
+            int index = i;
             deferredActions.push([this, body, index]() mutable {
-                world.DestroyBody(body); // Destroy the body
-                obstacleBodies.removeAt(index); // Remove the entry
+                world.DestroyBody(body);
+                obstacleBodies.removeAt(index);
             });
             break;
         }
@@ -555,9 +545,7 @@ void GameWorld::handleObstacleCollisions(Obstacle obstacle) {
 
     emit collidedWithObstacle(obstaclePosition); // Notify model of the collision
 
-    update(); // Trigger a repaint
-    //update lives hearts
-    
+    update();
 }
 
 void GameWorld::handleTentCollisions() {
