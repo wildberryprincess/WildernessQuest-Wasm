@@ -560,7 +560,7 @@ void GameWorld::changeProgressBar(int numAnswered) {
         numOfQuestionsLeft = 0;
     }
 
-    progressText = QString::number(numOfQuestionsLeft) + " question to go!";
+    progressText = QString::number(numOfQuestionsLeft) + " questions to go!";
     QFont courierFont("Courier", 12);
     progressLabel->setFont(courierFont);
     progressLabel->setText(progressText);
