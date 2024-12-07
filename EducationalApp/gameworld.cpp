@@ -568,7 +568,8 @@ void GameWorld::changeProgressBar(int numAnswered) {
 
 void GameWorld::setProgressBarToZero() {
     progressBar->setValue(0);
-    progressLabel->setText("2 questions to go!");
+    progressLabel->setText("5 questions to go!");
     QFont courierFont("Courier", 12); // Font: Courier, size: 12
     progressLabel->setFont(courierFont);
 }
+
