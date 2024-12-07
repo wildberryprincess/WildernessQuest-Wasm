@@ -11,7 +11,6 @@ void GameContactListener::BeginContact(b2Contact* contact) {
     void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 
     if (!bodyUserDataA || !bodyUserDataB) {
-        // qWarning() << "One of the bodies has no UserData.";
         return;
     }
 
@@ -27,19 +26,16 @@ void GameContactListener::BeginContact(b2Contact* contact) {
                                                       : nullptr;
 
     if (!playerData || !otherData) {
-        // qWarning() << "Invalid BodyData detected.";
         return;
     }
 
     if (otherData->type == "platform") {
         isGrounded = true; // Set player as grounded
-        // qDebug() << "Player is grounded on a platform.";
     } else if (otherData->type == "letter") {
         LetterObjects* letter = static_cast<LetterObjects*>(otherData->object);
         if (letter) {
             collidedLetter = letter->getLetter();
             gameWorld->checkLetter(collidedLetter); // Notify GameWorld
-            qDebug() << "Player collected letter:" << collidedLetter;
         } else {
             qWarning() << "Null letter object in collision.";
         }
@@ -48,14 +44,12 @@ void GameContactListener::BeginContact(b2Contact* contact) {
         if (obstacle) {
             collidedObstaclePosition = obstacle->getPosition();
             gameWorld->handleObstacleCollisions(*obstacle);
-            qDebug() << "Player collided bear:" << collidedObstaclePosition;
         } else {
             qWarning() << "Null obstacle object in collision.";
         }
     } else if (otherData->type == "tent") {
         gameWorld->handleTentCollisions();
     } else {
-        // qWarning() << "Unknown collision type:" << otherData->type;
     }
 }
 
@@ -84,7 +78,6 @@ void GameContactListener::EndContact(b2Contact* contact) {
         } else if (otherData->type == "tent") {
         }
     } else {
-        // qDebug() << "Collision ended but not involving player.";
     }
 }
 
