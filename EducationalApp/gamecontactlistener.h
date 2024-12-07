@@ -15,10 +15,8 @@ and allows us to integrate custom data structures like BodyData to distinguish b
 
 #include <Box2D/Box2D.h>
 #include <QString>
-#include "letterobjects.h"
 #include "platform.h"
 #include "obstacle.h"
-#include "maincharacter.h"
 #include "bodydata.h"
 #include <QDebug>
 

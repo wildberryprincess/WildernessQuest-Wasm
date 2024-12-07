@@ -21,7 +21,7 @@ GameWorld::GameWorld(QWidget *parent)
     progressBar(new QProgressBar(this))
 {
     progressBar->setValue(0);
-    progressBar->setMaximum(2); // Adjust this to fit the number of questions per level
+    progressBar->setMaximum(5); // Adjust this to fit the number of questions per level
     progressBar->setFixedSize(300, 10);
     progressBar->move(15, 75);
     progressBar->setTextVisible(false); // Hide percentage
@@ -555,7 +555,7 @@ void GameWorld::handleTentCollisions() {
 void GameWorld::changeProgressBar(int numAnswered) {
     progressBar->setValue(numAnswered);
 
-    numOfQuestionsLeft = 2 - numAnswered;
+    numOfQuestionsLeft = 5 - numAnswered;
     if (numOfQuestionsLeft < 0) {
         numOfQuestionsLeft = 0;
     }

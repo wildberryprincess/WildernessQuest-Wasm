@@ -214,7 +214,6 @@ private:
     QVector<std::pair<QPoint, b2Body*>> obstacleBodies;
     QVector<std::pair<QPoint, b2Body*>> platformBodies;
     QVector<std::pair<QPoint, b2Body*>> letterBodies;
-
     std::queue<std::function<void()>> deferredActions;
 
     ~GameWorld();

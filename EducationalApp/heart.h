@@ -31,7 +31,7 @@ public:
 
 private:
     QImage image;
-     QPoint position;
+    QPoint position;
 };
 
 #endif // HEART_H
