@@ -34,13 +34,11 @@ public:
      */
     void BeginContact(b2Contact* contact) override;
 
-
     /**
      * @brief EndContact : This is called when two objects are no longer in contact with each other
      * @param contact : Same as above, provides access to details about the objects that are colliding
      */
     void EndContact(b2Contact* contact) override;
-
 
     /**
      * @brief setGameWorld: sets the GameWorld as the current world
